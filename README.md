@@ -65,6 +65,20 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
 - [ ] Tools (❓)
     - [ ] Knife (❓)
 
+## Contribute
+To contribute you'll need to use [beet](https://github.com/mcbeet/beet/tree/728859b2bf7b7725fcf7aa7de3788c668ffd668d).
+
+First link beet to your dev world
+```cmd
+C:\> beet link <dev_world_name>
+```
+
+And second make beet watch all changes
+```cmd
+C:\> beet watch
+```
+
+Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 
 ## Credits
 All items texture/models come from the [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) mod.
