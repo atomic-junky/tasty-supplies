@@ -36,16 +36,18 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
         - [ ] Grilled Salmon
         - [ ] Fried Egg
     - [ ] Sweets
-        - [ ] Apple Pie
-        - [ ] Sweet Berry Cheesecake
-        - [ ] Chocolate Pie
-        - [ ] Slice of Cake
-        - [ ] Slice of Apple Pie
-        - [ ] Slice of Sweet Berry Cheesecake
-        - [ ] Slice of Chocolate Pie
+        - [x] Apple Pie
+        - [x] Sweet Berry Cheesecake
+        - [x] Chocolate Pie
+        - [ ] Slice of Cake (🔴)
+        - [ ] Slice of Apple Pie (🔴)
+        - [ ] Slice of Sweet Berry Cheesecake (🔴)
+        - [ ] Slice of Chocolate Pie (🔴)
         - [x] Sweet Berry Cookie
         - [x] Honey Cookie
         - [ ] Melon Popsicle (❓)
+    - [x] Ingredients
+        - [x] Pie Crust
     - [ ] Drinks
         - [ ] Hot Cocoa
         - [ ] Apple Cider
@@ -77,6 +79,8 @@ And second make beet watch all changes
 ```cmd
 C:\> beet watch
 ```
+
+Replace `beet` with `beet -p ./tasty_supplies/` if you want to stay in the root folder, else do `cd ./tasty_supplies/`.
 
 Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 

@@ -1,0 +1,42 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "C": {
+            "item": "minecraft:cocoa_beans"
+        },
+        "M": {
+            "item": "minecraft:milk_bucket"
+        },
+        "S": {
+            "item": "minecraft:sugar"
+        },
+        "B": {
+            "item": "minecraft:bread"
+        }
+    },
+    "pattern": [
+        "CCC",
+        "MMM",
+        "SBS"
+    ],
+    "result": {
+        "id": "minecraft:pumpkin_pie",
+        "components": {
+            "custom_name": "'Chocolate Pie'",
+            "custom_model_data": 2750005,
+            "food": {
+                "nutrition": 8,
+                "saturation_modifier": 1,
+                "effects": [
+                    {
+                        "effect": {
+                            "id": "minecraft:speed",
+                            "duration": 3600
+                        }
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}

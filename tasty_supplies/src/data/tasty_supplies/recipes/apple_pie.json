@@ -1,0 +1,34 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "W": {
+            "item": "minecraft:wheat"
+        },
+        "A": {
+            "item": "minecraft:apple"
+        },
+        "S": {
+            "item": "minecraft:sugar"
+        },
+        "C": {
+            "item": "minecraft:bread"
+        }
+    },
+    "pattern": [
+        "WWW",
+        "AAA",
+        "SCS"
+    ],
+    "result": {
+        "id": "minecraft:pumpkin_pie",
+        "components": {
+            "custom_name": "'Apple Pie'",
+            "custom_model_data": 2750003,
+            "food": {
+                "nutrition": 8,
+                "saturation_modifier": 1
+            }
+        },
+        "count": 1
+    }
+}

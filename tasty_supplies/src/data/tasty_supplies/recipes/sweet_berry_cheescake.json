@@ -1,0 +1,39 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "S": {
+            "item": "minecraft:sweet_berries"
+        },
+        "M": {
+            "item": "minecraft:milk_bucket"
+        },
+        "C": {
+            "item": "minecraft:bread"
+        }
+    },
+    "pattern": [
+        "SSS",
+        "SSS",
+        "MCM"
+    ],
+    "result": {
+        "id": "minecraft:pumpkin_pie",
+        "components": {
+            "custom_name": "'Sweet Berry Cheesecake'",
+            "custom_model_data": 2750004,
+            "food": {
+                "nutrition": 8,
+                "saturation_modifier": 1,
+                "effects": [
+                    {
+                        "effect": {
+                            "id": "minecraft:speed",
+                            "duration": 3600
+                        }
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}
