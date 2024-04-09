@@ -4,6 +4,7 @@
       "layer0": "minecraft:item/bread"
     },
     "overrides": [
-      { "predicate": { "custom_model_data": 2750002 }, "model": "tasty_supplies:item/pie_crust" }
+      { "predicate": { "custom_model_data": 2750002 }, "model": "tasty_supplies:item/pie_crust" },
+      { "predicate": { "custom_model_data": 2750008 }, "model": "tasty_supplies:item/egg_sandwich" }
     ]
 }

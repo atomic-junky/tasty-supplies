@@ -14,7 +14,7 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
     - [ ] Meals
         - [ ] Fruit Salad
         - [ ] Mixed Salad
-        - [ ] Nether Salad
+        - [x] Nether Salad
         - [ ] Cooked Rice (❓)
         - [ ] Bone Broth
         - [ ] Beef Stew
@@ -64,8 +64,8 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
     - [ ] Skillet (❓)
     - [ ] Stove (❓)
     - [ ] Cutting Board (❓)
-- [ ] Tools (❓)
-    - [ ] Knife (❓)
+- [x] Tools
+    - [x] Knife
 
 (🔴) => Impossible to do properly for now due to Minecraft limitations
 (❓) => Not sure to add

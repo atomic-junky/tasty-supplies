@@ -1,0 +1,44 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "category": "equipment",
+    "key": {
+        "m": {
+            "item": "minecraft:diamond"
+        },
+        "s": {
+            "item": "minecraft:stick"
+        }
+    },
+    "pattern": [
+        "m",
+        "s"
+    ],
+    "result": {
+        "id": "minecraft:stick",
+        "components": {
+            "custom_name": "'Diamond Knife'",
+            "custom_model_data": 2750009,
+            "max_damage": 1561,
+            "attribute_modifiers": {
+                "modifiers": [
+                    {
+                        "type": "generic.attack_damage",
+                        "name": "generic.attack_damage",
+                        "slot": "mainhand",
+                        "operation": "add_value",
+                        "amount": 4,
+                        "uuid": [42853, 1689024593, -201178, -1559272105]
+                    },
+                    {
+                        "type": "generic.attack_speed",
+                        "name": "generic.attack_speed",
+                        "slot": "mainhand",
+                        "operation": "add_value",
+                        "amount": 2,
+                        "uuid": [51238, 3376251567, -221210, 1511500114]
+                    }
+                ]
+            }
+        }
+    }
+  }

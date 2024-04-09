@@ -1,0 +1,34 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:bowl"
+        },
+        {
+            "item": "minecraft:crimson_fungus"
+        },
+        {
+            "item": "minecraft:warped_fungus"
+        }
+    ],
+    "result": {
+        "id": "minecraft:beetroot_soup",
+        "components": {
+            "custom_name": "'Nether Salad'",
+            "custom_model_data": 2750007,
+            "food": {
+                "nutrition": 5,
+                "saturation_modifier": 0.6,
+                "effects": [
+                    {
+                        "effect": {
+                            "id": "minecraft:nausea",
+                            "duration": 480
+                        }
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}
