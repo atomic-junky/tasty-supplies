@@ -1,0 +1,2 @@
+from beet import ResourcePack
+

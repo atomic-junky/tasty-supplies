@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:honey_bottle"
+        },
+        {
+            "item": "minecraft:wheat"
+        },
+        {
+            "item": "minecraft:wheat"
+        }
+    ],
+    "result": {
+        "id": "minecraft:cookie",
+        "components": {
+            "custom_name": "'Honey Cookie'",
+            "custom_model_data": 2750000
+        },
+        "count": 8
+    }
+}
