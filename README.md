@@ -34,7 +34,7 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
         - [ ] Ratatouille
         - [ ] Squid Ink Pasta
         - [ ] Grilled Salmon
-        - [ ] Fried Egg
+        - [x] Fried Egg
     - [ ] Sweets
         - [x] Apple Pie
         - [x] Sweet Berry Cheesecake
@@ -66,6 +66,9 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
     - [ ] Cutting Board (❓)
 - [ ] Tools (❓)
     - [ ] Knife (❓)
+
+(🔴) => Impossible to do properly for now due to Minecraft limitations
+(❓) => Not sure to add
 
 ## Contribute
 To contribute you'll need to use [beet](https://github.com/mcbeet/beet/tree/728859b2bf7b7725fcf7aa7de3788c668ffd668d).
