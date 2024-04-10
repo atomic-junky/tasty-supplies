@@ -47,5 +47,5 @@ jobs:
           generateReleaseNotes: true
           name: ${{ github.ref_name }}
           tag: ${{ github.ref_name }}
-          artifacts: tasty_supplies_data_pack.zip
+          artifacts: ${{ github.workspace }}/artifact/**/*
           replacesArtifacts: true
