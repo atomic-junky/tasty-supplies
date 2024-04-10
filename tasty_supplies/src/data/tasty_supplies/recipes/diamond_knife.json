@@ -14,7 +14,7 @@
         "s"
     ],
     "result": {
-        "id": "minecraft:stick",
+        "id": "minecraft:wooden_hoe",
         "components": {
             "custom_name": "'Diamond Knife'",
             "custom_model_data": 2750009,
