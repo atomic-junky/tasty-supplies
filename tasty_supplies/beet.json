@@ -2,7 +2,7 @@
   "output": "build",
   "data_pack": {
     "name": "Tasty Supplies",
-    "pack_format": 36,
+    "pack_format": 39,
     "load": ["src"]
   },
   "resource_pack": {

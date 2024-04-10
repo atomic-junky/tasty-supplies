@@ -9,8 +9,8 @@
             "custom_name": "{\"text\": \"Fried Egg\", \"italic\": false}",
             "custom_model_data": 2750006,
             "food": {
-                "nutrition": 8,
-                "saturation_modifier": 1
+                "nutrition": 4,
+                "saturation_modifier": 0.6
             }
         }
     },

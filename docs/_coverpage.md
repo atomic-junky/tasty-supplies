@@ -4,7 +4,7 @@
 
 - Simple as a datapack
 - Vanilla friendly
-- Multiple themes
+- A wealth of recipes!
 
 [GitHub](https://github.com/atomic-junky/tasty-supplies)
 [Get Started](#tastysupplies)
