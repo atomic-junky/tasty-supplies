@@ -36,16 +36,16 @@ jobs:
       - name: Save build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build-artifacts
-          path: ./tasty_supplies/build/
+          name: tasty_supplies_data_pack
+          path: ./tasty_supplies/build/tasty_supplies_data_pack
           compression-level: 0
       
       - name: Create release
-        uses: ncipollo/release-action@v1.13.0
+        uses: ncipollo/release-action@v1.14.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           generateReleaseNotes: true
           name: ${{ github.ref_name }}
           tag: ${{ github.ref_name }}
-          artifacts: ${{ github.workspace }}/artifact/**/*
+          artifacts: tasty_supplies_data_pack.zip
           replacesArtifacts: true

@@ -1,12 +1,12 @@
 {
   "output": "build",
   "data_pack": {
-    "name": "Tasty Supplies",
+    "name": "tasty_supplies_data_pack",
     "pack_format": 39,
     "load": ["src"]
   },
   "resource_pack": {
-    "name": "Tasty Supplies",
+    "name": "tasty_supplies_ressource_pack",
     "pack_format": 31,
     "load": ["src"]
   }
