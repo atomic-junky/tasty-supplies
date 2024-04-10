@@ -1,7 +1,5 @@
-# Tasty Supplies
-
 ![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
-Tasty supplies a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
+Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
 
 ## Features
 *Everything here is subject to change*
