@@ -26,6 +26,12 @@
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 
+#### Glow Berry Pie
+![Glow Berry Pie](_media/recipes/glow_berry_pie.png) <br>
+**Nutrition**: 8.0 <br>
+**Saturation**: 6.0 <br>
+**Effect**: Glowing (3min) <br>
+
 #### Chocolate Pie
 ![Chocolate Pie](_media/recipes/chocolate_pie.png) <br>
 **Nutrition**: 8.0 <br>

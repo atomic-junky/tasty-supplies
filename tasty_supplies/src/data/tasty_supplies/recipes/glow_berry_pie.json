@@ -1,0 +1,42 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "G": {
+            "item": "minecraft:glow_berries"
+        },
+        "M": {
+            "item": "minecraft:milk_bucket"
+        },
+        "S": {
+            "item": "minecraft:sugar"
+        },
+        "C": {
+            "item": "minecraft:bread"
+        }
+    },
+    "pattern": [
+        "GGG",
+        "SSS",
+        "MCM"
+    ],
+    "result": {
+        "id": "minecraft:pumpkin_pie",
+        "components": {
+            "custom_name": "{\"text\": \"Glow Berry Pie\", \"italic\": false}",
+            "custom_model_data": 2750014,
+            "food": {
+                "nutrition": 8,
+                "saturation": 6,
+                "effects": [
+                    {
+                        "effect": {
+                            "id": "minecraft:glowing",
+                            "duration": 3600
+                        }
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}

@@ -1,13 +1,13 @@
 ![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
-Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
+Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack for Minecraft 1.20.5+.
 
-## Features
+## Planned Features
 *Everything here is subject to change*
 
 - [ ] Food
     - [ ] Finger Foods
         - [ ] Barbecue on a Stick
-        - [ ] Egg Sandwich
+        - [ ] Egg Sandwich (🔴)
         - [ ] Chicken Sandwich
         - [ ] Hambuger
         - [ ] Bacon Sandwich
@@ -37,6 +37,7 @@ Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
         - [x] Fried Egg
     - [ ] Sweets
         - [x] Apple Pie
+        - [x] Glow Berry Pie
         - [x] Sweet Berry Cheesecake
         - [x] Chocolate Pie
         - [ ] Slice of Cake (🔴)
