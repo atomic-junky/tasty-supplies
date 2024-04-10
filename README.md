@@ -1,7 +1,7 @@
 # Tasty Supplies
 
-![Tasty Supplies Banner](tasty_supplies_title.png)
-Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
+![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
+Tasty supplies a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
 
 ## Features
 *Everything here is subject to change*
@@ -65,7 +65,7 @@ Tasty supplies in a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
     - [ ] Cooking Pot
     - [ ] Skillet (❓)
     - [ ] Stove (❓)
-    - [ ] Cutting Board (❓)
+    - [ ] Cutting Board (WIP) (it seams that item_display have an issue)
 - [x] Tools
     - [x] Knife
 
