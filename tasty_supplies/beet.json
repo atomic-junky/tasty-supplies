@@ -3,11 +3,13 @@
   "data_pack": {
     "name": "tasty_supplies_data_pack",
     "pack_format": 39,
-    "load": ["src"]
+    "load": ["src"],
+    "zipped": true
   },
   "resource_pack": {
     "name": "tasty_supplies_ressource_pack",
     "pack_format": 31,
-    "load": ["src"]
+    "load": ["src"],
+    "zipped": true
   }
 }

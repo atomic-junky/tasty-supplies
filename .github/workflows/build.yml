@@ -28,12 +28,12 @@ jobs:
       - name: Build project
         run: beet -p ./tasty_supplies build
 
-      - name: Save build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: tasty_supplies_data_pack
-          path: ./tasty_supplies/build/tasty_supplies_data_pack
-          compression-level: 0
+      # - name: Save build artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: tasty_supplies_data_pack
+      #     path: ./tasty_supplies/build/tasty_supplies_data_pack
+      #     compression-level: 0
       
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -41,5 +41,5 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
-          files: ${{ github.workspace }}**/*.zip
+          files: ./tasty_supplies/build/*.zip
           fail_on_unmatched_files: true
