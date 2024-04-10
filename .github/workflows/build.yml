@@ -31,7 +31,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build project
-        run: beet -c ./tasty_supplies build
+        run: beet -p ./tasty_supplies build
 
       - name: Save build artifacts
         uses: actions/upload-artifact@v4
