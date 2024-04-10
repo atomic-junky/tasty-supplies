@@ -35,12 +35,11 @@ jobs:
           path: ./tasty_supplies/build/tasty_supplies_data_pack
           compression-level: 0
       
-      - name: Create release
-        uses: ncipollo/release-action@v1.14.0
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          generateReleaseNotes: true
           name: ${{ github.ref_name }}
-          tag: ${{ github.ref_name }}
-          artifacts: ${{ github.workspace }}/artifact/**/*.zip
-          replacesArtifacts: true
+          tag_name: ${{ github.ref_name }}
+          files: ${{ github.workspace }}**/*.zip
+          fail_on_unmatched_files: true
