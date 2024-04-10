@@ -12,7 +12,7 @@
     "result": {
         "id": "minecraft:bread",
         "components": {
-            "custom_name": "'Pie Crust'",
+            "custom_name": "{\"text\": \"Pie Crust\", \"italic\": false}",
             "custom_model_data": 2750002
         },
         "count": 1

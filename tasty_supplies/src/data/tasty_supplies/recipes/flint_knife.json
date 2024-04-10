@@ -16,7 +16,7 @@
     "result": {
         "id": "minecraft:wooden_hoe",
         "components": {
-            "custom_name": "'Flint Knife'",
+            "custom_name": "{\"text\": \"Flint Knife\", \"italic\": false}",
             "custom_model_data": 2750010,
             "max_damage": 131,
             "attribute_modifiers": {

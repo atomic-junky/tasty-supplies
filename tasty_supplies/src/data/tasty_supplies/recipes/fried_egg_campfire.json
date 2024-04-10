@@ -6,7 +6,7 @@
     "result": {
         "id": "minecraft:egg",
         "components": {
-            "custom_name": "'Fried Egg'",
+            "custom_name": "{\"text\": \"Fried Egg\", \"italic\": false}",
             "custom_model_data": 2750006,
             "food": {
                 "nutrition": 8,

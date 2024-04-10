@@ -14,7 +14,7 @@
     "result": {
         "id": "minecraft:cookie",
         "components": {
-            "custom_name": "'Honey Cookie'",
+            "custom_name": "{\"text\": \"Honey Cookie\", \"italic\": false}",
             "custom_model_data": 2750000
         },
         "count": 8

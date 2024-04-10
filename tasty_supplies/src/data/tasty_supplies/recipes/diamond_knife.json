@@ -16,7 +16,7 @@
     "result": {
         "id": "minecraft:wooden_hoe",
         "components": {
-            "custom_name": "'Diamond Knife'",
+            "custom_name": "{\"text\": \"Diamond Knife\", \"italic\": false}",
             "custom_model_data": 2750009,
             "max_damage": 1561,
             "attribute_modifiers": {

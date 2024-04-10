@@ -22,7 +22,7 @@
     "result": {
         "id": "minecraft:pumpkin_pie",
         "components": {
-            "custom_name": "'Chocolate Pie'",
+            "custom_name": "{\"text\": \"Chocolate Pie\", \"italic\": false}",
             "custom_model_data": 2750005,
             "food": {
                 "nutrition": 8,

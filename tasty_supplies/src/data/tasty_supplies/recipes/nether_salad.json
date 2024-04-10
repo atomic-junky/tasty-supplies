@@ -14,7 +14,7 @@
     "result": {
         "id": "minecraft:beetroot_soup",
         "components": {
-            "custom_name": "'Nether Salad'",
+            "custom_name": "{\"text\": \"Nether Salad\", \"italic\": false}",
             "custom_model_data": 2750007,
             "food": {
                 "nutrition": 5,

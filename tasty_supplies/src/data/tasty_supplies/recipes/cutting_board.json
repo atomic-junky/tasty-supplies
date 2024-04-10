@@ -1,0 +1,31 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "key": {
+        "p": {
+            "tag": "minecraft:planks"
+        },
+        "s": {
+            "item": "minecraft:stick"
+        }
+    },
+    "pattern": [
+        "spp",
+        "spp"
+    ],
+    "result": {
+        "id": "minecraft:item_frame",
+        "components": {
+            "custom_name": "{\"text\": \"Cutting Board\", \"italic\": false}",
+            "custom_data": {
+                "ts_type": "cutting_board"
+            },
+            "custom_model_data": 2750014,
+            "entity_data": {
+                "id": "minecraft:item_display",
+                "tag": {
+                    "CustomModelData": 2750014
+                }
+            }
+        }
+    }
+  }

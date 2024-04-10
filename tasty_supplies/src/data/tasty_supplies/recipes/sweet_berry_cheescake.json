@@ -19,7 +19,7 @@
     "result": {
         "id": "minecraft:pumpkin_pie",
         "components": {
-            "custom_name": "'Sweet Berry Cheesecake'",
+            "custom_name": "{\"text\": \"Sweet Berry Cheescake\", \"italic\": false}",
             "custom_model_data": 2750004,
             "food": {
                 "nutrition": 8,
