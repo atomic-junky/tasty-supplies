@@ -1,0 +1,57 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:potion",
+        "count": 1,
+        "components": {
+          "minecraft:custom_model_data": 2750015,
+          "potion_contents": {
+              "custom_color": 16777215
+          }
+        }
+      },
+      "title": "Barman",
+      "description": "Craft a drink",
+      "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": false
+    },
+    "parent": "minecraft:husbandry/root",
+    "criteria": {
+      "apple_cider": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:apple_cider"
+        }
+      },
+      "hot_cocoa": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:hot_cocoa"
+        }
+      },
+      "glow_berry_custard": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:glow_berry_custard"
+        }
+      },
+      "melon_juice": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:melon_juice"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "apple_cider",
+        "hot_cocoa",
+        "glow_berry_custard",
+        "melon_juice"
+      ]
+    ],
+    "sends_telemetry_event": true
+  }
+  

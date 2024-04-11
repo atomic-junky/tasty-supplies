@@ -1,0 +1,61 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:wooden_hoe",
+        "count": 1,
+        "components": {
+          "minecraft:custom_model_data": 2750010
+        }
+      },
+      "title": "Small but handy",
+      "description": "Craft a knife",
+      "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": false
+    },
+    "parent": "minecraft:husbandry/root",
+    "criteria": {
+      "flint_knife": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:flint_knife"
+        }
+      },
+      "iron_knife": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:iron_knife"
+        }
+      },
+      "golden_knife": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:golden_knife"
+        }
+      },
+      "diamond_knife": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:diamond_knife"
+        }
+      },
+      "netherite_knife": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:netherite_knife"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "flint_knife",
+        "iron_knife",
+        "golden_knife",
+        "diamond_knife",
+        "netherite_knife"
+      ]
+    ],
+    "sends_telemetry_event": true
+  }
+  

@@ -1,0 +1,42 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:potion",
+        "count": 1,
+        "components": {
+          "minecraft:custom_model_data": 2750017,
+          "potion_contents": {
+              "custom_color": 16777215
+          }
+        }
+      },
+      "title": "Comforting",
+      "description": "Drink a hot cocoa",
+      "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": false
+    },
+    "parent": "tasty_supplies:barman",
+    "criteria": {
+      "hot_cocoa": {
+        "trigger": "minecraft:consume_item",
+        "conditions": {
+          "item": {
+            "items": "minecraft:potion",
+            "count": 1,
+            "components": {
+              "minecraft:custom_model_data": 2750017
+            }
+          }
+        }
+      }
+    },
+    "requirements": [
+      [
+        "hot_cocoa"
+      ]
+    ],
+    "sends_telemetry_event": true
+  }
+  
