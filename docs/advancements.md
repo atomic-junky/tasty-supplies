@@ -5,24 +5,24 @@
 - [**Husbandry**](https://minecraft.fandom.com/wiki/Advancement#Husbandry)
     - [**Barman**](#barman)
         - [**Comforting**](#comforting)
-    - **Small but handy**
-        - **Cut the all**
+    - [**Small but handy**](#small-but-handy)
+        - [**Cut the all**](#cut-them-all)
 
 
 ## Details
 
 #### Barman
-**Description**: Craft a drink <br>
-**Parent**: [Husbandry](https://minecraft.fandom.com/wiki/Advancement#Husbandry)
+![Barman](./_media/advancements/barman.png) <br>
+Craft a [drink](crafts#drinks). <br>
 
 #### Comforting
-**Description**: Drink a hot cocoa <br>
-**Parent**: [Barman](#barman)
+![Barman](./_media/advancements/comforting.png) <br>
+Drink a [Hot Cocoa](crafts#hot-cocoa). <br>
 
 #### Small but handy
-**Description**: Craft a knife <br>
-**Parent**: [Husbandry](https://minecraft.fandom.com/wiki/Advancement#Husbandry)
+![Barman](./_media/advancements/small_but_handy.png) <br>
+Craft a [knife](crafts#flint-knife). <br>
 
 #### Cut them all
-**Description**: Craft all type of knives <br>
-**Parent**: [Small but handy](#small-but-handy)
+![Barman](./_media/advancements/cut_them_all.png) <br>
+Craft all [knives](crafts#flint-knife). <br>
