@@ -1,13 +1,18 @@
 {
+  "version": "0.3.0",
+  "author": "Atomic Junky",
   "output": "build",
   "data_pack": {
-    "name": "tasty_supplies_data_pack",
+    "name": "Tasty Supplies - Data Pack",
     "pack_format": 39,
     "load": ["src"]
   },
   "resource_pack": {
-    "name": "tasty_supplies_ressource_pack",
+    "name": "Tasty Supplies - Resource Pack",
     "pack_format": 31,
     "load": ["src"]
-  }
+  },
+  "pipeline": [
+    "main.build_resource_pack"
+  ]
 }
