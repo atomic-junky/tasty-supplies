@@ -28,6 +28,12 @@ jobs:
       - name: Build project
         run: beet -p ./tasty_supplies build
       
+      - name: Zip all builds
+        run: |
+          for dir in ./tasty_supplies/build/*; do
+            zip -r ./tasty_supplies/build/$dir.zip $dir
+          done
+      
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
