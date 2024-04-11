@@ -1,0 +1,38 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:ice"
+        },
+        {
+            "item": "minecraft:ice"
+        },
+        {
+            "item": "minecraft:stick"
+        }
+    ],
+    "result": {
+        "id": "minecraft:golden_carrot",
+        "components": {
+            "custom_name": "{\"text\": \"Melon Popsicle\", \"italic\": false}",
+            "custom_model_data": 2750019,
+            "food": {
+                "nutrition": 3,
+                "saturation": 0.5
+            }
+        },
+        "count": 1
+    }
+}

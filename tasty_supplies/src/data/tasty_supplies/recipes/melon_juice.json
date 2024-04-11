@@ -1,0 +1,40 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "minecraft:glass_bottle"
+        }
+    ],
+    "result": {
+        "id": "minecraft:potion",
+        "components": {
+            "custom_name": "{\"text\": \"Melon Juice\", \"italic\": false}",
+            "custom_model_data": 2750018,
+            "max_stack_size": 16,
+            "potion_contents": {
+                "custom_color": 16777215,
+                "custom_effects": [
+                    {
+                        "id": "minecraft:instant_health"
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}

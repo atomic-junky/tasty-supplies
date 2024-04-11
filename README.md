@@ -40,28 +40,28 @@ Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
         - [x] Glow Berry Pie
         - [x] Sweet Berry Cheesecake
         - [x] Chocolate Pie
-        - [ ] Slice of Cake (🔴)
-        - [ ] Slice of Apple Pie (🔴)
-        - [ ] Slice of Sweet Berry Cheesecake (🔴)
-        - [ ] Slice of Chocolate Pie (🔴)
+        - [ ] Slice of Cake
+        - [ ] Slice of Apple Pie
+        - [ ] Slice of Sweet Berry Cheesecake
+        - [ ] Slice of Chocolate Pie
         - [x] Sweet Berry Cookie
         - [x] Honey Cookie
-        - [ ] Melon Popsicle (❓)
+        - [x] Melon Popsicle
     - [x] Ingredients
         - [x] Pie Crust
-    - [ ] Drinks
-        - [ ] Hot Cocoa
-        - [ ] Apple Cider
-        - [ ] Melon Juice
-        - [ ] Glow Berry Custard
-- [ ] Crops
+    - [x] Drinks
+        - [x] Hot Cocoa
+        - [x] Apple Cider
+        - [x] Melon Juice
+        - [x] Glow Berry Custard
+- [ ] Crops (🔴)
     - [ ] Cabbage
     - [ ] Sea Beet
     - [ ] Onion
     - [ ] Tomato
-    - [ ] Rice (❓)
+    - [ ] Rice
 - [ ] Worksations
-    - [ ] Cooking Pot
+    - [ ] Cooking Pot (❓)
     - [ ] Skillet (❓)
     - [ ] Stove (❓)
     - [ ] Cutting Board (WIP) (it seams that item_display have an issue)

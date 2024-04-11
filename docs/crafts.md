@@ -30,19 +30,19 @@
 ![Glow Berry Pie](_media/recipes/glow_berry_pie.png) <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
-**Effect**: Glowing (3min) <br>
+**Effect**: Glowing (3:00) <br>
 
 #### Chocolate Pie
 ![Chocolate Pie](_media/recipes/chocolate_pie.png) <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
-**Effect**: Speed I (3min) <br>
+**Effect**: Speed I (3:00) <br>
 
 #### Sweet Berry Cheescake
 ![Sweet Berry Cheescake](_media/recipes/sweet_berry_cheesecake.png) <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
-**Effect**: Speed I (3min) <br>
+**Effect**: Speed I (3:00) <br>
 
 #### Honey Cookie
 ![Honey Cookie](_media/recipes/honey_cookie.png) <br>
@@ -53,6 +53,30 @@
 ![Sweet Berry Cookie](_media/recipes/sweet_berry_cookie.png) <br>
 **Nutrition**: 1.0 <br>
 **Saturation**: 0.5 <br>
+
+#### Melon Popsicle
+![Sweet Berry Cookie](_media/recipes/melon_popsicle.png) <br>
+**Nutrition**: 3 <br>
+**Saturation**: 1 <br>
+
+
+## Drinks
+
+#### Apple Cider
+![Apple Cider](_media/recipes/apple_cider.png) <br>
+**Effect**: Absorption I (1:30) <br>
+
+#### Glow Berry Custard
+![Glow Berry Custard](_media/recipes/glow_berry_custard.png) <br>
+**Effect**: Glowing (3:00) <br>
+
+#### Hot Cocoa
+![Hot Cocoa](_media/recipes/hot_cocoa.png) <br>
+**Effect**: Regeneration (0:30) <br>
+
+#### Melon Juice
+![Melon Juice](_media/recipes/melon_juice.png) <br>
+**Effect**: Instant Health I <br>
 
 
 ## Tools
