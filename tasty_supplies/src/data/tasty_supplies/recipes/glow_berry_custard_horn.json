@@ -22,7 +22,7 @@
         "components": {
             "custom_name": "{\"text\": \"Glow Berry Custard Horn\", \"italic\": false}",
             "custom_model_data": 2750021,
-            "max_stack_size": 16,
+            "max_stack_size": 1,
             "potion_contents": {
                 "custom_color": 16777215,
                 "custom_effects": [
