@@ -30,7 +30,8 @@ jobs:
       
       - name: Zip all builds
         run: |
-          for dir in ./tasty_supplies/build/*; do
+          cd ./tasty_supplies/build/
+          for dir in *; do
             zip -r $dir.zip $dir
           done
       
