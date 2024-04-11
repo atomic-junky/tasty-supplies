@@ -31,7 +31,7 @@ jobs:
       - name: Zip all builds
         run: |
           for dir in ./tasty_supplies/build/*; do
-            zip -r ./tasty_supplies/build/$dir.zip $dir
+            zip -r $dir.zip $dir
           done
       
       - name: Create Release
