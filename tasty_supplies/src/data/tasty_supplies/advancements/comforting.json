@@ -24,7 +24,6 @@
         "conditions": {
           "item": {
             "items": "minecraft:potion",
-            "count": 1,
             "components": {
               "minecraft:custom_model_data": 2750017
             }

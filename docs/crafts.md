@@ -66,18 +66,33 @@
 ![Apple Cider](_media/recipes/apple_cider.png) <br>
 **Effect**: Absorption I (1:30) <br>
 
+#### Apple Cider Horn
+![Apple Cider](_media/recipes/apple_cider_horn.png) <br>
+**Effect**: Absorption I (1:30) <br>
+
 #### Glow Berry Custard
 ![Glow Berry Custard](_media/recipes/glow_berry_custard.png) <br>
+**Effect**: Glowing (3:00) <br>
+
+#### Glow Berry Custard Horn
+![Glow Berry Custard](_media/recipes/glow_berry_custard_horn.png) <br>
 **Effect**: Glowing (3:00) <br>
 
 #### Hot Cocoa
 ![Hot Cocoa](_media/recipes/hot_cocoa.png) <br>
 **Effect**: Regeneration (0:30) <br>
 
+#### Hot Cocoa Horn
+![Hot Cocoa](_media/recipes/hot_cocoa_horn.png) <br>
+**Effect**: Regeneration (0:30) <br>
+
 #### Melon Juice
 ![Melon Juice](_media/recipes/melon_juice.png) <br>
 **Effect**: Instant Health I <br>
 
+#### Melon Juice Horn
+![Melon Juice](_media/recipes/melon_juice_horn.png) <br>
+**Effect**: Instant Health I <br>
 
 ## Tools
 

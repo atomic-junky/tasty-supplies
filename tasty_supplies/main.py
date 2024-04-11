@@ -1,4 +1,4 @@
-from beet import ResourcePack, PngFile, Context
+from beet import PngFile, Context
 
 
 def build_resource_pack(ctx: Context):

@@ -51,9 +51,13 @@ Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
         - [x] Pie Crust
     - [x] Drinks
         - [x] Hot Cocoa
+        - [x] Hot Cocoa Horn
         - [x] Apple Cider
-        - [x] Melon Juice
+        - [x] Apple Cider Horn
         - [x] Glow Berry Custard
+        - [x] Glow Berry Custard Horn
+        - [x] Melon Juice
+        - [x] Melon Juice Horn
 - [ ] Crops (🔴)
     - [ ] Cabbage
     - [ ] Sea Beet

@@ -1,0 +1,40 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:sugar"
+        },
+        {
+            "item": "minecraft:goat_horn"
+        }
+    ],
+    "result": {
+        "id": "minecraft:potion",
+        "components": {
+            "custom_name": "{\"text\": \"Melon Juice Horn\", \"italic\": false}",
+            "custom_model_data": 2750023,
+            "max_stack_size": 16,
+            "potion_contents": {
+                "custom_color": 16777215,
+                "custom_effects": [
+                    {
+                        "id": "minecraft:instant_health"
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}
