@@ -3,12 +3,12 @@
   "author": "Atomic Junky",
   "output": "build",
   "data_pack": {
-    "name": "Tasty Supplies - Data Pack",
+    "name": "Tasty_Supplies_-_Data_Pack",
     "pack_format": 39,
     "load": ["src"]
   },
   "resource_pack": {
-    "name": "Tasty Supplies - Resource Pack",
+    "name": "Tasty_Supplies_-_Resource_Pack",
     "pack_format": 31,
     "load": ["src"]
   },
