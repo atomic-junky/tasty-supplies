@@ -7,4 +7,4 @@
 - A wealth of recipes!
 
 [GitHub](https://github.com/atomic-junky/tasty-supplies)
-[Get Started](#tastysupplies)
+[Get Started](#tasty-supplies)

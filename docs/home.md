@@ -1,6 +1,6 @@
-# Welcome to the Tasty Supplies Documentation!
+# Tasty Supplies
 
-Tasty supplies a [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
+> A [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) inspired Datapack.
 
 ## About The Datapack
 **Tasty Supplies** is datapack that add a lot of new food, recipes and even cooking mechanics in Minecraft by remaining Vanilla. <br>
