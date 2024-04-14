@@ -18,7 +18,7 @@
             "custom_model_data": 2750007,
             "food": {
                 "nutrition": 5,
-                "saturation_modifier": 0.6,
+                "saturation": 6,
                 "effects": [
                     {
                         "effect": {

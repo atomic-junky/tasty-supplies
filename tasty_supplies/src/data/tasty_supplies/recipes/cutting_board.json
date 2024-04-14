@@ -17,15 +17,17 @@
         "components": {
             "custom_name": "{\"text\": \"Cutting Board\", \"italic\": false}",
             "custom_data": {
-                "ts_type": "cutting_board"
+                "tags": [
+                    "cutting_board_placer"
+                ]
             },
-            "custom_model_data": 2750014,
             "entity_data": {
-                "id": "minecraft:item_display",
-                "tag": {
-                    "CustomModelData": 2750014
-                }
-            }
+                "id": "minecraft:item_frame",
+                "Tags": [
+                    "cutting_board_placer"
+                ]
+            },
+            "custom_model_data": 2750014
         }
     }
   }

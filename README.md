@@ -68,7 +68,7 @@ Tasty supplies is a [Farmer's Delight](https://github.com/vectorwing/FarmersDeli
     - [ ] Cooking Pot (❓)
     - [ ] Skillet (❓)
     - [ ] Stove (❓)
-    - [ ] Cutting Board (WIP) (it seams that item_display have an issue)
+    - [ ] Cutting Board (WIP)
 - [x] Tools
     - [x] Knife
 
