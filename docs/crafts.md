@@ -23,23 +23,27 @@
 
 #### Apple Pie
 ![Apple Pie](_media/recipes/apple_pie.png) <br>
+*You can use the [cutting board](workstations#cutting-board) to make **4 apple pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 
 #### Glow Berry Pie
 ![Glow Berry Pie](_media/recipes/glow_berry_pie.png) <br>
+*You can use the [cutting board](workstations#cutting-board) to make **4 glow berry pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Glowing (3:00) <br>
 
 #### Chocolate Pie
 ![Chocolate Pie](_media/recipes/chocolate_pie.png) <br>
+*You can use the [cutting board](workstations#cutting-board) to make **4 chocolate pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Speed I (3:00) <br>
 
-#### Sweet Berry Cheescake
-![Sweet Berry Cheescake](_media/recipes/sweet_berry_cheesecake.png) <br>
+#### Sweet Berry Cheesecake
+![Sweet Berry Cheesecake](_media/recipes/sweet_berry_cheesecake.png) <br>
+*You can use the [cutting board](workstations#cutting-board) to make **4 sweet berry cheesecake slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Speed I (3:00) <br>
@@ -125,3 +129,9 @@
 **Attack Damage**: 5.5 <br>
 **Attack Speed**: 3 <br>
 **Durability**: 2032 <br>
+
+## Workstations
+
+#### Cutting Board
+![Netherite Knife](_media/recipes/cutting_board.png) <br>
+Go [here](workstations#cutting-board) to see how work the **cutting board**!
