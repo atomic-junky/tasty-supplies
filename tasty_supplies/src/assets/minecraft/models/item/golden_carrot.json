@@ -4,6 +4,9 @@
     "layer0": "minecraft:item/golden_carrot"
   },
   "overrides": [
-    { "predicate": { "custom_model_data": 2750019 }, "model": "tasty_supplies:item/melon_popsicle" }
+    { "predicate": { "custom_model_data": 2750019 }, "model": "tasty_supplies:item/melon_popsicle" },
+    { "predicate": { "custom_model_data": 2750027 }, "model": "tasty_supplies:item/beef_skewer" },
+    { "predicate": { "custom_model_data": 2750028 }, "model": "tasty_supplies:item/fungus_skewer" },
+    { "predicate": { "custom_model_data": 2750029 }, "model": "tasty_supplies:item/mushroom_skewer" }
   ]
 }
