@@ -1,0 +1,1 @@
+summon minecraft:item ~ ~.5 ~ {Item:{id: "minecraft:item_frame", components:{custom_name: "{\"text\": \"Cutting Board\", \"italic\": false}", custom_data: {tags:["cutting_board_placer"]}, entity_data: {id: "minecraft:item_frame", Tags: ["cutting_board_placer"]},custom_model_data: 2750014}}}
