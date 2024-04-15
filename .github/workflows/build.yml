@@ -32,7 +32,7 @@ jobs:
         run: |
           cd ./tasty_supplies/build/
           for dir in *; do
-            zip -r $dir.zip $dir
+            zip -j $dir.zip $dir/*
           done
       
       - name: Create Release
