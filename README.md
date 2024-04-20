@@ -62,7 +62,7 @@ To know more about it, we invite you to read the [documentation](https://atomic-
         - [ ] Squid Ink Pasta
         - [ ] Grilled Salmon
         - [x] Fried Egg
-        - [-] Potato Fries
+        - [x] Potato Fries
     - [x] Sweets
         - [x] Apple Pie
         - [x] Glow Berry Pie
