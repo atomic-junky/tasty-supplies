@@ -4,7 +4,7 @@
   "output": "build",
   "data_pack": {
     "name": "Tasty_Supplies_-_Data_Pack",
-    "pack_format": 40,
+    "pack_format": 41,
     "supported_formats": {"min_inclusive": 39, "max_inclusive": 41},
     "load": ["src"]
   },
