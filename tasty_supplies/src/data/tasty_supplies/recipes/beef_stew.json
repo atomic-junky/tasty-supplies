@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:bowl"
+        },
+        {
+            "item": "minecraft:cooked_beef"
+        },
+        {
+            "item": "minecraft:carrot"
+        },
+        {
+            "item": "minecraft:baked_potato"
+        }
+    ],
+    "result": {
+        "id": "minecraft:rabbit_stew",
+        "components": {
+            "custom_name": "{\"text\": \"Beef Stew\", \"italic\": false}",
+            "custom_model_data": 2750031,
+            "food": {
+                "nutrition": 10,
+                "saturation": 12
+            }
+        },
+        "count": 1
+    }
+}

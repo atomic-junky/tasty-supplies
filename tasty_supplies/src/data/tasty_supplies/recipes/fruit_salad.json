@@ -1,0 +1,46 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:bowl"
+        },
+        {
+            "item": "minecraft:apple"
+        },
+        {
+            "item": "minecraft:apple"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "item": "minecraft:melon_slice"
+        },
+        {
+            "tag": "tasty_supplies:berries"
+        },
+        {
+            "tag": "tasty_supplies:berries"
+        }
+    ],
+    "result": {
+        "id": "minecraft:beetroot_soup",
+        "components": {
+            "custom_name": "{\"text\": \"Fruit Salad\", \"italic\": false}",
+            "custom_model_data": 2750030,
+            "food": {
+                "nutrition": 6,
+                "saturation": 3.6,
+                "effects": [
+                    {
+                        "effect": {
+                            "id": "minecraft:regeneration",
+                            "duration": 480
+                        }
+                    }
+                ]
+            }
+        },
+        "count": 1
+    }
+}

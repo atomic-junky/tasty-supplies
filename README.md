@@ -39,12 +39,12 @@ To know more about it, we invite you to read the [documentation](https://atomic-
         - [ ] Hambuger
         - [ ] Bacon Sandwich
     - [ ] Meals (🔴)
-        - [ ] Fruit Salad
+        - [x] Fruit Salad
         - [ ] Mixed Salad
         - [x] Nether Salad
         - [ ] Cooked Rice (❓)
         - [ ] Bone Broth
-        - [ ] Beef Stew
+        - [x] Beef Stew
         - [ ] Chicken Soup
         - [ ] Vegetable Soup
         - [ ] Fish Stew
@@ -62,6 +62,7 @@ To know more about it, we invite you to read the [documentation](https://atomic-
         - [ ] Squid Ink Pasta
         - [ ] Grilled Salmon
         - [x] Fried Egg
+        - [-] Potato Fries
     - [x] Sweets
         - [x] Apple Pie
         - [x] Glow Berry Pie
