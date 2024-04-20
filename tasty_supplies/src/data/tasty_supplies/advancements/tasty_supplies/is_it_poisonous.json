@@ -1,0 +1,46 @@
+{
+    "display": {
+        "icon": {
+            "id": "minecraft:suspicious_stew",
+            "count": 1
+        },
+        "title": "Is this poisonous?",
+        "description": "Eating food that makes you nauseous",
+        "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": false
+    },
+    "parent": "tasty_supplies:tasty_supplies/nether",
+    "criteria": {
+        "nether_salad": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "items": "minecraft:beetroot_soup",
+                "components": {
+                  "minecraft:custom_model_data": 2750007
+                }
+              }
+            }
+          },
+          "fungus_skewer": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "items": "minecraft:golden_carrot",
+                "components": {
+                  "minecraft:custom_model_data": 2750028
+                }
+              }
+            }
+          }
+      },
+    "requirements": [
+        [
+          "nether_salad",
+          "fungus_skewer"
+        ]
+      ],
+    "sends_telemetry_event": true
+}

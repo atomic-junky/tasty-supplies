@@ -17,7 +17,7 @@
       "show_toast": true,
       "announce_to_chat": false
     },
-    "parent": "tasty_supplies:barman",
+    "parent": "tasty_supplies:tasty_supplies/barman",
     "criteria": {
       "hot_cocoa": {
         "trigger": "minecraft:consume_item",

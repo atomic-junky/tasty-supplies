@@ -14,7 +14,7 @@
       "show_toast": true,
       "announce_to_chat": false
     },
-    "parent": "tasty_supplies:knife",
+    "parent": "tasty_supplies:tasty_supplies/knife",
     "criteria": {
       "flint_knife": {
         "trigger": "minecraft:recipe_crafted",

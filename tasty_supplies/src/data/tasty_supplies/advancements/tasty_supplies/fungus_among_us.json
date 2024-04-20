@@ -1,0 +1,43 @@
+{
+    "display": {
+      "icon": {
+        "id": "minecraft:crimson_fungus"
+      },
+      "title": "Fungus Amoung Us",
+      "description": "Craft something with fungus",
+      "background": "minecraft:textures/gui/advancements/backgrounds/husbandry.png",
+      "frame": "task",
+      "show_toast": true,
+      "announce_to_chat": false
+    },
+    "parent": "tasty_supplies:tasty_supplies/nether",
+    "criteria": {
+      "nether_salad": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:nether_salad"
+        }
+      },
+      "fungus_skewer": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:fungus_skewer"
+        }
+      },
+      "fungus_skewer_reversed": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:fungus_skewer_reversed"
+        }
+      }
+    },
+    "requirements": [
+      [
+        "nether_salad",
+        "fungus_skewer",
+        "fungus_skewer_reversed"
+      ]
+    ],
+    "sends_telemetry_event": true
+  }
+  
