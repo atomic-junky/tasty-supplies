@@ -29,13 +29,27 @@
         "conditions": {
           "recipe_id": "tasty_supplies:fungus_skewer_reversed"
         }
+      },
+      "magma_gelatin": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:magma_gelatin"
+        }
+      },
+      "warped_mutton": {
+        "trigger": "minecraft:recipe_crafted",
+        "conditions": {
+          "recipe_id": "tasty_supplies:warped_mutton"
+        }
       }
     },
     "requirements": [
       [
         "nether_salad",
         "fungus_skewer",
-        "fungus_skewer_reversed"
+        "fungus_skewer_reversed",
+        "magma_gelatin",
+        "warped_mutton"
       ]
     ],
     "sends_telemetry_event": true

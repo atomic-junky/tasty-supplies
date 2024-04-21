@@ -1,0 +1,1 @@
+give @p minecraft:bucket 1
