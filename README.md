@@ -86,22 +86,15 @@ To know more about it, we invite you to read the [documentation](https://atomic-
         - [x] Glow Berry Custard Horn
         - [x] Melon Juice
         - [x] Melon Juice Horn
-- [ ] Crops (🔴) (❓)
-    - [ ] Cabbage
-    - [ ] Sea Beet
-    - [ ] Onion
-    - [ ] Tomato
-    - [ ] Rice
-- [ ] Worksations (🔴)
-    - [ ] Cooking Pot (❓)
-    - [ ] Skillet (❓)
-    - [ ] Stove (❓)
+- [x] Worksations
     - [x] Cutting Board
 - [x] Tools
     - [x] Knife
 
 (🔴) => Impossible to do properly for now due to Minecraft limitations
 (❓) => Not sure to add
+
+So that maybe one day we can make a lot of new recipes, please vote for this [sugestion](https://feedback.minecraft.net/hc/en-us/community/posts/24834246348173-Add-the-new-components-to-crafting-recipe-inputs-Datapacks)!
 
 ## Contribute
 To contribute you'll need to use [beet](https://github.com/mcbeet/beet/tree/728859b2bf7b7725fcf7aa7de3788c668ffd668d).
