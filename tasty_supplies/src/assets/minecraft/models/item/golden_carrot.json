@@ -8,6 +8,7 @@
     { "predicate": { "custom_model_data": 2750027 }, "model": "tasty_supplies:item/beef_skewer" },
     { "predicate": { "custom_model_data": 2750028 }, "model": "tasty_supplies:item/fungus_skewer" },
     { "predicate": { "custom_model_data": 2750029 }, "model": "tasty_supplies:item/mushroom_skewer" },
-    { "predicate": { "custom_model_data": 2750034 }, "model": "tasty_supplies:item/magma_gelatin" }
+    { "predicate": { "custom_model_data": 2750034 }, "model": "tasty_supplies:item/magma_gelatin" },
+    { "predicate": { "custom_model_data": 2750037 }, "model": "tasty_supplies:item/ice_cream" }
   ]
 }

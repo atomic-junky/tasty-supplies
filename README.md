@@ -114,4 +114,4 @@ Replace `beet` with `beet -p ./tasty_supplies/` if you want to stay in the root 
 Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 
 ## Credits
-All items texture/models come from the [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) mod.
+Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight), [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge) and [FastFood Delight](https://github.com/akaneoMT/FastFoodDelight).

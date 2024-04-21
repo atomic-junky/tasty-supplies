@@ -5,6 +5,7 @@
     },
     "overrides": [
       { "predicate": { "custom_model_data": 2750002 }, "model": "tasty_supplies:item/pie_crust" },
-      { "predicate": { "custom_model_data": 2750008 }, "model": "tasty_supplies:item/egg_sandwich" }
+      { "predicate": { "custom_model_data": 2750008 }, "model": "tasty_supplies:item/egg_sandwich" },
+      { "predicate": { "custom_model_data": 2750036 }, "model": "tasty_supplies:item/ice_cream_cone" }
     ]
 }

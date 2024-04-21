@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:smelting",
+    "ingredient": {
+        "item": "minecraft:milk_bucket"
+    },
+    "result": {
+        "id": "minecraft:pumpkin_pie",
+        "components": {
+            "custom_name": "{\"text\": \"Cheese\", \"italic\": false}",
+            "custom_model_data": 2750035,
+            "food": {
+                "nutrition": 8,
+                "saturation": 5.6
+            }
+        }
+    },
+    "experience": 0.5,
+    "cookingtime": 200
+}

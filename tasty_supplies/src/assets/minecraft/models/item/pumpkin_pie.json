@@ -11,6 +11,8 @@
       { "predicate": { "custom_model_data": 2750024 }, "model": "tasty_supplies:item/apple_pie_slice" },
       { "predicate": { "custom_model_data": 2750025 }, "model": "tasty_supplies:item/sweet_berry_cheesecake_slice" },
       { "predicate": { "custom_model_data": 2750026 }, "model": "tasty_supplies:item/chocolate_pie_slice" },
-      { "predicate": { "custom_model_data": 2750027 }, "model": "tasty_supplies:item/glow_berry_pie_slice" }
+      { "predicate": { "custom_model_data": 2750027 }, "model": "tasty_supplies:item/glow_berry_pie_slice" },
+      { "predicate": { "custom_model_data": 2750035 }, "model": "tasty_supplies:item/cheese" },
+      { "predicate": { "custom_model_data": 2750038 }, "model": "tasty_supplies:item/cheese_slice" }
     ]
 }
