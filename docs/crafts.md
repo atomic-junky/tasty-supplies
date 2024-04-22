@@ -12,6 +12,12 @@
 **Nutrition**: 4.0 <br>
 **Saturation**: 4.8 <br>
 
+#### Cheese Slice
+![Cheese Slice](_media/recipes/cheese_slice.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 3.0 <br>
+**Saturation**: 2.2 <br>
+
 
 ## Sweats
 
@@ -23,30 +29,54 @@
 
 #### Apple Pie
 ![Apple Pie](_media/recipes/apple_pie.png) <br>
-*You can use the [cutting board](workstations#cutting-board) to make **4 apple pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 
+#### Apple Pie Slice
+![Apple Pie Slice](_media/recipes/apple_pie_slice.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 2.0 <br>
+**Saturation**: 1.5 <br>
+
+
 #### Glow Berry Pie
 ![Glow Berry Pie](_media/recipes/glow_berry_pie.png) <br>
-*You can use the [cutting board](workstations#cutting-board) to make **4 glow berry pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Glowing (3:00) <br>
 
+#### Glow Berry Pie Slice
+![Glow Berry Pie Slice](_media/recipes/glow_berry_pie_slice.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 2.0 <br>
+**Saturation**: 1.5 <br>
+**Effect**: Glowing (0:45) <br>
+
 #### Chocolate Pie
 ![Chocolate Pie](_media/recipes/chocolate_pie.png) <br>
-*You can use the [cutting board](workstations#cutting-board) to make **4 chocolate pie slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Speed I (3:00) <br>
 
+#### Chocolate Pie Slice
+![Chocolate Pie Slice](_media/recipes/chocolate_pie_slice.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 2.0 <br>
+**Saturation**: 1.5 <br>
+**Effect**: Speed I (0:45) <br>
+
 #### Sweet Berry Cheesecake
 ![Sweet Berry Cheesecake](_media/recipes/sweet_berry_cheesecake.png) <br>
-*You can use the [cutting board](workstations#cutting-board) to make **4 sweet berry cheesecake slices*** <br>
 **Nutrition**: 8.0 <br>
 **Saturation**: 6.0 <br>
 **Effect**: Speed I (3:00) <br>
+
+#### Sweet Berry Cheesecake Slice
+![Sweet Berry Cheesecake Slice](_media/recipes/sweet_berry_cheesecake_slice.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 2.0 <br>
+**Saturation**: 1.5 <br>
+**Effect**: Speed I (0:45) <br>
 
 #### Honey Cookie
 ![Honey Cookie](_media/recipes/honey_cookie.png) <br>
