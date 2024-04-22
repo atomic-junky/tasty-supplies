@@ -47,8 +47,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          allowUpdates: true
-          makeLatest: true
+          make_latest: true
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           body: ${{ steps.changelog.outputs.changes }}
