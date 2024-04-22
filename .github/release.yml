@@ -11,7 +11,7 @@ changelog:
         - fix
     - title: Documentation
       labels:
-        - doc
+        - docs
     - title: Rewrite
       labels:
         - refractor
