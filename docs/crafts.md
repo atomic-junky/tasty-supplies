@@ -1,22 +1,62 @@
 # Crafts
 
+!> Food nutrition and saturation is subject to change.
+
 ## Meals
 
-#### Nether Salad
-![Nether Salad](_media/recipes/nether_salad.png) <br>
-**Nutrition**: 5.0 <br>
-**Saturation**: 6.0 <br>
+#### Beef Skewer
+![Beef Skewer](_media/recipes/beef_skewer.png) <br>
+**Nutrition**: 16 <br>
+**Saturation**: 25.6 <br>
 
-#### Fried Egg
-![Nether Salad](_media/recipes/fried_egg.png) <br>
-**Nutrition**: 4.0 <br>
-**Saturation**: 4.8 <br>
+#### Fungus Skewer
+![Fungus Skewer](_media/recipes/fungus_skewer.png) <br>
+**Nutrition**: 5 <br>
+**Saturation**: 6 <br>
+**Effect**: Nausea (0:30) <br>
+
+#### Mushroom Skewer
+![Mushroom Skewer](_media/recipes/mushroom_skewer.png) <br>
+**Nutrition**: 6 <br>
+**Saturation**: 7.2 <br>
+
+#### Cheese
+![Cheese](_media/recipes/cheese.png) <br>
+**Nutrition**: 8.0 <br>
+**Saturation**: 5.6 <br>
 
 #### Cheese Slice
 ![Cheese Slice](_media/recipes/cheese_slice.png) <br>
 *This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
 **Nutrition**: 3.0 <br>
 **Saturation**: 2.2 <br>
+
+#### Nether Salad
+![Nether Salad](_media/recipes/nether_salad.png) <br>
+**Nutrition**: 5.0 <br>
+**Saturation**: 6.0 <br>
+**Effect**: Nausea (0:30) <br>
+
+#### Fried Egg
+![Fried Egg](_media/recipes/fried_egg.png) <br>
+**Nutrition**: 6 <br>
+**Saturation**: 4.8 <br>
+
+#### Fruit Salad
+![Fruit Salad](_media/recipes/fruit_salad.png) <br>
+**Nutrition**: 18 <br>
+**Saturation**: 7.6 <br>
+
+#### Potato Fries
+![Potato Fries](_media/recipes/potato_fries.png) <br>
+*This craft is made by using a **[cutting board](workstations#cutting-board)!*** <br>
+**Nutrition**: 3.0 <br>
+**Saturation**: 3.0 <br>
+
+#### Warped Mutton
+![Warped Mutton](_media/recipes/warped_mutton.png) <br>
+**Nutrition**: 8 <br>
+**Saturation**: 11 <br>
 
 
 ## Sweats
@@ -89,9 +129,20 @@
 **Saturation**: 0.5 <br>
 
 #### Melon Popsicle
-![Sweet Berry Cookie](_media/recipes/melon_popsicle.png) <br>
+![Melon Popsicle](_media/recipes/melon_popsicle.png) <br>
 **Nutrition**: 3 <br>
 **Saturation**: 1 <br>
+
+#### Ice Cream Cone
+![Ice Cream Cone](_media/recipes/ice_cream_cone.png) <br>
+*Ice Cream Cone can be replaced by bread* <br>
+**Nutrition**: 2.5 <br>
+**Saturation**: 6.0 <br>
+
+#### Ice Cream
+![Ice Cream](_media/recipes/ice_cream.png) <br>
+**Nutrition**: 4 <br>
+**Saturation**: 3.6 <br>
 
 
 ## Drinks
@@ -101,7 +152,7 @@
 **Effect**: Absorption I (1:30) <br>
 
 #### Apple Cider Horn
-![Apple Cider](_media/recipes/apple_cider_horn.png) <br>
+![Apple Cider Horn](_media/recipes/apple_cider_horn.png) <br>
 **Effect**: Absorption I (1:30) <br>
 
 #### Glow Berry Custard
@@ -109,7 +160,7 @@
 **Effect**: Glowing (3:00) <br>
 
 #### Glow Berry Custard Horn
-![Glow Berry Custard](_media/recipes/glow_berry_custard_horn.png) <br>
+![Glow Berry Custard Horn](_media/recipes/glow_berry_custard_horn.png) <br>
 **Effect**: Glowing (3:00) <br>
 
 #### Hot Cocoa
@@ -117,7 +168,7 @@
 **Effect**: Regeneration (0:30) <br>
 
 #### Hot Cocoa Horn
-![Hot Cocoa](_media/recipes/hot_cocoa_horn.png) <br>
+![Hot Cocoa Horn](_media/recipes/hot_cocoa_horn.png) <br>
 **Effect**: Regeneration (0:30) <br>
 
 #### Melon Juice
@@ -125,8 +176,12 @@
 **Effect**: Instant Health I <br>
 
 #### Melon Juice Horn
-![Melon Juice](_media/recipes/melon_juice_horn.png) <br>
+![Melon Juice Horn](_media/recipes/melon_juice_horn.png) <br>
 **Effect**: Instant Health I <br>
+
+#### Magma Gelatin
+![Magma Gelatin](_media/recipes/magma_gelatin.png) <br>
+**Effects**: Nausea (0:30) & Fire Resistance (5:00) <br>
 
 ## Tools
 
@@ -163,5 +218,5 @@
 ## Workstations
 
 #### Cutting Board
-![Netherite Knife](_media/recipes/cutting_board.png) <br>
+![Cutting Board](_media/recipes/cutting_board.png) <br>
 Go [here](workstations#cutting-board) to see how work the **cutting board**!
