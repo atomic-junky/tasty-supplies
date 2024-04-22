@@ -15,7 +15,11 @@
         "id": "minecraft:golden_carrot",
         "components": {
             "custom_name": "{\"text\": \"Ice Cream Cone\", \"italic\": false}",
-            "custom_model_data": 2750037
+            "custom_model_data": 2750037,
+            "food": {
+                "nutrition": 4,
+                "saturation": 3.6
+            }
         },
         "count": 1
     }
