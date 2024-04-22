@@ -1,0 +1,28 @@
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+  categories:
+    - title: Features
+      labels:
+        - feat
+    - title: Bug Fixes
+      labels:
+        - fix
+    - title: Documentation
+      labels:
+        - doc
+    - title: Rewrite
+      labels:
+        - refractor
+        - perf
+    - title: Style
+      labels:
+        - style
+    - title: Other Changes
+      labels:
+        - chore
+        - ops
+        - build
+        - test
+        - ci
