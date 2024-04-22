@@ -29,8 +29,8 @@
             "custom_name": "{\"text\": \"Fruit Salad\", \"italic\": false}",
             "custom_model_data": 2750030,
             "food": {
-                "nutrition": 6,
-                "saturation": 3.6,
+                "nutrition": 18,
+                "saturation": 7.6,
                 "effects": [
                     {
                         "effect": {
