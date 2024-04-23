@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Tasty Supplies Documentation</title>
-  <link rel="icon" type="image/x-icon" href="/_media/logo@160.png">
+  <link rel="icon" type="image/x-icon" href="./_media/logo@160.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
@@ -52,7 +52,7 @@
         'food': {
           template: `
             <div>
-              <b>Nutrition</b>: {{ hgr }} (<img v-if="hgr%2==1" class="component-icon" src="/_media/assets/half_hunger_icon.png"><img v-for="i in Math.floor(hgr/2)" class="component-icon" src="/_media/assets/hunger_icon.png">)<br>
+              <b>Nutrition</b>: {{ hgr }} (<img v-if="hgr%2==1" class="component-icon" src="./_media/assets/half_hunger_icon.png"><img v-for="i in Math.floor(hgr/2)" class="component-icon" src="./_media/assets/hunger_icon.png">)<br>
               <b>Saturation</b>: {{ sat }}
               <effects v-if="efs !== null" :efs="efs" />
             </div>
@@ -66,7 +66,7 @@
         'weapon': {
           template: `
             <div>
-              <b>Attack Damage</b>: {{ dmg }} (<img v-for="i in Math.floor(dmg)" class="component-icon" src="/_media/assets/heart_icon.png"><img v-if="dmg%1!==0" class="component-icon" src="/_media/assets/half_heart_icon.png">)<br>
+              <b>Attack Damage</b>: {{ dmg }} (<img v-for="i in Math.floor(dmg)" class="component-icon" src="./_media/assets/heart_icon.png"><img v-if="dmg%1!==0" class="component-icon" src="./_media/assets/half_heart_icon.png">)<br>
               <b>Attack Speed</b>: {{ spd }} <br>
               <b>Duration</b>: {{ dur }}
             </div>
