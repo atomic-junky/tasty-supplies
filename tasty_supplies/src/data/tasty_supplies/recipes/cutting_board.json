@@ -13,7 +13,7 @@
         "spp"
     ],
     "result": {
-        "id": "minecraft:item_frame",
+        "id": "minecraft:armor_stand",
         "components": {
             "custom_name": "{\"text\": \"Cutting Board\", \"italic\": false}",
             "custom_data": {
@@ -22,11 +22,14 @@
                 ]
             },
             "entity_data": {
-                "id": "minecraft:item_frame",
+                "id": "minecraft:armor_stand",
                 "Tags": [
                     "cutting_board_placer"
-                ]
+                ],
+                "Invisible": 1,
+                "Small": 1
             },
+            "max_stack_size": 64,
             "custom_model_data": 2750014
         }
     }

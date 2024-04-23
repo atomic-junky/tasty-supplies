@@ -1,1 +1,1 @@
-$summon minecraft:item_display ~ ~0.078125 ~-0.125 {item:{id:"$(id)", count:1, components:$(components)}, item_display:"ground", Rotation:[0.0f, 90.0f]}
+$summon minecraft:item_display ~ ~0.078125 ~ {item:{id:"$(id)", count:1, components:$(components)}, item_display:"ground"}

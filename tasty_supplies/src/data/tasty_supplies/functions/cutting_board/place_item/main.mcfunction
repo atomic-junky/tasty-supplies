@@ -8,8 +8,20 @@
 #           (1/16)/4 => item tickness centered at the middle
 # 0.125 = 2/16
 
-execute if data storage minecraft:temp cutting_board{custom_item: true} run function tasty_supplies:cutting_board/place_item/place_custom with entity @s SelectedItem 
-$execute unless data storage minecraft:temp cutting_board{custom_item: true} run summon minecraft:item_display ~ ~0.078125 ~-0.125 {item:{id:"$(id)", count:1}, item_display:"ground", Rotation:[0.0f, 90.0f]}
+execute if data storage minecraft:temp cutting_board{custom_item: true} run function tasty_supplies:cutting_board/place_item/place_custom with entity @s SelectedItem
+$execute unless data storage minecraft:temp cutting_board{custom_item: true} run summon minecraft:item_display ~ ~0.078125 ~ {item:{id:"$(id)", count: 1}, item_display:"ground"}
+
+# Rotate and translate the item_display
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s transformation.translation[1] set value -0.125f
+
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ if data entity @s {Rotation:[0.0f, 0.0f]} as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s Rotation set value [180.0f, 90.0f]
+
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ if data entity @s {Rotation:[180.0f, 0.0f]} as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s Rotation set value [0.0f, 90.0f]
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ if data entity @s {Rotation:[-180.0f, 0.0f]} as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s Rotation set value [0.0f, 90.0f]
+
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ if data entity @s {Rotation:[90.0f, 0.0f]} as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s Rotation set value [-90.0f, 90.0f]
+
+execute as @e[type=interaction, sort=nearest, limit=1] positioned ~ ~0.078125 ~ if data entity @s {Rotation:[-90.0f, 0.0f]} as @e[type=minecraft:item_display, sort=nearest, limit=1] run data modify entity @s Rotation set value [90.0f, 90.0f]
 
 data remove storage minecraft:temp cutting_board.custom_item
 
