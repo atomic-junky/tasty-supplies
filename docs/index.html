@@ -23,6 +23,11 @@
       min-width: 450px;
       image-rendering: pixelated;
     }
+
+    img.component-icon {
+      min-width: 15px;
+      width: 15px !important;
+    }
   </style>
 </head>
 <body>
@@ -43,7 +48,53 @@
       darkIcon: '<custom-dark-icon>',
       lightIcon: '<custom-light-icon>',
       defaultTheme: 'dark',
+      vueComponents: {
+        'food': {
+          template: `
+            <div>
+              <b>Nutrition</b>: {{ hgr }} (<img v-if="hgr%2==1" class="component-icon" src="/_media/assets/half_hunger_icon.png"><img v-for="i in Math.floor(hgr/2)" class="component-icon" src="/_media/assets/hunger_icon.png">)<br>
+              <b>Saturation</b>: {{ sat }}
+              <effects v-if="efs !== null" :efs="efs" />
+            </div>
+          `,
+          props: {
+            hgr: Number,
+            sat: Number,
+            efs: Array
+          }
+        },
+        'weapon': {
+          template: `
+            <div>
+              <b>Attack Damage</b>: {{ dmg }} (<img v-for="i in Math.floor(dmg)" class="component-icon" src="/_media/assets/heart_icon.png"><img v-if="dmg%1!==0" class="component-icon" src="/_media/assets/half_heart_icon.png">)<br>
+              <b>Attack Speed</b>: {{ spd }} <br>
+              <b>Duration</b>: {{ dur }}
+            </div>
+          `,
+          props: {
+            dmg: Number,
+            spd: Number,
+            dur: Number
+          }
+        },
+        'effects': {
+          template: `
+            <div v-if="efs.length > 1">
+              <b>Effects</b>: <li v-for="item in efs">{{ item }}</li><br>
+            </div>
+            <div v-else>
+              <b>Effect</b>: {{ efs[0] }}
+            </div>
+          `,
+          props: {
+            efs: Array
+          }
+        },
+      }
     }
+    // <img src="/_media/assets/hunger_icon.png">
+    // hunger_images += '![](./_media/assets/hunger_icon.png)'
+    // return a + ' (' + hunger_images + ')';
   </script>
 
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
@@ -55,5 +106,6 @@
     src="//cdn.jsdelivr.net/npm/docsify-darklight-theme@latest/dist/index.min.js"
     type="text/javascript">
   </script>
+  <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
 </body>
 </html>
