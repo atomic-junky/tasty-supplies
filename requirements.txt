@@ -1,2 +1,4 @@
-beet[image] >= 0.104.1
-mecha >= 0.92.0
+# beet[image] >= 0.107.0
+git+https://github.com/atomic-junky/beet.git
+mecha >= 0.94.2
+requests >= 2.31.0
