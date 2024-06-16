@@ -23,19 +23,17 @@
                 "modifiers": [
                     {
                         "type": "generic.attack_damage",
-                        "name": "generic.attack_damage",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:netherite_knife_damage",
                         "amount": 4.5,
-                        "uuid": [5458421, -877842154155, -8454594, 52455415]
+                        "operation": "add_value"
                     },
                     {
                         "type": "generic.attack_speed",
-                        "name": "generic.attack_speed",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:netherite_knife_speed",
                         "amount": 2,
-                        "uuid": [522326553, -25545478541, 454515, -4546467]
+                        "operation": "add_value"
                     }
                 ]
             }

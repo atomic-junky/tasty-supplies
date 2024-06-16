@@ -23,19 +23,17 @@
                 "modifiers": [
                     {
                         "type": "generic.attack_damage",
-                        "name": "generic.attack_damage",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:golden_knife_damage",
                         "amount": 2,
-                        "uuid": [-4842, 457845158854, 4545, -4544145544]
+                        "operation": "add_value"
                     },
                     {
                         "type": "generic.attack_speed",
-                        "name": "generic.attack_speed",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:golden_knife_speed",
                         "amount": 2,
-                        "uuid": [522326553, -25545478541, 454515, -4546467]
+                        "operation": "add_value"
                     }
                 ]
             }

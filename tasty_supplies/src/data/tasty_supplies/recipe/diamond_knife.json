@@ -23,19 +23,17 @@
                 "modifiers": [
                     {
                         "type": "generic.attack_damage",
-                        "name": "generic.attack_damage",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:flint_diamond_damage",
                         "amount": 4,
-                        "uuid": [42853, 1689024593, -201178, -1559272105]
+                        "operation": "add_value"
                     },
                     {
                         "type": "generic.attack_speed",
-                        "name": "generic.attack_speed",
                         "slot": "mainhand",
-                        "operation": "add_value",
+                        "id": "tasty_supplies:flint_diamond_speed",
                         "amount": 2,
-                        "uuid": [51238, 3376251567, -221210, 1511500114]
+                        "operation": "add_value"
                     }
                 ]
             }
