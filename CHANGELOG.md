@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.11.2] - 2024-06-16
+### :bug: Bug Fixes
+- [`d1c7c9d`](https://github.com/atomic-junky/tasty-supplies/commit/d1c7c9d9ef9b0c07f3de7337486c8a5c16e5c49e) - Custom item removed instead of the right one when placing an item on a cutting board *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.11.1] - 2024-06-16
 ### :bug: Bug Fixes
 - [`1907780`](https://github.com/atomic-junky/tasty-supplies/commit/19077806a9d3a57bf94489f26106b0989d1aad0f) - Parsing error with knife recipes *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -41,3 +46,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.10.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.10.0...v0.10.1
 [v0.11.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.10.1...v0.11.0
 [v0.11.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.0...v0.11.1
+[v0.11.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.1...v0.11.2
