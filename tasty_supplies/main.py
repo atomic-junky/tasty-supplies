@@ -1,5 +1,5 @@
 import json
-from beet import PngFile, Context, Model
+from beet import PngFile, Context, Model, ItemModel
 
 
 def build_resource_pack(ctx: Context):
@@ -25,3 +25,9 @@ def build_item_models(ctx: Context):
             f"{item_name}.json"
         )
         pack["tasty_supplies"].models[f"item/{item_name}"] = model
+        pack["tasty_supplies"].item_models[item_name] = ItemModel({
+            "model": {
+                "type": "minecraft:model",
+                "model": "tasty_supplies:item/" + item_name,
+            }
+        })

@@ -4,7 +4,7 @@
         "id": "minecraft:potion",
         "count": 1,
         "components": {
-          "minecraft:custom_model_data": 2750017,
+          "minecraft:custom_model_data": {"strings": ["tasty_supplies/hot_cocoa"]},
           "potion_contents": {
               "custom_color": 16777215
           }
@@ -25,7 +25,7 @@
           "item": {
             "items": "minecraft:potion",
             "components": {
-              "minecraft:custom_model_data": 2750017
+              "minecraft:custom_model_data": {"strings": ["tasty_supplies/hot_cocoa"]}
             }
           }
         }

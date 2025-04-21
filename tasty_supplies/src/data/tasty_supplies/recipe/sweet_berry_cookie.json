@@ -1,21 +1,15 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:sweet_berries"
-        },
-        {
-            "item": "minecraft:wheat"
-        },
-        {
-            "item": "minecraft:wheat"
-        }
+        "minecraft:sweet_berries",
+        "minecraft:wheat",
+        "minecraft:wheat"
     ],
     "result": {
         "id": "minecraft:cookie",
         "components": {
-            "custom_name": "{\"text\": \"Sweet Berry Cookie\", \"italic\": false}",
-            "custom_model_data": 2750001
+            "custom_name": {"text": "Sweet Berry Cookie", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/sweet_berry_cookie"]}
         },
         "count": 8
     }

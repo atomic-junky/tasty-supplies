@@ -19,7 +19,7 @@
               "item": {
                 "items": "minecraft:beetroot_soup",
                 "components": {
-                  "minecraft:custom_model_data": 2750007
+                  "minecraft:custom_model_data": {"strings": ["tasty_supplies/nether_salad"]}
                 }
               }
             }
@@ -30,7 +30,7 @@
               "item": {
                 "items": "minecraft:golden_carrot",
                 "components": {
-                  "minecraft:custom_model_data": 2750028
+                  "minecraft:custom_model_data": {"strings": ["tasty_supplies/fungus_skewer"]}
                 }
               }
             }

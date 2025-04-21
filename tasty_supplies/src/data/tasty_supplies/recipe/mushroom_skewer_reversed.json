@@ -1,15 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "b": {
-            "item": "minecraft:brown_mushroom"
-        },
-        "r": {
-            "item": "minecraft:red_mushroom"
-        },
-        "s": {
-            "item": "minecraft:stick"
-        }
+        "b": "minecraft:brown_mushroom",
+        "r": "minecraft:red_mushroom",
+        "s": "minecraft:stick"
     },
     "pattern": [
         "r",
@@ -19,8 +13,8 @@
     "result": {
         "id": "minecraft:golden_carrot",
         "components": {
-            "custom_name": "{\"text\": \"Mushroom Skewer\", \"italic\": false}",
-            "custom_model_data": 2750029,
+            "custom_name": {"text": "Mushroom Skewer", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/mushroom_skewer"]},
             "food": {
                 "nutrition": 6,
                 "saturation": 7.2

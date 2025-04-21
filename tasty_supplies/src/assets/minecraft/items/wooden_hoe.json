@@ -1,0 +1,47 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data", 
+    "cases": [
+      {
+        "when": "tasty_supplies/diamond_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/diamond_knife"
+        }
+      },
+      {
+        "when": "tasty_supplies/flint_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/flint_knife"
+        }
+      },
+      {
+        "when": "tasty_supplies/golden_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/golden_knife"
+        }
+      },
+      {
+        "when": "tasty_supplies/iron_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/iron_knife"
+        }
+      },
+      {
+        "when": "tasty_supplies/netherite_knife",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/netherite_knife"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/wooden_hoe"
+    }
+  }
+}

@@ -4,7 +4,7 @@
         "id": "minecraft:wooden_hoe",
         "count": 1,
         "components": {
-          "minecraft:custom_model_data": 2750009
+          "minecraft:custom_model_data": {"strings": ["tasty_supplies/netherite_knife"]}
         }
       },
       "title": "Cut them all",

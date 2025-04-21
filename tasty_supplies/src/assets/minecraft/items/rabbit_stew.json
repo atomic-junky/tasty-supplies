@@ -1,0 +1,26 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data", 
+    "cases": [
+      {
+        "when": "tasty_supplies/warped_mutton",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/warped_mutton"
+        }
+      },
+      {
+        "when": "tasty_supplies/beef_stew",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/beef_stew"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/rabbit_stew"
+    }
+  }
+}

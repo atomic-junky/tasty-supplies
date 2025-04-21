@@ -1,24 +1,16 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:cocoa_beans"
-        },
-        {
-            "item": "minecraft:cocoa_beans"
-        },
-        {
-            "item": "minecraft:sugar"
-        },
-        {
-            "item": "minecraft:goat_horn"
-        }
+        "minecraft:cocoa_beans",
+        "minecraft:cocoa_beans",
+        "minecraft:sugar",
+        "minecraft:goat_horn"
     ],
     "result": {
         "id": "minecraft:potion",
         "components": {
-            "custom_name": "{\"text\": \"Hot Cocoa Horn\", \"italic\": false}",
-            "custom_model_data": 2750022,
+            "custom_name": {"text": "Hot Cocoa Horn", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/hot_cocoa_horn"]},
             "max_stack_size": 1,
             "potion_contents": {
                 "custom_color": 16777215,

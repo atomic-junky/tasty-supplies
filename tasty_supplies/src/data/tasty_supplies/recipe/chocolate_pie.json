@@ -1,18 +1,10 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "C": {
-            "item": "minecraft:cocoa_beans"
-        },
-        "M": {
-            "item": "minecraft:milk_bucket"
-        },
-        "S": {
-            "item": "minecraft:sugar"
-        },
-        "B": {
-            "item": "minecraft:bread"
-        }
+        "C": "minecraft:cocoa_beans",
+        "M": "minecraft:milk_bucket",
+        "S": "minecraft:sugar",
+        "B": "minecraft:bread"
     },
     "pattern": [
         "CCC",
@@ -22,8 +14,8 @@
     "result": {
         "id": "minecraft:pumpkin_pie",
         "components": {
-            "custom_name": "{\"text\": \"Chocolate Pie\", \"italic\": false}",
-            "custom_model_data": 2750005,
+            "custom_name": {"text": "Chocolate Pie", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/chocoloate_pie"]},
             "food": {
                 "nutrition": 8,
                 "saturation": 6,

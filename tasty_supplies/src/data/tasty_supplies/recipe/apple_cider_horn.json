@@ -1,24 +1,16 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:apple"
-        },
-        {
-            "item": "minecraft:apple"
-        },
-        {
-            "item": "minecraft:sugar"
-        },
-        {
-            "item": "minecraft:goat_horn"
-        }
+        "minecraft:apple",
+        "minecraft:apple",
+        "minecraft:sugar",
+        "minecraft:goat_horn"
     ],
     "result": {
         "id": "minecraft:potion",
         "components": {
-            "custom_name": "{\"text\": \"Apple Cider Horn\", \"italic\": false}",
-            "custom_model_data": 2750020,
+            "custom_name": {"text": "Apple Cider Horn", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/apple_cider_horn"]},
             "max_stack_size": 1,
             "potion_contents": {
                 "custom_color": 16777215,

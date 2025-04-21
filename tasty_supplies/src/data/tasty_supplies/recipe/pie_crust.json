@@ -1,9 +1,7 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "W": {
-            "item": "minecraft:wheat"
-        }
+        "W": "minecraft:wheat"
     },
     "pattern": [
         "W W",
@@ -12,8 +10,8 @@
     "result": {
         "id": "minecraft:bread",
         "components": {
-            "custom_name": "{\"text\": \"Pie Crust\", \"italic\": false}",
-            "custom_model_data": 2750002
+            "custom_name": {"text": "Pie Crust", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/pie_crust"]}
         },
         "count": 1
     }

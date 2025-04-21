@@ -1,0 +1,26 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data", 
+    "cases": [
+      {
+        "when": "tasty_supplies/honey_cookie",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/honey_cookie"
+        }
+      },
+      {
+        "when": "tasty_supplies/sweet_berry_cookie",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/sweet_berry_cookie"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/cookie"
+    }
+  }
+}

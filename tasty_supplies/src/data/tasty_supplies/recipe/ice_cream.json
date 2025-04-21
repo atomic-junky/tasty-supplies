@@ -1,21 +1,15 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:snowball"
-        },
-        {
-            "item": "minecraft:sugar"
-        },
-        {
-            "item": "minecraft:bread"
-        }
+        "minecraft:snowball",
+        "minecraft:sugar",
+        "minecraft:bread"
     ],
     "result": {
         "id": "minecraft:golden_carrot",
         "components": {
-            "custom_name": "{\"text\": \"Ice Cream Cone\", \"italic\": false}",
-            "custom_model_data": 2750037,
+            "custom_name": {"text": "Ice Cream Cone", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/icde_cream"]},
             "food": {
                 "nutrition": 4,
                 "saturation": 3.6

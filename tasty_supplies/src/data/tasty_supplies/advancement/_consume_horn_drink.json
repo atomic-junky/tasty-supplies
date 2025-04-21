@@ -4,7 +4,7 @@
         "id": "minecraft:potion",
         "count": 1,
         "components": {
-          "minecraft:custom_model_data": 2750020,
+          "minecraft:custom_model_data": {"strings": ["tasty_supplies/apple_cider_horn"]},
           "potion_contents": {
               "custom_color": 16777215
           }
@@ -25,7 +25,7 @@
           "item": {
             "items": "minecraft:potion",
             "components": {
-              "minecraft:custom_model_data": 2750020
+              "minecraft:custom_model_data": {"strings": ["tasty_supplies/apple_cider_horn"]}
             }
           }
         }
@@ -36,7 +36,7 @@
           "item": {
             "items": "minecraft:potion",
             "components": {
-              "minecraft:custom_model_data": 2750021
+              "minecraft:custom_model_data": {"strings": ["tasty_supplies/glow_berry_custard_horn"]}
             }
           }
         }
@@ -47,7 +47,7 @@
           "item": {
             "items": "minecraft:potion",
             "components": {
-              "minecraft:custom_model_data": 2750022
+              "minecraft:custom_model_data": {"strings": ["tasty_supplies/hot_cocoa_horn"]}
             }
           }
         }
@@ -58,7 +58,7 @@
           "item": {
             "items": "minecraft:potion",
             "components": {
-              "minecraft:custom_model_data": 2750023
+              "minecraft:custom_model_data": {"strings": ["tasty_supplies/melon_juice_horn"]}
             }
           }
         }

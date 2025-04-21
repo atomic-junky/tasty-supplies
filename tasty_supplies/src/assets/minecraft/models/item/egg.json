@@ -1,9 +1,0 @@
-{
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "minecraft:item/egg"
-    },
-    "overrides": [
-      { "predicate": { "custom_model_data": 2750006 }, "model": "tasty_supplies:item/fried_egg" }
-    ]
-}

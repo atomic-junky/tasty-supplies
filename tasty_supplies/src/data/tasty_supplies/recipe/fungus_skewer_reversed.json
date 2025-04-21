@@ -1,15 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "w": {
-            "item": "minecraft:warped_fungus"
-        },
-        "c": {
-            "item": "minecraft:crimson_fungus"
-        },
-        "s": {
-            "item": "minecraft:stick"
-        }
+        "w": "minecraft:warped_fungus",
+        "c": "minecraft:crimson_fungus",
+        "s": "minecraft:stick"
     },
     "pattern": [
         "c",
@@ -19,8 +13,8 @@
     "result": {
         "id": "minecraft:golden_carrot",
         "components": {
-            "custom_name": "{\"text\": \"Fungus Skewer\", \"italic\": false}",
-            "custom_model_data": 2750028,
+            "custom_name": {"text": "Fungus Skewer", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/fungus_skewer"]},
             "food": {
                 "nutrition": 5,
                 "saturation": 6,

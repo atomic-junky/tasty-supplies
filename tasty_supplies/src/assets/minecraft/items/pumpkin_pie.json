@@ -1,0 +1,82 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data", 
+    "cases": [
+      {
+        "when": "tasty_supplies/apple_pie",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/apple_pie"
+        }
+      },
+      {
+        "when": "tasty_supplies/sweet_berry_cheesecake",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/sweet_berry_cheesecake"
+        }
+      },
+      {
+        "when": "tasty_supplies/chocolate_pie",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/chocolate_pie"
+        }
+      },
+      {
+        "when": "tasty_supplies/glow_berry_pie",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/glow_berry_pie"
+        }
+      },
+      {
+        "when": "tasty_supplies/apple_pie_slice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/apple_pie_slice"
+        }
+      },
+      {
+        "when": "tasty_supplies/sweet_berry_cheesecake_slice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/sweet_berry_cheesecake_slice"
+        }
+      },
+      {
+        "when": "tasty_supplies/chocolate_pie_slice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/chocolate_pie_slice"
+        }
+      },
+      {
+        "when": "tasty_supplies/glow_berry_pie_slice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/glow_berry_pie_slice"
+        }
+      },
+      {
+        "when": "tasty_supplies/cheese",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/cheese"
+        }
+      },
+      {
+        "when": "tasty_supplies/cheese_slice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/cheese_slice"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/pumpkin_pie"
+    }
+  }
+}

@@ -1,12 +1,8 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "p": {
-            "tag": "minecraft:planks"
-        },
-        "s": {
-            "item": "minecraft:stick"
-        }
+        "p": "#minecraft:planks",
+        "s": "minecraft:stick"
     },
     "pattern": [
         "spp",
@@ -15,7 +11,7 @@
     "result": {
         "id": "minecraft:armor_stand",
         "components": {
-            "custom_name": "{\"text\": \"Cutting Board\", \"italic\": false}",
+            "custom_name": {"text": "Cutting Board", "italic": false},
             "custom_data": {
                 "tags": [
                     "cutting_board_placer"
@@ -30,7 +26,7 @@
                 "Small": 1
             },
             "max_stack_size": 64,
-            "custom_model_data": 2750014
+            "custom_model_data": {"strings": ["tasty_supplies/cutting_board"]}
         }
     }
   }

@@ -1,0 +1,74 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:custom_model_data", 
+    "cases": [
+      {
+        "when": "tasty_supplies/apple_cider",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/apple_cider"
+        }
+      },
+      {
+        "when": "tasty_supplies/glow_berry_custard",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/glow_berry_custard"
+        }
+      },
+      {
+        "when": "tasty_supplies/hot_cocoa",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/hot_cocoa"
+        }
+      },
+      {
+        "when": "tasty_supplies/melon_juice",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/melon_juice"
+        }
+      },
+      {
+        "when": "tasty_supplies/apple_cider_horn",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/apple_cider_horn"
+        }
+      },
+      {
+        "when": "tasty_supplies/glow_berry_custard_horn",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/glow_berry_custard_horn"
+        }
+      },
+      {
+        "when": "tasty_supplies/hot_cocoa_horn",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/hot_cocoa_horn"
+        }
+      },
+      {
+        "when": "tasty_supplies/melon_juice_horn",
+        "model": {
+          "type": "minecraft:model",
+          "model": "tasty_supplies:item/melon_juice_horn"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "minecraft:item/potion",
+      "tints": [
+        {
+          "type": "minecraft:potion",
+          "default": -13083194
+        }
+      ]
+    }
+  }
+}

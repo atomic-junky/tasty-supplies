@@ -1,24 +1,16 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:warped_roots"
-        },
-        {
-            "item": "minecraft:warped_roots"
-        },
-        {
-            "item": "minecraft:bowl"
-        },
-        {
-            "item": "minecraft:cooked_mutton"
-        }
+        "minecraft:warped_roots",
+        "minecraft:warped_roots",
+        "minecraft:bowl",
+        "minecraft:cooked_mutton"
     ],
     "result": {
         "id": "minecraft:rabbit_stew",
         "components": {
-            "custom_name": "{\"text\": \"Warped Mutton\", \"italic\": false}",
-            "custom_model_data": 2750033,
+            "custom_name": {"text": "Warped Mutton", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/warped_mutton"]},
             "food": {
                 "nutrition": 8,
                 "saturation": 11,

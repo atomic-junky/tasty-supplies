@@ -1,27 +1,17 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:glow_berries"
-        },
-        {
-            "item": "minecraft:milk_bucket"
-        },
-        {
-            "item": "minecraft:egg"
-        },
-        {
-            "item": "minecraft:sugar"
-        },
-        {
-            "item": "minecraft:glass_bottle"
-        }
+        "minecraft:glow_berries",
+        "minecraft:milk_bucket",
+        "minecraft:egg",
+        "minecraft:sugar",
+        "minecraft:glass_bottle"
     ],
     "result": {
         "id": "minecraft:potion",
         "components": {
-            "custom_name": "{\"text\": \"Glow Berry Custard\", \"italic\": false}",
-            "custom_model_data": 2750016,
+            "custom_name": {"text": "Glow Berry Custard", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/glow_berry_custard"]},
             "max_stack_size": 16,
             "potion_contents": {
                 "custom_color": 16777215,

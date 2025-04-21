@@ -1,13 +1,11 @@
 {
     "type": "minecraft:smoking",
-    "ingredient": {
-        "item": "minecraft:milk_bucket"
-    },
+    "ingredient": "minecraft:milk_bucket",
     "result": {
         "id": "minecraft:pumpkin_pie",
         "components": {
-            "custom_name": "{\"text\": \"Cheese\", \"italic\": false}",
-            "custom_model_data": 2750035,
+            "custom_name": {"text": "Cheese", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/cheese"]},
             "food": {
                 "nutrition": 8,
                 "saturation": 5.6

@@ -1,12 +1,8 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "b": {
-            "item": "minecraft:cooked_beef"
-        },
-        "s": {
-            "item": "minecraft:stick"
-        }
+        "b": "minecraft:cooked_beef",
+        "s": "minecraft:stick"
     },
     "pattern": [
         "b",
@@ -16,8 +12,8 @@
     "result": {
         "id": "minecraft:golden_carrot",
         "components": {
-            "custom_name": "{\"text\": \"Beef Skewer\", \"italic\": false}",
-            "custom_model_data": 2750027,
+            "custom_name": {"text": "Beef Skewer", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/beef_skewer"]},
             "food": {
                 "nutrition": 16,
                 "saturation": 25.6

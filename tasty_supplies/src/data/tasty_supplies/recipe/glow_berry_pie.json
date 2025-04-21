@@ -1,18 +1,10 @@
 {
     "type": "minecraft:crafting_shaped",
     "key": {
-        "G": {
-            "item": "minecraft:glow_berries"
-        },
-        "M": {
-            "item": "minecraft:milk_bucket"
-        },
-        "S": {
-            "item": "minecraft:sugar"
-        },
-        "C": {
-            "item": "minecraft:bread"
-        }
+        "G": "minecraft:glow_berries",
+        "M": "minecraft:milk_bucket",
+        "S": "minecraft:sugar",
+        "C": "minecraft:bread"
     },
     "pattern": [
         "GGG",
@@ -22,8 +14,8 @@
     "result": {
         "id": "minecraft:pumpkin_pie",
         "components": {
-            "custom_name": "{\"text\": \"Glow Berry Pie\", \"italic\": false}",
-            "custom_model_data": 2750014,
+            "custom_name": {"text": "Glow Berry Pie", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/glow_berry_pie"]},
             "food": {
                 "nutrition": 8,
                 "saturation": 6,

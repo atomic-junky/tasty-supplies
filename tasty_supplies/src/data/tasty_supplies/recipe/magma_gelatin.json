@@ -1,30 +1,18 @@
 {
     "type": "minecraft:crafting_shapeless",
     "ingredients": [
-        {
-            "item": "minecraft:bucket"
-        },
-        {
-            "item": "minecraft:magma_cream"
-        },
-        {
-            "item": "minecraft:magma_cream"
-        },
-        {
-            "item": "minecraft:magma_cream"
-        },
-        {
-            "item": "minecraft:blaze_powder"
-        },
-        {
-            "item": "minecraft:blaze_powder"
-        }
+        "minecraft:bucket",
+        "minecraft:magma_cream",
+        "minecraft:magma_cream",
+        "minecraft:magma_cream",
+        "minecraft:blaze_powder",
+        "minecraft:blaze_powder"
     ],
     "result": {
         "id": "minecraft:golden_carrot",
         "components": {
-            "custom_name": "{\"text\": \"Magma Gelatin\", \"italic\": false}",
-            "custom_model_data": 2750034,
+            "custom_name": {"text": "Magma Gelatin", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/magma_gelatin"]},
             "max_stack_size": 1,
             "food": {
                 "nutrition": 1,

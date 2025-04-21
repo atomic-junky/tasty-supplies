@@ -4,7 +4,7 @@
         "id": "minecraft:potion",
         "count": 1,
         "components": {
-          "minecraft:custom_model_data": 2750015,
+          "minecraft:custom_model_data": {"strings": ["tasty_supplies/apple_cider"]},
           "potion_contents": {
               "custom_color": 16777215
           }

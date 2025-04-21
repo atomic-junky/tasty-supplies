@@ -2,12 +2,8 @@
     "type": "minecraft:crafting_shaped",
     "category": "equipment",
     "key": {
-        "m": {
-            "item": "minecraft:diamond"
-        },
-        "s": {
-            "item": "minecraft:stick"
-        }
+        "m": "minecraft:diamond",
+        "s": "minecraft:stick"
     },
     "pattern": [
         "m",
@@ -16,27 +12,25 @@
     "result": {
         "id": "minecraft:wooden_hoe",
         "components": {
-            "custom_name": "{\"text\": \"Diamond Knife\", \"italic\": false}",
-            "custom_model_data": 2750009,
+            "custom_name": {"text": "Diamond Knife", "italic": false},
+            "custom_model_data": {"strings": ["tasty_supplies/diamond_knife"]},
             "max_damage": 1561,
-            "attribute_modifiers": {
-                "modifiers": [
-                    {
-                        "type": "generic.attack_damage",
-                        "slot": "mainhand",
-                        "id": "tasty_supplies:flint_diamond_damage",
-                        "amount": 4,
-                        "operation": "add_value"
-                    },
-                    {
-                        "type": "generic.attack_speed",
-                        "slot": "mainhand",
-                        "id": "tasty_supplies:flint_diamond_speed",
-                        "amount": 2,
-                        "operation": "add_value"
-                    }
-                ]
-            }
+            "attribute_modifiers": [
+                {
+                    "type": "attack_damage",
+                    "slot": "mainhand",
+                    "id": "tasty_supplies:flint_diamond_damage",
+                    "amount": 4,
+                    "operation": "add_value"
+                },
+                {
+                    "type": "attack_speed",
+                    "slot": "mainhand",
+                    "id": "tasty_supplies:flint_diamond_speed",
+                    "amount": 2,
+                    "operation": "add_value"
+                }
+            ]
         }
     }
-  }
+}
