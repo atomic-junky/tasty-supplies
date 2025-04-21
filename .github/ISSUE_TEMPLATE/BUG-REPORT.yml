@@ -1,0 +1,36 @@
+name: 🐛 Bug Report
+description: Create a new ticket for a bug.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    attributes:
+      label: Issue description
+      description: |
+        Describe your issue briefly. What doesn't work, and how do you expect it to work instead?
+      value: "A bug happened!"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reprod
+    attributes:
+      label: "Reproduction steps"
+      description: Please enter an explicit description of your issue
+      value: |
+        1. Step 1
+        2. Step 2
+        3. Step 3
+        ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: "Screenshots"
+      description: If applicable, add screenshots to help explain your problem.
+      value: |
+        ![DESCRIPTION](LINK.png)
+    validations:
+      required: false

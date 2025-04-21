@@ -1,0 +1,17 @@
+name: "💡 Feature Request"
+description: Create a new ticket for a new feature request
+title: "[REQUEST] "
+labels: ["enhancement"]
+body:
+- type: markdown
+  attributes:
+    value: |
+      - Write a descriptive proposal title above.
+      - Search for existing proposals to ensure that the feature has not already been suggested.
+
+- type: textarea
+  attributes:
+    label: Describe the feature / enhancement.
+    placeholder: Example - "Add Emerald Carrot."
+  validations:
+    required: true
