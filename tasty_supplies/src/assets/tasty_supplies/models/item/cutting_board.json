@@ -1,4 +1,5 @@
 {
+	"format_version": "1.21.8",
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "tasty_supplies:block/cutting_board",
@@ -77,7 +78,7 @@
 			"rotation": [-90, 0, 90]
 		},
 		"ground": {
-			"rotation": [0, 180, 0],
+			"rotation": [0, -180, 0],
 			"translation": [0, 2.5, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
@@ -87,11 +88,11 @@
 			"scale": [0.75, 0.75, 0.75]
 		},
 		"head": {
-			"rotation": [0, 180, 0],
-			"translation": [0, 13.75, 0]
+			"rotation": [0, -180, 0],
+			"translation": [0, 15.5, 0]
 		},
 		"fixed": {
-			"rotation": [0, 180, 0]
+			"rotation": [0, -180, 0]
 		}
 	},
 	"groups": [

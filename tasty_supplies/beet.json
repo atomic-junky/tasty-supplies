@@ -1,20 +1,18 @@
 {
-  "version": "0.12.0",
+  "version": "0.13.0",
   "author": "Atomic Junky",
   "output": "build",
   "data_pack": {
     "name": "Tasty_Supplies_-_Data_Pack",
-    "pack_format": 71,
-    "supported_formats": {"min_inclusive": 71, "max_inclusive": 71},
+    "pack_format": 83.0,
     "load": ["src"]
   },
   "resource_pack": {
     "name": "Tasty_Supplies_-_Resource_Pack",
-    "pack_format": 55,
-    "supported_formats": {"min_inclusive": 55, "max_inclusive": 55},
+    "pack_format": 65.0,
     "load": ["src"]
   },
   "pipeline": [
-    "main.build_resource_pack"
+    "main.build_pack"
   ]
 }
