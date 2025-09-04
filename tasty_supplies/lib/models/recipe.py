@@ -1,0 +1,188 @@
+from typing import List
+from beet import Recipe
+
+from .result import Result
+from .context import TSContext
+from .tools import to_absolute_path
+
+
+class _Recipe:
+    def __init__(
+        self, category: str = "misc", result: Result = Result(), suffix: str = ""
+    ):
+        self.category = category
+        self.result = result
+        self.suffix = suffix
+
+    def _register(self, item_name: str, base_item: str, ctx: TSContext) -> dict:
+        result = self._to_json() | {
+            "result": self.result._to_json(item_name, base_item)
+        }
+
+        ctx.data["tasty_supplies"].recipes[f"{item_name}{self.suffix}"] = Recipe(result)
+
+    def _to_json(self) -> dict:
+        raise NotImplementedError("Subclasses must implement this method.")
+
+
+class FakeRecipe(_Recipe):
+    pass
+
+
+class ShapelessRecipe(_Recipe):
+    def __init__(
+        self,
+        ingredients: list,
+        category: str = "misc",
+        result: Result = Result(),
+        suffix: str = "",
+    ):
+        super().__init__(category, result, suffix)
+        self.ingredients = ingredients
+
+    def _to_json(self) -> dict:
+        return {
+            "type": "minecraft:crafting_shapeless",
+            "category": self.category,
+            "ingredients": [
+                to_absolute_path(ingredient) for ingredient in self.ingredients
+            ],
+        }
+
+
+class ShapedRecipe(_Recipe):
+    def __init__(
+        self,
+        key: dict,
+        pattern: List[str],
+        result: Result = Result(),
+        category: str = "misc",
+        suffix: str = "",
+    ):
+        super().__init__(category, result, suffix)
+        self.key = key
+        self.pattern = pattern
+
+    def _to_json(self) -> dict:
+        return {
+            "type": "minecraft:crafting_shaped",
+            "category": self.category,
+            "key": self.key,
+            "pattern": self.pattern,
+        }
+
+
+## Automatically create item recipes for blasting, smoking and campfire.
+class AutoBakeRecipe(_Recipe):
+    def __init__(
+        self,
+        ingredient: str,
+        experience: float,
+        cookingtime: int,
+        category: str = "misc",
+        result=Result(),
+        suffix="",
+    ):
+        super().__init__(category, result, suffix)
+        self._blasting_recipe = BlastingRecipe(
+            ingredient=ingredient,
+            experience=experience,
+            cookingtime=cookingtime,
+            result=result,
+            suffix=suffix,
+        )
+        self._smoking_recipe = SmokingRecipe(
+            ingredient=ingredient,
+            experience=experience,
+            cookingtime=cookingtime * 0.7,
+            result=result,
+            suffix=suffix,
+        )
+        self._campfire_recipe = CampfireRecipe(
+            ingredient=ingredient,
+            cookingtime=cookingtime * 1.3,
+            result=result,
+            suffix=suffix,
+        )
+
+    def _register(self, item_name: str, base_item: str, ctx: TSContext) -> dict:
+        self._blasting_recipe._register(item_name, base_item, ctx)
+        self._smoking_recipe._register(item_name, base_item, ctx)
+        self._campfire_recipe._register(item_name, base_item, ctx)
+
+
+class BlastingRecipe(_Recipe):
+    def __init__(
+        self,
+        ingredient: str,
+        experience: float,
+        cookingtime: int,
+        category: str = "misc",
+        result: Result = Result(),
+        suffix: str = "",
+    ):
+        super().__init__(category, result, suffix)
+        self.ingredient = ingredient
+        self.experience = experience
+        self.cookingtime = cookingtime
+        self.type = "blasting"
+
+    def _to_json(self) -> dict:
+        return {
+            "type": f"minecraft:{self.type}",
+            "category": self.category,
+            "ingredient": to_absolute_path(self.ingredient),
+            "experience": self.experience,
+            "cookingtime": self.cookingtime,
+        }
+
+
+class SmeltingRecipe(BlastingRecipe):
+    def __init__(
+        self,
+        ingredient: str,
+        experience: float,
+        cookingtime: int,
+        category: str = "misc",
+        result: Result = Result(),
+        suffix: str = "",
+    ):
+        suffix += "_smelting"
+        super().__init__(ingredient, experience, cookingtime, category, result, suffix)
+        self.type = "smelting"
+
+
+class SmokingRecipe(BlastingRecipe):
+    def __init__(
+        self,
+        ingredient: str,
+        experience: float,
+        cookingtime: int,
+        category: str = "misc",
+        result: Result = Result(),
+        suffix: str = "",
+    ):
+        suffix += "_smoking"
+        super().__init__(ingredient, experience, cookingtime, category, result, suffix)
+        self.type = "smoking"
+
+
+class CampfireRecipe(BlastingRecipe):
+    def __init__(
+        self,
+        ingredient: str,
+        cookingtime: int,
+        category: str = "misc",
+        result: Result = Result(),
+        suffix: str = "",
+    ):
+        suffix += "_campfire"
+        super().__init__(ingredient, 0.0, cookingtime, category, result, suffix)
+        self.type = "campfire_cooking"
+
+    def _to_json(self) -> dict:
+        return {
+            "type": f"minecraft:{self.type}",
+            "ingredient": to_absolute_path(self.ingredient),
+            "cookingtime": self.cookingtime,
+        }
