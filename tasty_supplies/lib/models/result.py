@@ -29,7 +29,6 @@ class Result:
         return {
             "id": f"minecraft:{base_item}",
             "components": self._get_components_json(item_name),
-            "max_stack_size": self.max_stack_size,
             "count": self.count,
         }
 
@@ -42,6 +41,7 @@ class Result:
                     "italic": False,
                 },
                 "custom_model_data": {"strings": [f"tasty_supplies/{item_name}"]},
+                "max_stack_size": self.max_stack_size,
             }
             | self.components
         )

@@ -1,3 +1,2 @@
-beet[image] >= 0.110.0
-mecha >= 0.98
+beet[image] >= 0.111.0
 requests >= 2.32.3
