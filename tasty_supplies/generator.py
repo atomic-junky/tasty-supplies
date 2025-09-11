@@ -220,7 +220,7 @@ def generate(ctx: TSContext):
                 extra_components={
                     "max_damage": 190,
                     "weapon": {},
-                    "attribute_modifiers": knife_attr(3.5, 2, "copper"),
+                    "attribute_modifiers": knife_attr(3, 2, "copper"),
                 }
             ),
         ),
@@ -237,7 +237,7 @@ def generate(ctx: TSContext):
                 extra_components={
                     "max_damage": 131,
                     "weapon": {},
-                    "attribute_modifiers": knife_attr(3.5, 2, "flint"),
+                    "attribute_modifiers": knife_attr(2, 2, "flint"),
                 }
             ),
         ),
