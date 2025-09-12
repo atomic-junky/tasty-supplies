@@ -359,6 +359,21 @@ def _get_item_texture(ctx: TSContext, item_name: str, upscale: bool = True):
     path = ""
 
     if "#" in item_name:
+        item_name = item_name.removeprefix("minecraft:")
+        item_name = item_name.removeprefix("#")
+        tag = {}
+        if item_name in ctx.vanilla.data.item_tags.keys():
+            tag = ctx.vanilla.data.item_tags[item_name].data
+        elif item_name in ctx.vanilla.data.block_tags.keys():
+            tag = ctx.vanilla.data.block_tags[item_name].data
+        elif item_name in ctx.data.item_tags.keys():
+            tag = ctx.data.item_tags[item_name].data
+        elif item_name in ctx.data.block_tags.keys():
+            tag = ctx.data.block_tags[item_name].data
+
+        if "values" in tag:
+            return _get_item_texture(ctx, tag["values"][0])
+
         path = ctx.vanilla.assets.textures[f"minecraft:item/barrier"].source_path
     else:
         raw_name = item_name.removeprefix("minecraft:")

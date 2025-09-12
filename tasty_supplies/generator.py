@@ -290,7 +290,7 @@ def generate(ctx: TSContext):
     Item(
         "fried_egg",
         AutoBakeRecipe(
-            ingredient="#eggs",
+            ingredient="#minecraft:eggs",
             experience=0.1,
             cookingtime=140,
             result=FoodResult(nutrition=8, saturation=2.4),
