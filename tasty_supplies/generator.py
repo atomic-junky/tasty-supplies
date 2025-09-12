@@ -48,7 +48,7 @@ def generate(ctx: TSContext):
         base_item="bread",
     ).register(ctx)
 
-    Item("apple_pie_slice").register(ctx)
+    Item("apple_pie_slice", CuttingBoardRecipe("apple_pie")).register(ctx)
 
     Item(
         "beef_skewer",
@@ -78,7 +78,7 @@ def generate(ctx: TSContext):
         ),
     ).register(ctx)
 
-    Item("cheese_slice").register(ctx)
+    Item("cheese_slice", CuttingBoardRecipe("cheese")).register(ctx)
 
     Item(
         "chocolate_pie",
@@ -96,7 +96,7 @@ def generate(ctx: TSContext):
         ),
     ).register(ctx)
 
-    Item("chocolate_pie_slice").register(ctx)
+    Item("chocolate_pie_slice", CuttingBoardRecipe("chocolate_pie")).register(ctx)
 
     BlockItem(
         "cutting_board",
@@ -387,7 +387,7 @@ def generate(ctx: TSContext):
         ),
     ).register(ctx)
 
-    Item("glow_berry_pie_slice").register(ctx)
+    Item("glow_berry_pie_slice", CuttingBoardRecipe("glow_berry_pie")).register(ctx)
 
     Item(
         "honey_cookie",
@@ -578,8 +578,10 @@ def generate(ctx: TSContext):
     ).register(ctx)
 
     Item(
-        "pie_crust", ShapedRecipe(key={"W": "minecraft:wheat"}, pattern=["W W", " W "])
+        "pie_crust", ShapedRecipe(key={"W": "minecraft:wheat"}, pattern=["WWW"])
     ).register(ctx)
+
+    Item("potato_fries", CuttingBoardRecipe("baked_potato")).register(ctx)
 
     Item(
         "sweet_berry_cheesecake",
@@ -596,7 +598,9 @@ def generate(ctx: TSContext):
         ),
     ).register(ctx)
 
-    Item("sweet_berry_cheesecake_slice").register(ctx)
+    Item(
+        "sweet_berry_cheesecake_slice", CuttingBoardRecipe("sweet_berry_cheesecake")
+    ).register(ctx)
 
     Item(
         "sweet_berry_cookie",

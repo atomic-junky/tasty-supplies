@@ -25,6 +25,9 @@ class Result:
         self.max_stack_size = max_stack_size
         self.components = extra_components
 
+    def _get_custom_model_data(self, item_name: str) -> dict:
+        return {"strings": [f"tasty_supplies/{item_name}"]}
+
     def _to_json(self, item_name: str, base_item: str) -> dict:
         return {
             "id": f"minecraft:{base_item}",
@@ -40,7 +43,7 @@ class Result:
                     "text": item_name.replace("_", " ").title(),
                     "italic": False,
                 },
-                "custom_model_data": {"strings": [f"tasty_supplies/{item_name}"]},
+                "custom_model_data": self._get_custom_model_data(item_name),
                 "max_stack_size": self.max_stack_size,
             }
             | self.components
