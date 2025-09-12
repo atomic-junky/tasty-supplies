@@ -18,7 +18,7 @@ FURNACE_TABLE_BG = Image.open(
 CUTTING_BOARD_BG = Image.open(
     "./docs/_media/recipes/blank_recipes/blank_cutting_board_recipe.png"
 ).convert("RGBA")
-ITEMS_LOCATION = "./tasty_supplies/src/assets/tasty_supplies/textures/item"
+ITEM_LOCATION = "./tasty_supplies/src/assets/tasty_supplies/textures/item"
 BLOCK_LOCATION = "./tasty_supplies/src/assets/tasty_supplies/textures/block"
 RECIPES_RESULT = "./docs/_media/recipes"
 
@@ -384,8 +384,8 @@ def _get_item_texture(ctx: TSContext, item_name: str, upscale: bool = True):
             path = ctx.vanilla.assets.textures[texture_item_name].source_path
         elif texture_block_name in ctx.vanilla.assets.textures.keys():
             path = ctx.vanilla.assets.textures[texture_block_name].source_path
-        elif f"{item_name}.png" in os.listdir(ITEMS_LOCATION):
-            path = os.path.join(ITEMS_LOCATION, f"{item_name}.png")
+        elif f"{item_name}.png" in os.listdir(ITEM_LOCATION):
+            path = os.path.join(ITEM_LOCATION, f"{item_name}.png")
         elif f"{item_name}.png" in os.listdir(BLOCK_LOCATION):
             path = os.path.join(BLOCK_LOCATION, f"{item_name}.png")
 

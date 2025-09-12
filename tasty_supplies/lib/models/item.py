@@ -15,6 +15,9 @@ class Item:
         self.base_item = base_item
 
     def register(self, ctx: TSContext):
+        if not self.name in ctx.showcase_items:
+            ctx.showcase_items.append(self.name)
+
         ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
         ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model()
         self._register_model_case(ctx)

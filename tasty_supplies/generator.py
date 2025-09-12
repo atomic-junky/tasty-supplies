@@ -625,5 +625,7 @@ def generate(ctx: TSContext):
         base_item="rabbit_stew",
     ).register(ctx)
 
+    ctx._create_item_showcase()
+
     log.info(f"Items generated")
     log.info(f"\t- {len(ctx.data.recipes)} recipes")
