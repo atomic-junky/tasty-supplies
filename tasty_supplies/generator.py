@@ -98,6 +98,26 @@ def generate(ctx: TSContext):
 
     Item("chocolate_pie_slice", CuttingBoardRecipe("chocolate_pie")).register(ctx)
 
+    Item(
+        "cherry_blossom_pie",
+        ShapedRecipe(
+            key={
+                "C": "minecraft:cherry_leaves",
+                "M": "minecraft:milk_bucket",
+                "H": "minecraft:honeycomb",
+                "B": "minecraft:bread",
+            },
+            pattern=["CCC", "MMM", "HBH"],
+            result=FoodResult(
+                nutrition=8, saturation=6, effects=[Effect("slow_falling", 3600, 1)]
+            ),
+        ),
+    ).register(ctx)
+
+    Item("cherry_blossom_pie_slice", CuttingBoardRecipe("cherry_blossom_pie")).register(
+        ctx
+    )
+
     BlockItem(
         "cutting_board",
         ShapedRecipe(
@@ -578,7 +598,7 @@ def generate(ctx: TSContext):
     ).register(ctx)
 
     Item(
-        "pie_crust", ShapedRecipe(key={"W": "minecraft:wheat"}, pattern=["WWW"])
+        "pie_crust", ShapedRecipe(key={"W": "minecraft:wheat"}, pattern=["W W", " W "])
     ).register(ctx)
 
     Item("potato_fries", CuttingBoardRecipe("baked_potato")).register(ctx)
