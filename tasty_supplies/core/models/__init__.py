@@ -1,4 +1,5 @@
 from .context import TSContext
+from .category import Category
 from .recipe import (
     ShapedRecipe,
     ShapelessRecipe,

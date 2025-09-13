@@ -3,7 +3,7 @@ from beet import Model, ItemModel
 from .context import TSContext
 from .recipe import _Recipe, FakeRecipe
 from .tools import to_absolute_path
-from lib.logger import log
+from core.logger import log
 
 
 class Item:

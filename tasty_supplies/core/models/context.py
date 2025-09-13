@@ -34,7 +34,10 @@ class TSContext(Context):
 
 def _load_item_textures(items: tuple):
     for item_name in items:
-        if f"{item_name}.png" in os.listdir(ITEM_LOCATION):
+        if item_name == "\n":
+            item_textures.append(item_name)
+            continue
+        elif f"{item_name}.png" in os.listdir(ITEM_LOCATION):
             path = os.path.join(ITEM_LOCATION, f"{item_name}.png")
         elif f"{item_name}.png" in os.listdir(BLOCK_LOCATION):
             path = os.path.join(BLOCK_LOCATION, f"{item_name}.png")
@@ -43,8 +46,26 @@ def _load_item_textures(items: tuple):
 
 
 def _build_displayer():
-    col = 9
-    raw = math.ceil(len(item_textures) / col)
+    col = 0
+    raw = 0
+    idx = 0
+    for item in item_textures:
+        if isinstance(item, str):
+            if idx >= len(item_textures) - 1:
+                continue
+
+            if col < 9:
+                raw += 1
+
+            col = 0
+            raw += 1
+            idx += 1
+            continue
+        col += 1
+        if col >= 9:
+            col = 0
+            raw += 1
+        idx += 1
 
     header_size = UI_HEADER.size
     slots_size = UI_SLOTS.size
@@ -66,10 +87,15 @@ def _build_displayer():
 def _append_items(im):
     padding = (7, UI_HEADER.size[1])
 
+    raw = 0
+    col = 0
     for texture in item_textures:
-        index = item_textures.index(texture)
-        raw = math.floor(index / 9)
-        col = index - raw * 9
+        if isinstance(texture, str):
+            if col > 0:
+                raw += 1
+            raw += 1
+            col = 0
+            continue
 
         mask = _create_a_mask(texture)
 
@@ -81,6 +107,11 @@ def _append_items(im):
             ),
             mask,
         )
+        col += 1
+
+        if col >= 9:
+            col = 0
+            raw += 1
 
     return im
 

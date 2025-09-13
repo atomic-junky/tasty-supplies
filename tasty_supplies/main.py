@@ -1,9 +1,9 @@
 import json
 from beet import PngFile, Context, Model, ItemModel
 
-from lib import log
+from core import log
 from generator import generate
-from lib import TSContext
+from core import TSContext
 
 
 def build_pack(ctx: Context):
