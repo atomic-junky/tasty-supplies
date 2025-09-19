@@ -66,6 +66,7 @@ jobs:
           if [ -n "$changed_files" ]; then
             # Stage only changed files
             git add $changed_files
+            git pull
             git commit -m "Update Tasty Supplies Invicon"
             git push
           else
