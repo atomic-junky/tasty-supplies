@@ -1,0 +1,91 @@
+name: Update All Minecraft Invicon
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 13 * * 3'
+
+jobs:
+  update-icons:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Copy, rename & resize Invicon sprites
+        run: |
+          set -euo pipefail
+          # Clean old icons to avoid duplicates and name-change issues
+          rm -rf docs/icons32 docs/icons64 docs/icons512
+          mkdir -p docs/icons32 docs/icons64 docs/icons512
+          
+          overrides_json=$(cat docs/name_overrides.json)
+
+          for f in tasty_supplies/src/assets/tasty_supplies/textures/item/*.png; do
+            [ -e "$f" ] || continue
+            base=$(basename "$f" .png)
+            
+            base=$(echo "$base" | awk -F'_' '{
+              for(i=1;i<=NF;i++){
+                $i=tolower($i);
+                $i=toupper(substr($i,1,1)) substr($i,2)
+              }
+              OFS="_"; print
+            }')
+            
+            proper="${base// /_}"
+
+            # Apply override from JSON if exists
+            override=$(echo "$overrides_json" | jq -r --arg key "$proper" '.[$key] // empty')
+            if [ -n "$override" ]; then
+              proper="$override"
+            fi
+          
+            newname="Invicon_${proper}.png"
+          
+            # Resize images
+            convert "$f" -filter Point -resize 32x32 "docs/icons32/$newname"
+            convert "$f" -filter Point -resize 64x64 "docs/icons64/$newname"
+            convert "$f" -filter Point -resize 512x512 "docs/icons512/$newname"
+          done
+
+      - name: Commit & push only changed files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          # Check for changed files
+          changed_files=$(git status --porcelain | awk '{print $2}')
+
+          if [ -n "$changed_files" ]; then
+            # Stage only changed files
+            git add $changed_files
+            git commit -m "Update Tasty Supplies Invicon"
+            git push
+          else
+            echo "No changed files to commit, skipping push"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload icons32 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: icons32
+          path: docs/icons32
+
+      - name: Upload icons64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: icons64
+          path: docs/icons64
+          
+      - name: Upload icons512 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: icons512
+          path: docs/icons512
