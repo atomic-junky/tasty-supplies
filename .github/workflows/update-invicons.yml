@@ -1,9 +1,11 @@
 name: Update All Minecraft Invicon
 
+
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 13 * * 3'
+  push:
+    paths:
+      - 'tasty_supplies/src/assets/tasty_supplies/textures/*'
 
 jobs:
   update-icons:
