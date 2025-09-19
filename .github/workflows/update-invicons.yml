@@ -55,26 +55,6 @@ jobs:
             convert "$f" -filter Point -resize 512x512 "docs/icons512/$newname"
           done
 
-      - name: Commit & push only changed files
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-          # Check for changed files
-          changed_files=$(git status --porcelain | awk '{print $2}')
-
-          if [ -n "$changed_files" ]; then
-            # Stage only changed files
-            git add $changed_files
-            git pull
-            git commit -m "Update Tasty Supplies Invicon"
-            git push
-          else
-            echo "No changed files to commit, skipping push"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload icons32 artifacts
         uses: actions/upload-artifact@v4
         with:
