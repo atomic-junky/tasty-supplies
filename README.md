@@ -1,6 +1,8 @@
 ![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
 > A [Farmer's Delight](https://modrinth.com/mod/farmers-delight) inspired Datapack for Minecraft 1.21.5+.
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y7DH7YN)
+
 Tasty Supplies is a datapack that add a lot of new foods, recipes and even cooking mechanics in Minecraft by remaining Vanilla.
 You'll be able to prepare a wide variety of delicious dishes from cookies to salad and pies.
 
