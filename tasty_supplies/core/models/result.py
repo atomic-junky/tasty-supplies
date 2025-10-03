@@ -42,6 +42,7 @@ class Result:
                 "custom_name": {
                     "text": item_name.replace("_", " ").title(),
                     "italic": False,
+                    "color": "white",
                 },
                 "custom_model_data": self._get_custom_model_data(item_name),
                 "max_stack_size": self.max_stack_size,
@@ -59,6 +60,8 @@ class FoodResult(Result):
         saturation: float = 0.0,
         can_always_eat: bool = False,
         effects: List[Effect] = [],
+        consume_effect_type: str = "apply_effects",
+        consume_effect_diameter: float = 12.0,
         extra_components: dict = {},
     ):
         extra_components["food"] = {
@@ -70,8 +73,9 @@ class FoodResult(Result):
         extra_components["consumable"] = {
             "on_consume_effects": [
                 {
-                    "type": "apply_effects",
+                    "type": consume_effect_type,
                     "effects": [effect._to_json() for effect in effects],
+                    "diameter": consume_effect_diameter,
                 }
             ],
         }

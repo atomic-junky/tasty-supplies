@@ -195,5 +195,8 @@ class CuttingBoardRecipe(_Recipe):
         self.ingredient = ingredient
         super().__init__("none", Result(), suffix)
 
-    def _to_json(self) -> dict:
+    def _register(self, item_name: str, base_item: str, ctx: TSContext) -> dict:
         pass
+
+    def _to_json(self) -> dict:
+        return {}

@@ -5,10 +5,10 @@ def generate(ctx: TSContext):
     log.info("Generating items...")
 
     DrinkCategory().register(ctx)
-    PieCategory().register(ctx)
     MealCategory().register(ctx)
     KnifeCategory().register(ctx)
     WorksationCategory().register(ctx)
+    Sweets().register(ctx)
 
     ctx._create_item_showcase()
 

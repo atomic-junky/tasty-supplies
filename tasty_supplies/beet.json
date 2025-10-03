@@ -4,12 +4,12 @@
   "output": "build",
   "data_pack": {
     "name": "Tasty Supplies - Data_Pack",
-    "pack_format": 86.0,
+    "pack_format": 88.0,
     "load": ["src"]
   },
   "resource_pack": {
     "name": "Tasty Supplies - Resource_Pack",
-    "pack_format": 68.0,
+    "pack_format": 69.0,
     "load": ["src"]
   },
   "pipeline": [
