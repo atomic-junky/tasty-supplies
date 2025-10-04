@@ -4,10 +4,10 @@ from core import *
 def generate(ctx: TSContext):
     log.info("Generating items...")
 
-    DrinkCategory().register(ctx)
-    MealCategory().register(ctx)
-    KnifeCategory().register(ctx)
-    WorksationCategory().register(ctx)
+    Beverage().register(ctx)
+    Meals().register(ctx)
+    Tools().register(ctx)
+    Worksation().register(ctx)
     Sweets().register(ctx)
 
     log.info(f"Items generated")

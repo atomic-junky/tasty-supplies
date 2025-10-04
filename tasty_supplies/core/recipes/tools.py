@@ -1,7 +1,7 @@
 from .. import TSContext, Item, ShapedRecipe, Result, Category
 
 
-class KnifeCategory(Category):
+class Tools(Category):
     def __init__(self):
         super().__init__("Knife")
 

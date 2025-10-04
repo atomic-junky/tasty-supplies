@@ -8,7 +8,7 @@ from .. import (
 )
 
 
-class WorksationCategory(Category):
+class Worksation(Category):
     def __init__(self):
         super().__init__("Workstation")
 

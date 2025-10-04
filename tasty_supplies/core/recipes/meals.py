@@ -12,7 +12,7 @@ from .. import (
 )
 
 
-class MealCategory(Category):
+class Meals(Category):
     def generate(self, ctx: TSContext):
         Item(
             "beef_skewer",

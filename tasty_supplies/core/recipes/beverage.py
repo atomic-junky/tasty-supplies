@@ -9,7 +9,7 @@ from .. import (
 )
 
 
-class DrinkCategory(Category):
+class Beverage(Category):
     def __init__(self):
         super().__init__("Drinks")
 
