@@ -13,6 +13,7 @@
     "load": ["src"]
   },
   "pipeline": [
-    "main.build_pack"
+    "main.build_pack",
+    "beet.contrib.minify_function"
   ]
 }

@@ -8,6 +8,7 @@ from .. import (
     FoodResult,
     Effect,
     Category,
+    FoodSliceResult,
 )
 
 
@@ -167,7 +168,12 @@ class MealCategory(Category):
             base_item="beetroot_soup",
         ).register(ctx)
 
-        Item("potato_fries", CuttingBoardRecipe("baked_potato")).register(ctx)
+        Item(
+            "potato_fries",
+            CuttingBoardRecipe(
+                "baked_potato", FoodSliceResult(nutrition=1.5, saturation=1.5)
+            ),
+        ).register(ctx)
 
         Item(
             "sweet_berry_cookie",

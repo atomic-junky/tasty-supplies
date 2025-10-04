@@ -80,7 +80,37 @@ class FoodResult(Result):
             ],
         }
 
-        super().__init__(count, max_stack_size, extra_components)
+        super().__init__(
+            count=count,
+            max_stack_size=max_stack_size,
+            extra_components=extra_components,
+        )
+
+
+class FoodSliceResult(FoodResult):
+    def __init__(
+        self,
+        count: int = 4,
+        max_stack_size: int = 64,
+        nutrition: int = 0,
+        saturation: float = 0.0,
+        can_always_eat: bool = False,
+        effects: List[Effect] = [],
+        consume_effect_type: str = "apply_effects",
+        consume_effect_diameter: float = 12.0,
+        extra_components: dict = {},
+    ):
+        super().__init__(
+            count=count,
+            max_stack_size=max_stack_size,
+            nutrition=nutrition,
+            saturation=saturation,
+            can_always_eat=can_always_eat,
+            effects=effects,
+            consume_effect_type=consume_effect_type,
+            consume_effect_diameter=consume_effect_diameter,
+            extra_components=extra_components,
+        )
 
 
 class PotionResult(Result):

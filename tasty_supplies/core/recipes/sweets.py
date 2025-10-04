@@ -3,7 +3,7 @@ from .. import (
     Item,
     ShapelessRecipe,
     ShapedRecipe,
-    PotionResult,
+    FoodSliceResult,
     CuttingBoardRecipe,
     AutoBakeRecipe,
     Effect,
@@ -54,7 +54,12 @@ class Sweets(Category):
             base_item="bread",
         ).register(ctx)
 
-        Item("apple_pie_slice", CuttingBoardRecipe("apple_pie")).register(ctx)
+        Item(
+            "apple_pie_slice",
+            CuttingBoardRecipe(
+                "apple_pie", FoodSliceResult(nutrition=2, saturation=1.5)
+            ),
+        ).register(ctx)
 
         ## Cheese
 
@@ -68,7 +73,10 @@ class Sweets(Category):
             ),
         ).register(ctx)
 
-        Item("cheese_slice", CuttingBoardRecipe("cheese")).register(ctx)
+        Item(
+            "cheese_slice",
+            CuttingBoardRecipe("cheese", FoodSliceResult(nutrition=2, saturation=1.4)),
+        ).register(ctx)
 
         ## Cherry Blossom Pie
 
@@ -89,7 +97,15 @@ class Sweets(Category):
         ).register(ctx)
 
         Item(
-            "cherry_blossom_pie_slice", CuttingBoardRecipe("cherry_blossom_pie")
+            "cherry_blossom_pie_slice",
+            CuttingBoardRecipe(
+                "cherry_blossom_pie",
+                FoodSliceResult(
+                    nutrition=2,
+                    saturation=1.5,
+                    effects=[Effect("slow_falling", 900, 1)],
+                ),
+            ),
         ).register(ctx)
 
         ## Chocolate Pie
@@ -110,7 +126,15 @@ class Sweets(Category):
             ),
         ).register(ctx)
 
-        Item("chocolate_pie_slice", CuttingBoardRecipe("chocolate_pie")).register(ctx)
+        Item(
+            "chocolate_pie_slice",
+            CuttingBoardRecipe(
+                "chocolate_pie",
+                FoodSliceResult(
+                    nutrition=2, saturation=1.5, effects=[Effect("speed", 900, 1)]
+                ),
+            ),
+        ).register(ctx)
 
         ## Chorus Pie
 
@@ -130,13 +154,27 @@ class Sweets(Category):
                     consume_effect_type="teleport_randomly",
                     consume_effect_diameter=32,
                     extra_components={
-                        "use_cooldown": {"seconds": 2.0, "cooldown_group": "chorus"}
+                        "use_cooldown": {"seconds": 2.0, "cooldown_group": "chorus_pie"}
                     },
                 ),
             ),
         ).register(ctx)
 
-        Item("chorus_pie", CuttingBoardRecipe("chorus_pie")).register(ctx)
+        Item(
+            "chorus_pie_slice",
+            CuttingBoardRecipe(
+                "chorus_pie",
+                FoodSliceResult(
+                    nutrition=2,
+                    saturation=1.5,
+                    consume_effect_type="teleport_randomly",
+                    consume_effect_diameter=8,
+                    extra_components={
+                        "use_cooldown": {"seconds": 1.0, "cooldown_group": "chorus_pie"}
+                    },
+                ),
+            ),
+        ).register(ctx)
 
         ## Glow Berry Pie
 
@@ -156,7 +194,15 @@ class Sweets(Category):
             ),
         ).register(ctx)
 
-        Item("glow_berry_pie_slice", CuttingBoardRecipe("glow_berry_pie")).register(ctx)
+        Item(
+            "glow_berry_pie_slice",
+            CuttingBoardRecipe(
+                "glow_berry_pie",
+                FoodSliceResult(
+                    nutrition=2, saturation=1.5, effects=[Effect("glowing", 900, 1)]
+                ),
+            ),
+        ).register(ctx)
 
         ## Sweet Berry Cheesecake
 
@@ -176,7 +222,13 @@ class Sweets(Category):
         ).register(ctx)
 
         Item(
-            "sweet_berry_cheesecake_slice", CuttingBoardRecipe("sweet_berry_cheesecake")
+            "sweet_berry_cheesecake_slice",
+            CuttingBoardRecipe(
+                "sweet_berry_cheesecake",
+                FoodSliceResult(
+                    nutrition=2, saturation=1.5, effects=[Effect("speed", 900, 1)]
+                ),
+            ),
         ).register(ctx)
 
         ## Croissant

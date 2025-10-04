@@ -3,7 +3,7 @@
 ## @pos => must be the interaction
 
 # Do nothing if the player is interacting with a knife (or wooden hoe)
-execute at @s on target if data entity @s SelectedItem{id:"minecraft:wooden_hoe"} run return run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction
+execute at @s on target if data entity @s SelectedItem{id:"minecraft:wooden_sword"} run return run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction
 
 # Do nothing if there is already an item on the cutting board
 execute at @s unless data entity @e[type=item_display, distance=..1, limit=1, sort=nearest] item.components."minecraft:custom_data"{tags:["cutting_board_display"]} run return run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction

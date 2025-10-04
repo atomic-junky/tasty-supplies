@@ -1,6 +1,6 @@
 import os
 from typing import List
-from beet import Recipe
+from beet import Function, Recipe
 from PIL import Image
 
 from .result import Result
@@ -191,12 +191,42 @@ class CampfireRecipe(BlastingRecipe):
 
 
 class CuttingBoardRecipe(_Recipe):
-    def __init__(self, ingredient: str, suffix=""):
+    def __init__(self, ingredient: str, result: Result, suffix=""):
         self.ingredient = ingredient
-        super().__init__("none", Result(), suffix)
+        self.result = result
+        super().__init__("none", result, suffix)
 
     def _register(self, item_name: str, base_item: str, ctx: TSContext) -> dict:
-        pass
+        recipe_path: str = f"tasty_supplies:cutting_board/recipes/{item_name}"
+        result_item: dict = self.result._to_json(item_name, base_item)
+        is_vanilla_ingredient: bool = False
+
+        for recipe in ctx.vanilla.data.recipes.keys():
+            if self.ingredient in recipe:
+                is_vanilla_ingredient = True
+                break
+
+        ctx.data[recipe_path] = Function(
+            [
+                "summon minecraft:item ~ ~.5 ~ {Item:%s}" % result_item,
+                "kill @s",
+            ]
+        )
+        f_cut_item = ctx.data["tasty_supplies"].functions.get("cutting_board/cut_item")
+        if not is_vanilla_ingredient:
+            f_cut_item.append(
+                Function(
+                    'execute if data entity @s item{id: "minecraft:bread", components: {"minecraft:custom_model_data": {"strings": ["tasty_supplies/%s"]}}} run function %s'
+                    % (self.ingredient, recipe_path)
+                )
+            )
+        else:
+            f_cut_item.append(
+                Function(
+                    'execute if data entity @s item{id: "%s"} run function %s'
+                    % (to_absolute_path(self.ingredient), recipe_path)
+                )
+            )
 
     def _to_json(self) -> dict:
         return {}

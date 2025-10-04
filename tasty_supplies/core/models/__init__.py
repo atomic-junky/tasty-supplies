@@ -10,5 +10,5 @@ from .recipe import (
     CampfireRecipe,
     CuttingBoardRecipe,
 )
-from .result import Result, PotionResult, FoodResult, Effect
+from .result import Result, PotionResult, FoodResult, FoodSliceResult, Effect
 from .item import Item, BlockItem
