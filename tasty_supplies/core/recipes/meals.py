@@ -9,6 +9,7 @@ from .. import (
     Effect,
     Category,
     FoodSliceResult,
+    aliases,
 )
 
 
@@ -188,6 +189,19 @@ class Meals(Category):
         ).register(ctx)
 
         Item(
+            "stuffed_potato",
+            ShapelessRecipe(
+                ingredients=[
+                    "minecraft:baked_potato",
+                    "minecraft:cooked_beef",
+                    "minecraft:carrot",
+                    "minecraft:milk_bucket",
+                ],
+                result=FoodResult(nutrition=6, saturation=7.8),
+            ),
+        ).register(ctx)
+
+        Item(
             "warped_mutton",
             ShapelessRecipe(
                 ingredients=["warped_roots", "warped_roots", "bowl", "cooked_mutton"],
@@ -196,4 +210,24 @@ class Meals(Category):
                 ),
             ),
             base_item="rabbit_stew",
+        ).register(ctx)
+
+        Item(
+            "kelp_roll",
+            ShapedRecipe(
+                key={
+                    "k": "minecraft:dried_kelp",
+                    "r": aliases.COOKED_RICE,
+                    "c": "minecraft:carrot",
+                },
+                pattern=["rcr", "kkk"],
+                result=FoodResult(nutrition=10, saturation=12.6),
+            ),
+        ).register(ctx)
+
+        Item(
+            "kelp_roll_slice",
+            CuttingBoardRecipe(
+                "kelp_roll", FoodSliceResult(nutrition=2.5, saturation=6.2)
+            ),
         ).register(ctx)
