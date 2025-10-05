@@ -86,7 +86,7 @@ class AutoBakeRecipe(_Recipe):
         suffix="",
     ):
         super().__init__(category, result, suffix)
-        self._blasting_recipe = BlastingRecipe(
+        self._blasting_recipe = SmeltingRecipe(
             ingredient=ingredient,
             experience=experience,
             cookingtime=cookingtime,
@@ -113,7 +113,7 @@ class AutoBakeRecipe(_Recipe):
         self._campfire_recipe._register(item_name, base_item, ctx)
 
 
-class BlastingRecipe(_Recipe):
+class SmeltingRecipe(_Recipe):
     def __init__(
         self,
         ingredient: str,
@@ -127,7 +127,7 @@ class BlastingRecipe(_Recipe):
         self.ingredient = ingredient
         self.experience = experience
         self.cookingtime = cookingtime
-        self.type = "blasting"
+        self.type = "smelting"
 
     def _to_json(self) -> dict:
         return {
@@ -139,7 +139,7 @@ class BlastingRecipe(_Recipe):
         }
 
 
-class SmeltingRecipe(BlastingRecipe):
+class BlastingRecipe(SmeltingRecipe):
     def __init__(
         self,
         ingredient: str,
@@ -149,9 +149,9 @@ class SmeltingRecipe(BlastingRecipe):
         result: Result = Result(),
         suffix: str = "",
     ):
-        suffix += "_smelting"
+        suffix += "_blasting"
         super().__init__(ingredient, experience, cookingtime, category, result, suffix)
-        self.type = "smelting"
+        self.type = "blasting"
 
 
 class SmokingRecipe(BlastingRecipe):
