@@ -231,3 +231,27 @@ class Meals(Category):
                 "kelp_roll", FoodSliceResult(nutrition=2.5, saturation=6.2)
             ),
         ).register(ctx)
+
+        Item(
+            "salmon_roll",
+            ShapedRecipe(
+                key={
+                    "s": aliases.RAW_SALMON_SLICE,
+                    "r": aliases.COOKED_RICE,
+                },
+                pattern=["s", "s", "r"],
+                result=FoodResult(nutrition=7, saturation=9.4, count=2),
+            ),
+        ).register(ctx)
+
+        Item(
+            "cod_roll",
+            ShapedRecipe(
+                key={
+                    "c": aliases.RAW_COD_SLICE,
+                    "r": aliases.COOKED_RICE,
+                },
+                pattern=["c", "c", "r"],
+                result=FoodResult(nutrition=7, saturation=9.4, count=2),
+            ),
+        ).register(ctx)

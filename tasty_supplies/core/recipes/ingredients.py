@@ -29,3 +29,19 @@ class Ingredients(Category):
             ),
             base_item=aliases.COOKED_RICE,
         ).register(ctx)
+
+        Item(
+            "raw_cod_slice",
+            CuttingBoardRecipe(
+                "cod", result=FoodResult(count=2, nutrition=1, saturation=0.8)
+            ),
+            base_item=aliases.RAW_COD_SLICE,
+        ).register(ctx)
+
+        Item(
+            "raw_salmon_slice",
+            CuttingBoardRecipe(
+                "salmon", result=FoodResult(count=2, nutrition=1, saturation=0.8)
+            ),
+            base_item=aliases.RAW_SALMON_SLICE,
+        ).register(ctx)
