@@ -1,0 +1,21 @@
+version: 0.13.0
+author: Atomic Junky
+
+data_pack:
+  name: "Tasty Supplies - Data Pack"
+  description: "Data pack that adds over 50 new recipes to Minecraft!"
+  min_format: 80
+  max_format: [88, 0]
+  load: "src"
+resource_pack:
+  name: "Tasty Supplies - Resource Pack"
+  description: "The offcial Resource pack for the Tasty Supplies Data pack!"
+  min_format: 63
+  max_format: [69, 0]
+  load: "src"
+
+pipeline:
+  - "main.build_pack"
+  - "beet.contrib.minify_function"
+
+output: build
