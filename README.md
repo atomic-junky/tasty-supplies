@@ -1,5 +1,4 @@
 ![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
-> A [Farmer's Delight](https://modrinth.com/mod/farmers-delight) inspired Datapack for Minecraft 1.21.5+.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y7DH7YN)
 
