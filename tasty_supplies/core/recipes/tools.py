@@ -1,4 +1,5 @@
-from .. import TSContext, Item, ShapedRecipe, Result, Category
+from core.models import TSContext, Item, ShapedRecipe, Result, Category
+from core.utils import to_absolute_path
 
 
 class Tools(Category):
@@ -8,19 +9,19 @@ class Tools(Category):
     def generate(self, ctx: TSContext):
         knife_pattern = ["m", "s"]
 
-        def knife_shape(m: str):
-            return {"m": f"minecraft:{m}", "s": "minecraft:stick"}
+        def knife_key(m: str):
+            return {"m": to_absolute_path(m), "s": "minecraft:stick"}
 
-        def knife_attr(damage: float, speed: float, id_prefix: str):
-            base_damage = 4
-            base_speed = 1.6
+        def tool_attr(damage: float, speed: float, id_prefix: str):
+            base_damage = 1.0
+            base_speed = 4.0
 
             return [
                 {
                     "type": "attack_damage",
                     "slot": "mainhand",
-                    "id": f"tasty_supplies:{id_prefix}_knife_damage",
-                    "amount": max(round(damage - base_damage, 1), 0),
+                    "id": f"tasty_supplies:{id_prefix}_damage",
+                    "amount": round(damage - base_damage, 1),
                     "operation": "add_value",
                     "display": {
                         "type": "override",
@@ -43,8 +44,8 @@ class Tools(Category):
                 {
                     "type": "attack_speed",
                     "slot": "mainhand",
-                    "id": f"tasty_supplies:{id_prefix}_knife_speed",
-                    "amount": max(round(speed - base_speed, 1), 0),
+                    "id": f"tasty_supplies:{id_prefix}_speed",
+                    "amount": round(speed - base_speed, 1),
                     "operation": "add_value",
                     "display": {
                         "type": "override",
@@ -69,7 +70,7 @@ class Tools(Category):
         Item(
             "netherite_knife",
             ShapedRecipe(
-                key=knife_shape("netherite_ingot"),
+                key=knife_key("netherite_ingot"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -77,7 +78,7 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 2032,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(4.5, 2.3, "netherite"),
+                        "attribute_modifiers": tool_attr(4.5, 2.3, "netherite_knife"),
                     },
                 ),
             ),
@@ -87,7 +88,7 @@ class Tools(Category):
         Item(
             "diamond_knife",
             ShapedRecipe(
-                key=knife_shape("diamond"),
+                key=knife_key("diamond"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -95,7 +96,7 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 1561,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(4, 2.3, "diamond"),
+                        "attribute_modifiers": tool_attr(4, 2.3, "diamond_knife"),
                     },
                 ),
             ),
@@ -105,7 +106,7 @@ class Tools(Category):
         Item(
             "golden_knife",
             ShapedRecipe(
-                key=knife_shape("gold_ingot"),
+                key=knife_key("gold_ingot"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -113,7 +114,7 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 32,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(2, 2.3, "golden"),
+                        "attribute_modifiers": tool_attr(2, 2.3, "golden_knife"),
                     },
                 ),
             ),
@@ -123,7 +124,7 @@ class Tools(Category):
         Item(
             "iron_knife",
             ShapedRecipe(
-                key=knife_shape("iron_ingot"),
+                key=knife_key("iron_ingot"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -131,7 +132,7 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 250,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(3.5, 2.3, "iron"),
+                        "attribute_modifiers": tool_attr(3.5, 2.3, "iron_knife"),
                     },
                 ),
             ),
@@ -141,7 +142,7 @@ class Tools(Category):
         Item(
             "copper_knife",
             ShapedRecipe(
-                key=knife_shape("copper_ingot"),
+                key=knife_key("copper_ingot"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -149,7 +150,7 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 190,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(3, 2.3, "copper"),
+                        "attribute_modifiers": tool_attr(3, 2.3, "copper_knife"),
                     },
                 ),
             ),
@@ -159,7 +160,7 @@ class Tools(Category):
         Item(
             "flint_knife",
             ShapedRecipe(
-                key=knife_shape("flint"),
+                key=knife_key("flint"),
                 pattern=knife_pattern,
                 category="equipement",
                 result=Result(
@@ -167,7 +168,138 @@ class Tools(Category):
                     extra_components={
                         "max_damage": 131,
                         "weapon": {},
-                        "attribute_modifiers": knife_attr(3, 2.3, "flint"),
+                        "attribute_modifiers": tool_attr(3, 2.3, "flint_knife"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        cleaver_pattern = ["mm", "mm", " s"]
+
+        def cleaver_key(m: str):
+            return {"m": f"minecraft:{m}", "s": "minecraft:stick"}
+
+        Item(
+            "netherite_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("netherite_ingot"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 3046,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(9, 1.2, "netherite_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "diamond_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("diamond"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 2341,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(8, 1.2, "diamond_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "golden_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("gold_ingot"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 48,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(6, 1.2, "golden_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "iron_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("iron_ingot"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 375,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(8, 1.1, "iron_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "copper_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("copper_ingot"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 285,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(8, 1.0, "copper_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "stone_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("#stone_crafting_materials"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 196,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(8, 1.0, "stone_cleaver"),
+                    },
+                ),
+            ),
+            base_item="wooden_sword",
+        ).register(ctx)
+
+        Item(
+            "wooden_cleaver",
+            ShapedRecipe(
+                key=cleaver_key("#planks"),
+                pattern=cleaver_pattern,
+                category="equipement",
+                result=Result(
+                    max_stack_size=1,
+                    extra_components={
+                        "max_damage": 88,
+                        "weapon": {},
+                        "attribute_modifiers": tool_attr(6, 1.0, "wooden_cleaver"),
                     },
                 ),
             ),

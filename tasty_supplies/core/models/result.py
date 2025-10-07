@@ -1,6 +1,5 @@
 from typing import List
-
-from .tools import to_absolute_path
+from ..utils import to_absolute_path
 
 
 class Effect:

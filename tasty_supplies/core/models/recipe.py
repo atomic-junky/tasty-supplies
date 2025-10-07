@@ -1,11 +1,10 @@
-import os
 from typing import List
 from beet import Function, Recipe
 from PIL import Image
 
 from .result import Result
 from .context import TSContext
-from .tools import to_absolute_path
+from core.utils import to_absolute_path
 
 
 class _Recipe:

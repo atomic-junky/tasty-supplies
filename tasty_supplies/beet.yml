@@ -4,14 +4,18 @@ author: Atomic Junky
 data_pack:
   name: "Tasty Supplies - Data Pack"
   description: "Data pack that adds over 50 new recipes to Minecraft!"
+  pack_format: 88
   min_format: 80
   max_format: [88, 0]
+  supported_formats: [80, 88]
   load: "src"
 resource_pack:
   name: "Tasty Supplies - Resource Pack"
   description: "The offcial Resource pack for the Tasty Supplies Data pack!"
+  pack_format: 69
   min_format: 63
   max_format: [69, 0]
+  supported_formats: [63, 69]
   load: "src"
 
 pipeline:
