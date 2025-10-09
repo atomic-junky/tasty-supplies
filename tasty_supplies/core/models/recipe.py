@@ -20,6 +20,9 @@ class _Recipe:
             "result": self.result._to_json(item_name, base_item)
         }
 
+        if self.category:
+            result["category"] = self.category
+
         ctx.data["tasty_supplies"].recipes[f"{item_name}{self.suffix}"] = Recipe(result)
 
     def _to_json(self) -> dict:
@@ -229,3 +232,27 @@ class CuttingBoardRecipe(_Recipe):
 
     def _to_json(self) -> dict:
         return {}
+
+
+class SmithingTransform(_Recipe):
+    def __init__(
+        self,
+        base: str,
+        result: Result,
+        addition: str = "#minecraft:netherite_tool_materials",
+        template: str = "minecraft:netherite_upgrade_smithing_template",
+        suffix="",
+    ):
+        self.type = "smithing_transform"
+        self.base = base
+        self.addition = addition
+        self.template = template
+        super().__init__("", result, suffix)
+
+    def _to_json(self) -> dict:
+        return {
+            "type": f"minecraft:{self.type}",
+            "addition": to_absolute_path(self.addition),
+            "base": to_absolute_path(self.base),
+            "template": to_absolute_path(self.template),
+        }

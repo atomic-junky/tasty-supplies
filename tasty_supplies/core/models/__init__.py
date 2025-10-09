@@ -9,6 +9,7 @@ from .recipe import (
     SmokingRecipe,
     CampfireRecipe,
     CuttingBoardRecipe,
+    SmithingTransform,
 )
 from .result import Result, PotionResult, FoodResult, FoodSliceResult, Effect
 from .item import Item, BlockItem

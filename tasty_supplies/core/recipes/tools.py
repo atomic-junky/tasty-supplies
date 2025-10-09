@@ -1,5 +1,13 @@
-from core.models import TSContext, Item, ShapedRecipe, Result, Category
+from core.models import (
+    TSContext,
+    Item,
+    ShapedRecipe,
+    Result,
+    Category,
+    SmithingTransform,
+)
 from core.utils import to_absolute_path
+from core import aliases
 
 
 class Tools(Category):
@@ -12,10 +20,9 @@ class Tools(Category):
         def knife_key(m: str):
             return {"m": to_absolute_path(m), "s": "minecraft:stick"}
 
-        def tool_attr(damage: float, speed: float, id_prefix: str):
-            base_damage = 1.0
-            base_speed = 4.0
-
+        def tool_attr(
+            damage: float, speed: float, id_prefix: str, base_damage=1.0, base_speed=4.0
+        ):
             return [
                 {
                     "type": "attack_damage",
@@ -69,10 +76,8 @@ class Tools(Category):
 
         Item(
             "netherite_knife",
-            ShapedRecipe(
-                key=knife_key("netherite_ingot"),
-                pattern=knife_pattern,
-                category="equipement",
+            SmithingTransform(
+                base=aliases.DIAMOND_KNIFE,
                 result=Result(
                     max_stack_size=1,
                     extra_components={
@@ -100,7 +105,7 @@ class Tools(Category):
                     },
                 ),
             ),
-            base_item="wooden_sword",
+            base_item=aliases.DIAMOND_KNIFE,
         ).register(ctx)
 
         Item(
@@ -178,14 +183,12 @@ class Tools(Category):
         cleaver_pattern = ["mm", "mm", " s"]
 
         def cleaver_key(m: str):
-            return {"m": f"minecraft:{m}", "s": "minecraft:stick"}
+            return {"m": to_absolute_path(m), "s": "minecraft:stick"}
 
         Item(
             "netherite_cleaver",
-            ShapedRecipe(
-                key=cleaver_key("netherite_ingot"),
-                pattern=cleaver_pattern,
-                category="equipement",
+            SmithingTransform(
+                base=aliases.DIAMOND_CLEAVER,
                 result=Result(
                     max_stack_size=1,
                     extra_components={
@@ -213,7 +216,7 @@ class Tools(Category):
                     },
                 ),
             ),
-            base_item="wooden_sword",
+            base_item=aliases.DIAMOND_CLEAVER,
         ).register(ctx)
 
         Item(
