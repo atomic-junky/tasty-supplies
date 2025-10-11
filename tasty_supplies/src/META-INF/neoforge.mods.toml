@@ -1,0 +1,14 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+
+license="MIT"
+[[mods]]
+    modId="tasty_supplies"
+    version="0.13.0"
+    displayName="Tasty Supplies"
+    displayURL="https://modrinth.com/datapack/tasty-supplies"
+    credits="Some of the textures come from the Farmer's Delight mod (MIT Licence)."
+    authors="Atomic Junky"
+    description='''
+    Adds +60 new food recipes and 2 new tools to Minecraft!
+    '''

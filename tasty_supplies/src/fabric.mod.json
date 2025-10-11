@@ -1,0 +1,26 @@
+{
+    "schema_version": 1,
+    "id": "tasty_supplies",
+    "version": "0.13.0",
+    "metadata": {
+        "name": "Tasty Supplies",
+        "description": "Data pack that adds over 50 new recipes to Minecraft! (mod version)",
+        "contributors":  {
+        "Atomic Junky": "Developer"
+        },
+        "contact": {
+            "homepage": "https://github.com/atomic-junky/tasty-supplies",
+            "issues": "https://github.com/atomic-junky/tasty-supplies/issues",
+            "curseforge": "https://legacy.curseforge.com/minecraft/data-packs/tasty-supplies",
+            "wiki": "https://tasty-supplies.fandom.com/wiki/Tasty_Supplies_Wiki",
+            "discord": "https://discord.gg/zMnfuGjrhH",
+            "ko-fi": "ko-fi.com/Y8Y7DH7YN"
+        },
+        "license": "MIT",
+        "icon": "pack.png"
+    },
+    "environment": "*",
+    "depends": {
+        "fabric-resource-loader-v0": "*"
+  }
+}
