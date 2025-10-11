@@ -77,10 +77,10 @@ jobs:
           done
 
           # Include loader config files from repo src/ (place at jar root)
-          if [ -f src/fabric.mod.json ]; then cp src/fabric.mod.json "$TMP/" || true; fi
-          if [ -f src/quilt.mod.json ]; then cp src/quilt.mod.json "$TMP/" || true; fi
-          if [ -f src/META-INF/mods.toml ]; then mkdir -p "$TMP/META-INF"; cp src/META-INF/mods.toml "$TMP/META-INF/" || true; fi
-          if [ -f src/META-INF/neoforge.mods.toml ]; then mkdir -p "$TMP/META-INF"; cp src/META-INF/neoforge.mods.toml "$TMP/META-INF/" || true; fi
+          if [ -f tasty_supplies/src/fabric.mod.json ]; then cp tasty_supplies/src/fabric.mod.json "$TMP/" || true; fi
+          if [ -f tasty_supplies/src/quilt.mod.json ]; then cp tasty_supplies/src/quilt.mod.json "$TMP/" || true; fi
+          if [ -f tasty_supplies/src/META-INF/mods.toml ]; then mkdir -p "$TMP/META-INF"; cp tasty_supplies/src/META-INF/mods.toml "$TMP/META-INF/" || true; fi
+          if [ -f tasty_supplies/src/META-INF/neoforge.mods.toml ]; then mkdir -p "$TMP/META-INF"; cp tasty_supplies/src/META-INF/neoforge.mods.toml "$TMP/META-INF/" || true; fi
 
           # Create the jar from TMP contents
           cd "$TMP"
