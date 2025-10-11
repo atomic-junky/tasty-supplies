@@ -10,7 +10,7 @@ env:
   PYTHON_VERSION: "3.12.2"
 
 jobs:
-  build-vanilla:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -80,6 +80,15 @@ jobs:
           jar -cf ../tasty-supplies.jar .
           cd ..
           rm -rf jar_temp
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tasty-supplies-builds
+          path: |
+            tasty_supplies/build/*.zip
+            tasty_supplies/build/tasty-supplies.jar
       
       - name: Create Release
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
