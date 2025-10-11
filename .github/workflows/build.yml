@@ -4,12 +4,13 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
+  workflow_dispatch:
 
 env:
   PYTHON_VERSION: "3.12.2"
 
 jobs:
-  build:
+  build-vanilla:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,6 +19,7 @@ jobs:
           fetch-depth: 0
       
       - name: Update CHANGELOG
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         id: changelog
         uses: requarks/changelog-action@v1
         with:
@@ -43,19 +45,58 @@ jobs:
             zip -r "../$dir.zip" ./*
             cd ..
           done
+
+      - name: Create combined .jar
+        if: always()
+        run: |
+          set -e
+          mkdir -p ./tasty_supplies/build/jar_temp
+          # Copy datapack and resource pack builds (if they exist)
+          cd ./tasty_supplies/build/
+          for f in *; do
+            if [ -d "$f" ]; then
+              # skip the temp dir itself
+              if [ "$f" = "jar_temp" ]; then
+                continue
+              fi
+              cp -r "$f" "jar_temp/$f"
+            fi
+          done
+
+          # Also include loader config files from src/META-INF and top-level mod JSONs
+          mkdir -p jar_temp/META-INF
+          if [ -d "./src/META-INF" ]; then
+            cp -r ./src/META-INF/* jar_temp/META-INF/ || true
+          fi
+          # include mod loader jsons
+          for json in ./src/fabric.mod.json ./src/quilt.mod.json ./src/META-INF/mods.toml ./src/META-INF/neoforge.mods.toml; do
+            if [ -f "$json" ]; then
+              cp "$json" jar_temp/ || true
+            fi
+          done
+
+          # Create the jar (zip format) from the jar_temp contents
+          cd jar_temp
+          jar -cf ../tasty-supplies.jar .
+          cd ..
+          rm -rf jar_temp
       
       - name: Create Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           make_latest: true
           name: ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           body: ${{ steps.changelog.outputs.changes }}
-          files: ./tasty_supplies/build/*.zip
+          files: |
+            ./tasty_supplies/build/*.zip
+            ./tasty_supplies/build/tasty-supplies.jar
           fail_on_unmatched_files: true
           token: ${{ secrets.GITHUB_TOKEN }}
   
       - name: Commit CHANGELOG.md
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: main
