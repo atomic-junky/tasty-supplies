@@ -49,37 +49,44 @@ jobs:
       - name: Create combined .jar
         if: always()
         run: |
-          set -e
-          mkdir -p ./tasty_supplies/build/jar_temp
-          # Copy datapack and resource pack builds (if they exist)
-          cd ./tasty_supplies/build/
-          for f in *; do
-            if [ -d "$f" ]; then
-              # skip the temp dir itself
-              if [ "$f" = "jar_temp" ]; then
+          set -eux
+          TMP=./tasty_supplies/build/jar_temp
+          rm -rf "$TMP"
+          mkdir -p "$TMP"
+
+          # Copy contents (not directories) of each build into TMP
+          for d in tasty_supplies/build/*; do
+            if [ -d "$d" ]; then
+              name=$(basename "$d")
+              if [ "$name" = "jar_temp" ]; then
                 continue
               fi
-              cp -r "$f" "jar_temp/$f"
+              # lower-case name for matching
+              nl=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+              # If this looks like a datapack build, copy only its data/ folder
+              if [[ "$nl" == *data* ]]; then
+                if [ -d "$d/data" ]; then
+                  mkdir -p "$TMP/data"
+                  cp -a "$d/data/." "$TMP/data/" || true
+                fi
+              else
+                # resource pack: copy full contents
+                cp -a "$d/." "$TMP/" || true
+              fi
             fi
           done
 
-          # Also include loader config files from src/META-INF and top-level mod JSONs
-          mkdir -p jar_temp/META-INF
-          if [ -d "./src/META-INF" ]; then
-            cp -r ./src/META-INF/* jar_temp/META-INF/ || true
-          fi
-          # include mod loader jsons
-          for json in ./src/fabric.mod.json ./src/quilt.mod.json ./src/META-INF/mods.toml ./src/META-INF/neoforge.mods.toml; do
-            if [ -f "$json" ]; then
-              cp "$json" jar_temp/ || true
-            fi
-          done
+          # Include loader config files from repo src/ (place at jar root)
+          if [ -f src/fabric.mod.json ]; then cp src/fabric.mod.json "$TMP/" || true; fi
+          if [ -f src/quilt.mod.json ]; then cp src/quilt.mod.json "$TMP/" || true; fi
+          if [ -f src/META-INF/mods.toml ]; then mkdir -p "$TMP/META-INF"; cp src/META-INF/mods.toml "$TMP/META-INF/" || true; fi
+          if [ -f src/META-INF/neoforge.mods.toml ]; then mkdir -p "$TMP/META-INF"; cp src/META-INF/neoforge.mods.toml "$TMP/META-INF/" || true; fi
 
-          # Create the jar (zip format) from the jar_temp contents
-          cd jar_temp
+          # Create the jar from TMP contents
+          cd "$TMP"
           jar -cf ../tasty-supplies.jar .
-          cd ..
-          rm -rf jar_temp
+          cd -
+          rm -rf "$TMP"
 
       - name: Upload build artifacts
         if: always()

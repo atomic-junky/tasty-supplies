@@ -11,7 +11,7 @@ data_pack:
   load: "src"
 resource_pack:
   name: "Tasty Supplies - Resource Pack"
-  description: "The offcial Resource pack for the Tasty Supplies Data pack!"
+  description: "Data pack that adds over 50 new recipes to Minecraft!"
   pack_format: 69
   min_format: 63
   max_format: [69, 0]
