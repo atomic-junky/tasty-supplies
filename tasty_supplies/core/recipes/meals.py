@@ -1,51 +1,235 @@
 from .. import (
     TSContext,
+    Bucket,
     Item,
-    ShapelessRecipe,
-    ShapedRecipe,
-    AutoBakeRecipe,
-    CuttingBoardRecipe,
-    FoodResult,
-    Effect,
+    ShapelessRecipe as NewShapelessRecipe,
+    ShapedRecipe as NewShapedRecipe,
+    AutoCookingRecipe,
+    CuttingBoardRecipe as NewCuttingBoardRecipe,
     Category,
-    FoodSliceResult,
     aliases,
 )
 
 
 class Meals(Category):
+    def __init__(self, bucket: Bucket):
+        """Initialize Meals category with bucket reference.
+
+        Args:
+            bucket: The Bucket instance to store items and recipes
+        """
+        super().__init__("Meals", bucket)
+
     def generate(self, ctx: TSContext):
-        Item(
-            "beef_skewer",
-            ShapedRecipe(
-                key={"b": "cooked_beef", "s": "stick"},
+        """Generate all meal items and recipes.
+
+        Args:
+            ctx: The Tasty Supplies context
+        """
+        pass  # Items and recipes are now created in separate phases
+
+    def create_items(self):
+        """Phase 1: Create all meal items."""
+        self._create_items()
+
+    def create_recipes(self):
+        """Phase 2: Create all meal recipes."""
+        self._create_recipes()
+
+    def _create_items(self):
+        """Create all meal items and add them to the bucket."""
+        items = [
+            Item(
+                "beef_skewer",
+                base_item="bread",
+                food={"nutrition": 16, "saturation": 25.6},
+            ),
+            Item(
+                "beef_stew",
+                base_item="rabbit_stew",
+                food={"nutrition": 10, "saturation": 12},
+            ),
+            Item(
+                "cod_roll", base_item="bread", food={"nutrition": 7, "saturation": 9.4}
+            ),
+            Item(
+                "fried_egg", base_item="bread", food={"nutrition": 8, "saturation": 2.4}
+            ),
+            Item(
+                "fruit_salad",
+                base_item="beetroot_soup",
+                food={"nutrition": 18, "saturation": 7.6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:regeneration",
+                                    "duration": 600,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "fungus_skewer",
+                base_item="bread",
+                food={"nutrition": 5, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:nausea",
+                                    "duration": 600,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+                use_remainder={"id": "minecraft:stick"},
+            ),
+            Item(
+                "honey_cookie",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 0.4},
+            ),
+            Item(
+                "ice_cream_cone",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 0.4},
+            ),
+            Item(
+                "ice_cream",
+                base_item="bread",
+                food={"nutrition": 4, "saturation": 3.6},
+                max_stack_size=16,
+            ),
+            Item(
+                "kelp_roll",
+                base_item="bread",
+                food={"nutrition": 10, "saturation": 12.6},
+            ),
+            Item(
+                "kelp_roll_slice",
+                base_item="bread",
+                food={"nutrition": 2.5, "saturation": 6.2},
+            ),
+            Item(
+                "melon_popsicle",
+                base_item="bread",
+                food={"nutrition": 3, "saturation": 0.5},
+            ),
+            Item(
+                "mushroom_skewer",
+                base_item="bread",
+                food={"nutrition": 6, "saturation": 7.2},
+                use_remainder={"id": "minecraft:stick"},
+            ),
+            Item(
+                "nether_salad",
+                base_item="beetroot_soup",
+                food={"nutrition": 5, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:nausea",
+                                    "duration": 600,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "potato_fries",
+                base_item="bread",
+                food={"nutrition": 1.5, "saturation": 1.5},
+            ),
+            Item(
+                "salmon_roll",
+                base_item="bread",
+                food={"nutrition": 7, "saturation": 9.4},
+            ),
+            Item(
+                "stuffed_potato",
+                base_item="bread",
+                food={"nutrition": 6, "saturation": 7.8},
+            ),
+            Item(
+                "sweet_berry_cookie",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 0.4},
+            ),
+            Item(
+                "warped_mutton",
+                base_item="rabbit_stew",
+                food={"nutrition": 6, "saturation": 11},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:nausea",
+                                    "duration": 300,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+        ]
+
+        for item in items:
+            self.bucket.add_item(item, category="meals")
+
+    def _create_recipes(self):
+        """Create all meal recipes and add them to the bucket."""
+
+        # Beef Skewer
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["b", "b", "s"],
-                result=FoodResult(nutrition=16, saturation=25.6),
+                key={"b": "cooked_beef", "s": "stick"},
+                result=self.bucket.get("beef_skewer"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "beef_stew",
-            ShapelessRecipe(
+        # Beef Stew
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=["bowl", "cooked_beef", "carrot", "baked_potato"],
-                result=FoodResult(nutrition=10, saturation=12),
+                result=self.bucket.get("beef_stew"),
             ),
-            base_item="rabbit_stew",
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "fried_egg",
-            AutoBakeRecipe(
+        # Fried Egg
+        self.bucket.add_recipe(
+            AutoCookingRecipe(
                 ingredient="#minecraft:eggs",
+                result=self.bucket.get("fried_egg"),
+                base_cooking_time=140,
                 experience=0.1,
-                cookingtime=140,
-                result=FoodResult(nutrition=8, saturation=2.4),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "fruit_salad",
-            ShapelessRecipe(
+        # Fruit Salad
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=[
                     "bowl",
                     "apple",
@@ -55,72 +239,63 @@ class Meals(Category):
                     "#tasty_supplies:berries",
                     "#tasty_supplies:berries",
                 ],
-                result=FoodResult(
-                    nutrition=18,
-                    saturation=7.6,
-                    effects=[Effect("regeneration", 600)],
-                ),
+                result=self.bucket.get("fruit_salad"),
             ),
-            base_item="beetroot_soup",
-        ).register(ctx)
-
-        fungus_skewer_recipe = ShapedRecipe(
-            key={
-                "w": "minecraft:warped_fungus",
-                "c": "minecraft:crimson_fungus",
-                "s": "minecraft:stick",
-            },
-            pattern=["w", "c", "s"],
-            result=FoodResult(
-                nutrition=5,
-                saturation=6,
-                effects=[Effect("nausea", 600)],
-                extra_components={
-                    "use_remainder": {
-                        "id": "minecraft:stick",
-                    }
-                },
-            ),
+            category="meals",
         )
 
-        Item("fungus_skewer", fungus_skewer_recipe).register(ctx)
+        # Fungus Skewer (two variations)
+        self.bucket.add_recipe(
+            NewShapedRecipe(
+                pattern=["w", "c", "s"],
+                key={"w": "warped_fungus", "c": "crimson_fungus", "s": "stick"},
+                result=self.bucket.get("fungus_skewer"),
+            ),
+            category="meals",
+        )
 
-        fungus_skewer_recipe.pattern = ["c", "w", "s"]
-        fungus_skewer_recipe.suffix = "_reversed"
-        Item("fungus_skewer", fungus_skewer_recipe).register(ctx)
+        self.bucket.add_recipe(
+            NewShapedRecipe(
+                pattern=["c", "w", "s"],
+                key={"w": "warped_fungus", "c": "crimson_fungus", "s": "stick"},
+                result=self.bucket.get("fungus_skewer"),
+                recipe_id="fungus_skewer_reversed",
+            ),
+            category="meals",
+        )
 
-        Item(
-            "honey_cookie",
-            ShapedRecipe(
-                key={
-                    "h": "minecraft:honey_bottle",
-                    "w": "minecraft:wheat",
-                },
+        # Honey Cookie
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["whw"],
-                result=FoodResult(nutrition=2, saturation=0.4),
+                key={"h": "honey_bottle", "w": "wheat"},
+                result=self.bucket.get("honey_cookie"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "ice_cream_cone",
-            ShapedRecipe(
-                key={"W": "minecraft:wheat"},
+        # Ice Cream Cone
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["W", "W", "W"],
-                result=FoodResult(nutrition=2, saturation=0.4),
+                key={"W": "wheat"},
+                result=self.bucket.get("ice_cream_cone"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "ice_cream",
-            ShapelessRecipe(
+        # Ice Cream
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=["snowball", "sugar", "bread"],
-                result=FoodResult(nutrition=4, saturation=3.6, max_stack_size=16),
+                result=self.bucket.get("ice_cream"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "melon_popsicle",
-            ShapelessRecipe(
+        # Melon Popsicle
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=[
                     "melon_slice",
                     "melon_slice",
@@ -130,128 +305,126 @@ class Meals(Category):
                     "ice",
                     "stick",
                 ],
-                result=FoodResult(nutrition=3, saturation=0.5),
+                result=self.bucket.get("melon_popsicle"),
             ),
-        ).register(ctx)
-
-        mushroom_skewer_recipe = ShapedRecipe(
-            key={
-                "b": "minecraft:brown_mushroom",
-                "r": "minecraft:red_mushroom",
-                "s": "minecraft:stick",
-            },
-            pattern=["b", "r", "s"],
-            result=FoodResult(
-                nutrition=6,
-                saturation=7.2,
-                extra_components={
-                    "use_remainder": {
-                        "id": "minecraft:stick",
-                    }
-                },
-            ),
+            category="meals",
         )
 
-        Item("mushroom_skewer", mushroom_skewer_recipe).register(ctx)
+        # Mushroom Skewer (two variations)
+        self.bucket.add_recipe(
+            NewShapedRecipe(
+                pattern=["b", "r", "s"],
+                key={"b": "brown_mushroom", "r": "red_mushroom", "s": "stick"},
+                result=self.bucket.get("mushroom_skewer"),
+            ),
+            category="meals",
+        )
 
-        mushroom_skewer_recipe.pattern = ["r", "b", "s"]
-        mushroom_skewer_recipe.suffix = "_reversed"
-        Item("mushroom_skewer", mushroom_skewer_recipe).register(ctx)
+        self.bucket.add_recipe(
+            NewShapedRecipe(
+                pattern=["r", "b", "s"],
+                key={"b": "brown_mushroom", "r": "red_mushroom", "s": "stick"},
+                result=self.bucket.get("mushroom_skewer"),
+                recipe_id="mushroom_skewer_reversed",
+            ),
+            category="meals",
+        )
 
-        Item(
-            "nether_salad",
-            ShapelessRecipe(
+        # Nether Salad
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=["bowl", "crimson_fungus", "warped_fungus"],
-                result=FoodResult(
-                    nutrition=5, saturation=6, effects=[Effect("nausea", 600)]
-                ),
+                result=self.bucket.get("nether_salad"),
             ),
-            base_item="beetroot_soup",
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "potato_fries",
-            CuttingBoardRecipe(
-                "baked_potato", FoodSliceResult(nutrition=1.5, saturation=1.5)
+        # Potato Fries (cutting board)
+        self.bucket.add_recipe(
+            NewCuttingBoardRecipe(
+                ingredient="baked_potato",
+                result=self.bucket.get("potato_fries"),
+                result_count=4,
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "sweet_berry_cookie",
-            ShapedRecipe(
-                key={
-                    "b": "minecraft:sweet_berries",
-                    "w": "minecraft:wheat",
-                },
+        # Sweet Berry Cookie
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["wbw"],
-                result=FoodResult(nutrition=2, saturation=0.4),
+                key={"b": "sweet_berries", "w": "wheat"},
+                result=self.bucket.get("sweet_berry_cookie"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "stuffed_potato",
-            ShapelessRecipe(
-                ingredients=[
-                    "minecraft:baked_potato",
-                    "minecraft:cooked_beef",
-                    "minecraft:carrot",
-                    "minecraft:milk_bucket",
-                ],
-                result=FoodResult(nutrition=6, saturation=7.8),
+        # Stuffed Potato
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
+                ingredients=["baked_potato", "cooked_beef", "carrot", "milk_bucket"],
+                result=self.bucket.get("stuffed_potato"),
             ),
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "warped_mutton",
-            ShapelessRecipe(
+        # Warped Mutton
+        self.bucket.add_recipe(
+            NewShapelessRecipe(
                 ingredients=["warped_roots", "warped_roots", "bowl", "cooked_mutton"],
-                result=FoodResult(
-                    nutrition=6, saturation=11, effects=[Effect("nausea", 300)]
-                ),
+                result=self.bucket.get("warped_mutton"),
             ),
-            base_item="rabbit_stew",
-        ).register(ctx)
+            category="meals",
+        )
 
-        Item(
-            "kelp_roll",
-            ShapedRecipe(
-                key={
-                    "k": "minecraft:dried_kelp",
-                    "r": aliases.COOKED_RICE,
-                    "c": "minecraft:carrot",
-                },
+        # Kelp Roll
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["rcr", "kkk"],
-                result=FoodResult(nutrition=10, saturation=12.6),
-            ),
-        ).register(ctx)
-
-        Item(
-            "kelp_roll_slice",
-            CuttingBoardRecipe(
-                "kelp_roll", FoodSliceResult(nutrition=2.5, saturation=6.2)
-            ),
-        ).register(ctx)
-
-        Item(
-            "salmon_roll",
-            ShapedRecipe(
                 key={
-                    "s": aliases.RAW_SALMON_SLICE,
-                    "r": aliases.COOKED_RICE,
+                    "k": "dried_kelp",
+                    "r": self.bucket.get_ingredient("cooked_rice"),
+                    "c": "carrot",
                 },
+                result=self.bucket.get("kelp_roll"),
+            ),
+            category="meals",
+        )
+
+        # Kelp Roll Slice (cutting board)
+        self.bucket.add_recipe(
+            NewCuttingBoardRecipe(
+                ingredient=self.bucket.get("kelp_roll"),
+                result=self.bucket.get("kelp_roll_slice"),
+                result_count=4,
+            ),
+            category="meals",
+        )
+
+        # Salmon Roll
+        self.bucket.add_recipe(
+            NewShapedRecipe(
                 pattern=["s", "s", "r"],
-                result=FoodResult(nutrition=7, saturation=9.4, count=2),
-            ),
-        ).register(ctx)
-
-        Item(
-            "cod_roll",
-            ShapedRecipe(
                 key={
-                    "c": aliases.RAW_COD_SLICE,
-                    "r": aliases.COOKED_RICE,
+                    "s": self.bucket.get_ingredient("raw_salmon_slice"),
+                    "r": self.bucket.get_ingredient("cooked_rice"),
                 },
-                pattern=["c", "c", "r"],
-                result=FoodResult(nutrition=7, saturation=9.4, count=2),
+                result=self.bucket.get("salmon_roll"),
+                result_count=2,
             ),
-        ).register(ctx)
+            category="meals",
+        )
+
+        # Cod Roll
+        self.bucket.add_recipe(
+            NewShapedRecipe(
+                pattern=["c", "c", "r"],
+                key={
+                    "c": self.bucket.get_ingredient("raw_cod_slice"),
+                    "r": self.bucket.get_ingredient("cooked_rice"),
+                },
+                result=self.bucket.get("cod_roll"),
+                result_count=2,
+            ),
+            category="meals",
+        )

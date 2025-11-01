@@ -1,275 +1,500 @@
+"""Sweets category - contains all dessert items and their recipes.
+
+This module defines sweet foods including pies, cakes, cookies, and other desserts.
+All items and recipes are managed through the Bucket system.
+"""
+
 from .. import (
     TSContext,
+    Bucket,
     Item,
     ShapelessRecipe,
     ShapedRecipe,
-    FoodSliceResult,
     CuttingBoardRecipe,
-    AutoBakeRecipe,
-    Effect,
+    AutoCookingRecipe,
     Category,
-    FoodResult,
     aliases,
 )
 
 
 class Sweets(Category):
-    def __init__(self):
-        super().__init__("Sweets")
+    """Category for sweet dessert items."""
+
+    def __init__(self, bucket: Bucket):
+        """Initialize Sweets category with bucket reference.
+
+        Args:
+            bucket: The Bucket instance to store items and recipes
+        """
+        super().__init__("Sweets", bucket)
 
     def generate(self, ctx: TSContext):
-        ## Butter
+        """Generate all sweet items and recipes.
 
-        Item(
-            "butter",
+        Args:
+            ctx: The Tasty Supplies context
+        """
+        pass  # Items and recipes are now created in separate phases
+
+    def create_items(self):
+        """Phase 1: Create all sweet items."""
+        self._create_items()
+
+    def create_recipes(self):
+        """Phase 2: Create all sweet recipes."""
+        self._create_recipes()
+
+    def _create_items(self):
+        """Create all sweet items and add them to the bucket."""
+        items = [
+            # Butter and clear effects
+            Item(
+                "butter",
+                base_item=aliases.BUTTER,
+                food={"nutrition": 2, "saturation": 1.2},
+                consumable={"on_consume_effects": [{"type": "clear_all_effects"}]},
+            ),
+            # Pie Crust
+            Item("pie_crust", base_item=aliases.PIE_CRUST),
+            # Apple Pie
+            Item(
+                "apple_pie", base_item="bread", food={"nutrition": 8, "saturation": 6}
+            ),
+            Item(
+                "apple_pie_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+            ),
+            # Cheese
+            Item("cheese", base_item="bread", food={"nutrition": 8, "saturation": 5.6}),
+            Item(
+                "cheese_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.4},
+            ),
+            # Cherry Blossom Pie
+            Item(
+                "cherry_blossom_pie",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:slow_falling",
+                                    "duration": 3600,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "cherry_blossom_pie_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:slow_falling",
+                                    "duration": 900,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            # Chocolate Pie
+            Item(
+                "chocolate_pie",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:speed",
+                                    "duration": 3600,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "chocolate_pie_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:speed",
+                                    "duration": 900,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            # Chorus Pie
+            Item(
+                "chorus_pie",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {"type": "teleport_randomly", "diameter": 32}
+                    ]
+                },
+                use_cooldown={"seconds": 2.0, "cooldown_group": "chorus_pie"},
+            ),
+            Item(
+                "chorus_pie_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+                consumable={
+                    "on_consume_effects": [{"type": "teleport_randomly", "diameter": 8}]
+                },
+                use_cooldown={"seconds": 1.0, "cooldown_group": "chorus_pie"},
+            ),
+            # Glow Berry Pie
+            Item(
+                "glow_berry_pie",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:glowing",
+                                    "duration": 3600,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "glow_berry_pie_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:glowing",
+                                    "duration": 900,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            # Sweet Berry Cheesecake
+            Item(
+                "sweet_berry_cheesecake",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:speed",
+                                    "duration": 3600,
+                                    "amplifier": 0,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            Item(
+                "sweet_berry_cheesecake_slice",
+                base_item="bread",
+                food={"nutrition": 2, "saturation": 1.5},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:speed",
+                                    "duration": 900,
+                                    "amplifier": 1,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            ),
+            # Croissant
+            Item(
+                "croissant", base_item="bread", food={"nutrition": 6, "saturation": 3.4}
+            ),
+            # Honeyed Apple
+            Item(
+                "honeyed_apple",
+                base_item="bread",
+                food={"nutrition": 6, "saturation": 8.6},
+            ),
+            # Sweet Roll
+            Item(
+                "sweet_roll",
+                base_item="bread",
+                food={"nutrition": 8, "saturation": 12.8},
+            ),
+        ]
+
+        for item in items:
+            self.bucket.add_item(item, category="sweets")
+
+    def _create_recipes(self):
+        """Create all sweet recipes and add them to the bucket."""
+
+        # Butter
+        self.bucket.add_recipe(
             ShapelessRecipe(
                 ingredients=["milk_bucket"],
-                result=FoodResult(
-                    nutrition=2, saturation=1.2, consume_effect_type="clear_all_effects"
-                ),
+                result=self.bucket.get("butter"),
             ),
-            base_item=aliases.BUTTER,
-        ).register(ctx)
+            category="sweets",
+        )
 
-        ## Pie Crust
-
-        Item(
-            "pie_crust",
+        # Pie Crust
+        self.bucket.add_recipe(
             ShapedRecipe(
-                key={"W": "minecraft:wheat", "B": aliases.BUTTER},
                 pattern=["WBW", " W "],
+                key={"W": "wheat", "B": self.bucket.get_ingredient("butter")},
+                result=self.bucket.get("pie_crust"),
             ),
-            base_item=aliases.PIE_CRUST,
-        ).register(ctx)
+            category="sweets",
+        )
 
-        ## Apple Pie
-
-        Item(
-            "apple_pie",
+        # Apple Pie
+        self.bucket.add_recipe(
             ShapedRecipe(
-                key={"W": "wheat", "A": "apple", "S": "sugar", "B": aliases.PIE_CRUST},
                 pattern=["WWW", "AAA", "SBS"],
-                result=FoodResult(nutrition=8, saturation=6),
+                key={
+                    "W": "wheat",
+                    "A": "apple",
+                    "S": "sugar",
+                    "B": self.bucket.get_ingredient("pie_crust"),
+                },
+                result=self.bucket.get("apple_pie"),
             ),
-            base_item="bread",
-        ).register(ctx)
+            category="sweets",
+        )
 
-        Item(
-            "apple_pie_slice",
+        # Apple Pie Slice
+        self.bucket.add_recipe(
             CuttingBoardRecipe(
-                "apple_pie", FoodSliceResult(nutrition=2, saturation=1.5)
+                ingredient=self.bucket.get("apple_pie"),
+                result=self.bucket.get("apple_pie_slice"),
+                result_count=4,
             ),
-        ).register(ctx)
+            category="sweets",
+        )
 
-        ## Cheese
-
-        Item(
-            "cheese",
-            AutoBakeRecipe(
+        # Cheese
+        self.bucket.add_recipe(
+            AutoCookingRecipe(
                 ingredient="milk_bucket",
+                result=self.bucket.get("cheese"),
+                base_cooking_time=200,
                 experience=0.5,
-                cookingtime=200,
-                result=FoodResult(nutrition=8, saturation=5.6),
             ),
-        ).register(ctx)
+            category="sweets",
+        )
 
-        Item(
-            "cheese_slice",
-            CuttingBoardRecipe("cheese", FoodSliceResult(nutrition=2, saturation=1.4)),
-        ).register(ctx)
+        # Cheese Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("cheese"),
+                result=self.bucket.get("cheese_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
 
-        ## Cherry Blossom Pie
-
-        Item(
-            "cherry_blossom_pie",
+        # Cherry Blossom Pie
+        self.bucket.add_recipe(
             ShapedRecipe(
-                key={
-                    "C": "minecraft:cherry_leaves",
-                    "M": "minecraft:milk_bucket",
-                    "H": "minecraft:honeycomb",
-                    "B": aliases.PIE_CRUST,
-                },
                 pattern=["CCC", "MMM", "HBH"],
-                result=FoodResult(
-                    nutrition=8, saturation=6, effects=[Effect("slow_falling", 3600, 1)]
-                ),
-            ),
-        ).register(ctx)
-
-        Item(
-            "cherry_blossom_pie_slice",
-            CuttingBoardRecipe(
-                "cherry_blossom_pie",
-                FoodSliceResult(
-                    nutrition=2,
-                    saturation=1.5,
-                    effects=[Effect("slow_falling", 900, 1)],
-                ),
-            ),
-        ).register(ctx)
-
-        ## Chocolate Pie
-
-        Item(
-            "chocolate_pie",
-            ShapedRecipe(
                 key={
-                    "C": "minecraft:cocoa_beans",
-                    "M": "minecraft:milk_bucket",
-                    "S": "minecraft:sugar",
-                    "B": aliases.PIE_CRUST,
+                    "C": "cherry_leaves",
+                    "M": "milk_bucket",
+                    "H": "honeycomb",
+                    "B": self.bucket.get_ingredient("pie_crust"),
                 },
+                result=self.bucket.get("cherry_blossom_pie"),
+            ),
+            category="sweets",
+        )
+
+        # Cherry Blossom Pie Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("cherry_blossom_pie"),
+                result=self.bucket.get("cherry_blossom_pie_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
+
+        # Chocolate Pie
+        self.bucket.add_recipe(
+            ShapedRecipe(
                 pattern=["CCC", "MMM", "SBS"],
-                result=FoodResult(
-                    nutrition=8, saturation=6, effects=[Effect("speed", 3600, 1)]
-                ),
-            ),
-        ).register(ctx)
-
-        Item(
-            "chocolate_pie_slice",
-            CuttingBoardRecipe(
-                "chocolate_pie",
-                FoodSliceResult(
-                    nutrition=2, saturation=1.5, effects=[Effect("speed", 900, 1)]
-                ),
-            ),
-        ).register(ctx)
-
-        ## Chorus Pie
-
-        Item(
-            "chorus_pie",
-            ShapedRecipe(
                 key={
-                    "C": "minecraft:chorus_fruit",
-                    "M": "minecraft:milk_bucket",
-                    "S": "minecraft:sugar",
-                    "P": aliases.PIE_CRUST,
+                    "C": "cocoa_beans",
+                    "M": "milk_bucket",
+                    "S": "sugar",
+                    "B": self.bucket.get_ingredient("pie_crust"),
                 },
+                result=self.bucket.get("chocolate_pie"),
+            ),
+            category="sweets",
+        )
+
+        # Chocolate Pie Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("chocolate_pie"),
+                result=self.bucket.get("chocolate_pie_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
+
+        # Chorus Pie
+        self.bucket.add_recipe(
+            ShapedRecipe(
                 pattern=["CCC", "SSS", "MPM"],
-                result=FoodResult(
-                    nutrition=8,
-                    saturation=6,
-                    consume_effect_type="teleport_randomly",
-                    consume_effect_diameter=32,
-                    extra_components={
-                        "use_cooldown": {"seconds": 2.0, "cooldown_group": "chorus_pie"}
-                    },
-                ),
-            ),
-        ).register(ctx)
-
-        Item(
-            "chorus_pie_slice",
-            CuttingBoardRecipe(
-                "chorus_pie",
-                FoodSliceResult(
-                    nutrition=2,
-                    saturation=1.5,
-                    consume_effect_type="teleport_randomly",
-                    consume_effect_diameter=8,
-                    extra_components={
-                        "use_cooldown": {"seconds": 1.0, "cooldown_group": "chorus_pie"}
-                    },
-                ),
-            ),
-        ).register(ctx)
-
-        ## Glow Berry Pie
-
-        Item(
-            "glow_berry_pie",
-            ShapedRecipe(
                 key={
-                    "G": "minecraft:glow_berries",
-                    "M": "minecraft:milk_bucket",
-                    "S": "minecraft:sugar",
-                    "B": aliases.PIE_CRUST,
+                    "C": "chorus_fruit",
+                    "M": "milk_bucket",
+                    "S": "sugar",
+                    "P": self.bucket.get_ingredient("pie_crust"),
                 },
+                result=self.bucket.get("chorus_pie"),
+            ),
+            category="sweets",
+        )
+
+        # Chorus Pie Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("chorus_pie"),
+                result=self.bucket.get("chorus_pie_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
+
+        # Glow Berry Pie
+        self.bucket.add_recipe(
+            ShapedRecipe(
                 pattern=["GGG", "SSS", "MBM"],
-                result=FoodResult(
-                    nutrition=8, saturation=6, effects=[Effect("glowing", 3600)]
-                ),
-            ),
-        ).register(ctx)
-
-        Item(
-            "glow_berry_pie_slice",
-            CuttingBoardRecipe(
-                "glow_berry_pie",
-                FoodSliceResult(
-                    nutrition=2, saturation=1.5, effects=[Effect("glowing", 900, 1)]
-                ),
-            ),
-        ).register(ctx)
-
-        ## Sweet Berry Cheesecake
-
-        Item(
-            "sweet_berry_cheesecake",
-            ShapedRecipe(
                 key={
-                    "S": "minecraft:sweet_berries",
-                    "M": "minecraft:milk_bucket",
-                    "B": aliases.PIE_CRUST,
+                    "G": "glow_berries",
+                    "M": "milk_bucket",
+                    "S": "sugar",
+                    "B": self.bucket.get_ingredient("pie_crust"),
                 },
+                result=self.bucket.get("glow_berry_pie"),
+            ),
+            category="sweets",
+        )
+
+        # Glow Berry Pie Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("glow_berry_pie"),
+                result=self.bucket.get("glow_berry_pie_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
+
+        # Sweet Berry Cheesecake
+        self.bucket.add_recipe(
+            ShapedRecipe(
                 pattern=["SSS", "SSS", "MBM"],
-                result=FoodResult(
-                    nutrition=8, saturation=6, effects=[Effect("speed", 3600)]
-                ),
-            ),
-        ).register(ctx)
-
-        Item(
-            "sweet_berry_cheesecake_slice",
-            CuttingBoardRecipe(
-                "sweet_berry_cheesecake",
-                FoodSliceResult(
-                    nutrition=2, saturation=1.5, effects=[Effect("speed", 900, 1)]
-                ),
-            ),
-        ).register(ctx)
-
-        ## Croissant
-
-        Item(
-            "croissant",
-            ShapedRecipe(
                 key={
-                    "W": "minecraft:wheat",
-                    "B": aliases.BUTTER,
-                    "S": "minecraft:sugar",
+                    "S": "sweet_berries",
+                    "M": "milk_bucket",
+                    "B": self.bucket.get_ingredient("pie_crust"),
                 },
+                result=self.bucket.get("sweet_berry_cheesecake"),
+            ),
+            category="sweets",
+        )
+
+        # Sweet Berry Cheesecake Slice
+        self.bucket.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("sweet_berry_cheesecake"),
+                result=self.bucket.get("sweet_berry_cheesecake_slice"),
+                result_count=4,
+            ),
+            category="sweets",
+        )
+
+        # Croissant
+        self.bucket.add_recipe(
+            ShapedRecipe(
                 pattern=["WBS", "WBS"],
-                result=FoodResult(nutrition=6, saturation=3.4),
+                key={
+                    "W": "wheat",
+                    "B": self.bucket.get_ingredient("butter"),
+                    "S": "sugar",
+                },
+                result=self.bucket.get("croissant"),
             ),
-        ).register(ctx)
+            category="sweets",
+        )
 
-        ## Honeyed Apple
+        # Honeyed Apple
+        self.bucket.add_recipe(
+            ShapelessRecipe(
+                ingredients=["apple", "honey_bottle"],
+                result=self.bucket.get("honeyed_apple"),
+            ),
+            category="sweets",
+        )
 
-        Item(
-            "honeyed_apple",
+        # Sweet Roll
+        self.bucket.add_recipe(
             ShapelessRecipe(
                 ingredients=[
-                    "minecraft:apple",
-                    "minecraft:honey_bottle",
-                ],
-                result=FoodResult(nutrition=6, saturation=8.6),
-            ),
-        ).register(ctx)
-
-        ## Sweet Roll
-
-        Item(
-            "sweet_roll",
-            ShapelessRecipe(
-                ingredients=[
-                    "minecraft:wheat",
-                    "minecraft:sugar",
+                    "wheat",
+                    "sugar",
                     "#minecraft:eggs",
-                    aliases.BUTTER,
+                    self.bucket.get_ingredient("butter"),
                 ],
-                result=FoodResult(nutrition=8, saturation=12.8),
+                result=self.bucket.get("sweet_roll"),
             ),
-        ).register(ctx)
+            category="sweets",
+        )
