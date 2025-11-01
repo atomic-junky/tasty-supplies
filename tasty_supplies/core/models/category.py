@@ -7,24 +7,18 @@ class Category:
         self.category_name = category_name
         self.bucket: Bucket = bucket
 
-    def register(self, ctx: TSContext):
-        self.generate(ctx)
-        ctx.showcase_items.append("\n")
+    def add_item(self, item):
+        """Add an item with automatic category tagging."""
+        self.bucket.add_item(item, category=self.category_name.lower())
 
-    def generate(self, ctx: TSContext):
-        pass
+    def add_recipe(self, recipe):
+        """Add a recipe with automatic category tagging."""
+        self.bucket.add_recipe(recipe, category=self.category_name.lower())
 
     def create_items(self):
-        """Phase 1: Create all items for this category.
-
-        Should call _create_items() if the category has items to create.
-        """
+        """Create all items for this category."""
         pass
 
     def create_recipes(self):
-        """Phase 2: Create all recipes for this category.
-
-        Should call _create_recipes() if the category has recipes to create.
-        Called after all items from all categories have been created.
-        """
+        """Create all recipes for this category."""
         pass

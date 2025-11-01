@@ -2,12 +2,8 @@ from core import *
 
 
 def generate(ctx: TSContext):
-    log.info("Generating items...")
-
-    # Create a bucket to store all items and recipes
     bucket = Bucket()
 
-    # Initialize all categories
     categories = [
         Beverage(bucket),
         Ingredients(bucket),
@@ -17,22 +13,26 @@ def generate(ctx: TSContext):
         Worksation(bucket),
     ]
 
-    # PHASE 1: Create all items from all categories first
-    log.debug("Phase 1: Creating all items...")
     for category in categories:
         category.create_items()
 
-    # PHASE 2: Create all recipes (now all items are available)
-    log.debug("Phase 2: Creating all recipes...")
     for category in categories:
         category.create_recipes()
 
-    # Register showcase items and special functions
-    for category in categories:
-        category.register(ctx)
-
-    # Register all items and recipes from the bucket
     bucket.register_all(ctx)
 
+    # Generate cutting board drop function
+    cutting_board = bucket.get("cutting_board")
+    if cutting_board:
+        from beet import Function
+
+        ctx.data["tasty_supplies:cutting_board/drop"] = Function(
+            [f"summon minecraft:item ~ ~.5 ~ {{Item:{cutting_board.to_result()}}}"]
+        )
+
+    item_count = len(bucket.export_item_names())
+    recipe_count = len(bucket.export_recipe_ids())
+
     log.info(f"Items generated")
-    log.info(f"\t- {len(ctx.data.recipes)} recipes")
+    log.info(f"\t- {item_count} items")
+    log.info(f"\t- {recipe_count} recipes")

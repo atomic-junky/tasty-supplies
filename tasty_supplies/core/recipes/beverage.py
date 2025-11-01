@@ -24,26 +24,9 @@ class Beverage(Category):
         """
         super().__init__("Drinks", bucket)
 
-    def generate(self, ctx: TSContext):
-        """Generate all beverage items and recipes.
-
-        Args:
-            ctx: The Tasty Supplies context
-        """
-        pass  # Items and recipes are now created in separate phases
-
     def create_items(self):
-        """Phase 1: Create all beverage items."""
-        self._create_items()
-
-    def create_recipes(self):
-        """Phase 2: Create all beverage recipes."""
-        self._create_recipes()
-
-    def _create_items(self):
         """Create all beverage items and add them to the bucket."""
-        items = [
-            # Apple Cider
+        self.add_item(
             Item(
                 "apple_cider",
                 base_item="potion",
@@ -57,7 +40,9 @@ class Beverage(Category):
                         }
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "apple_cider_horn",
                 base_item="potion",
@@ -72,8 +57,9 @@ class Beverage(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:goat_horn"},
-            ),
-            # Glow Berry Custard
+            )
+        )
+        self.add_item(
             Item(
                 "glow_berry_custard",
                 base_item="potion",
@@ -87,7 +73,9 @@ class Beverage(Category):
                         }
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "glow_berry_custard_horn",
                 base_item="potion",
@@ -102,8 +90,9 @@ class Beverage(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:goat_horn"},
-            ),
-            # Hot Cocoa
+            )
+        )
+        self.add_item(
             Item(
                 "hot_cocoa",
                 base_item="potion",
@@ -117,7 +106,9 @@ class Beverage(Category):
                         }
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "hot_cocoa_horn",
                 base_item="potion",
@@ -132,8 +123,9 @@ class Beverage(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:goat_horn"},
-            ),
-            # Melon Juice
+            )
+        )
+        self.add_item(
             Item(
                 "melon_juice",
                 base_item="potion",
@@ -143,7 +135,9 @@ class Beverage(Category):
                         {"id": "minecraft:instant_health", "amplifier": 0}
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "melon_juice_horn",
                 base_item="potion",
@@ -154,11 +148,11 @@ class Beverage(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:goat_horn"},
-            ),
-            # Magma Gelatin (food item, not potion)
+            )
+        )
+        self.add_item(
             Item(
                 "magma_gelatin",
-                base_item="bread",
                 food={"nutrition": 1, "saturation": 6, "can_always_eat": True},
                 max_stack_size=1,
                 consumable={
@@ -181,35 +175,27 @@ class Beverage(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:bucket"},
-            ),
-        ]
+            )
+        )
 
-        for item in items:
-            self.bucket.add_item(item, category="beverages")
-
-    def _create_recipes(self):
+    def create_recipes(self):
         """Create all beverage recipes and add them to the bucket."""
 
-        # Apple Cider
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=["apple", "apple", "sugar", "glass_bottle"],
                 result=self.bucket.get("apple_cider"),
             ),
-            category="beverages",
         )
 
-        # Apple Cider Horn
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=["apple", "apple", "sugar", "goat_horn"],
                 result=self.bucket.get("apple_cider_horn"),
             ),
-            category="beverages",
         )
 
-        # Glow Berry Custard
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "glow_berries",
@@ -220,11 +206,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("glow_berry_custard"),
             ),
-            category="beverages",
         )
 
-        # Glow Berry Custard Horn
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "glow_berries",
@@ -235,11 +219,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("glow_berry_custard_horn"),
             ),
-            category="beverages",
         )
 
-        # Hot Cocoa
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "cocoa_beans",
@@ -250,11 +232,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("hot_cocoa"),
             ),
-            category="beverages",
         )
 
-        # Hot Cocoa Horn
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "cocoa_beans",
@@ -265,11 +245,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("hot_cocoa_horn"),
             ),
-            category="beverages",
         )
 
-        # Melon Juice
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "melon_slice",
@@ -281,11 +259,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("melon_juice"),
             ),
-            category="beverages",
         )
 
-        # Melon Juice Horn
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "melon_slice",
@@ -297,11 +273,9 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("melon_juice_horn"),
             ),
-            category="beverages",
         )
 
-        # Magma Gelatin (food item, not potion)
-        self.bucket.add_recipe(
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "bucket",
@@ -313,5 +287,4 @@ class Beverage(Category):
                 ],
                 result=self.bucket.get("magma_gelatin"),
             ),
-            category="beverages",
         )

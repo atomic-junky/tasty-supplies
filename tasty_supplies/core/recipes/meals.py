@@ -5,7 +5,7 @@ from .. import (
     ShapelessRecipe as NewShapelessRecipe,
     ShapedRecipe as NewShapedRecipe,
     AutoCookingRecipe,
-    CuttingBoardRecipe as NewCuttingBoardRecipe,
+    CuttingBoardRecipe,
     Category,
     aliases,
 )
@@ -20,41 +20,31 @@ class Meals(Category):
         """
         super().__init__("Meals", bucket)
 
-    def generate(self, ctx: TSContext):
-        """Generate all meal items and recipes.
-
-        Args:
-            ctx: The Tasty Supplies context
-        """
-        pass  # Items and recipes are now created in separate phases
-
     def create_items(self):
-        """Phase 1: Create all meal items."""
-        self._create_items()
-
-    def create_recipes(self):
-        """Phase 2: Create all meal recipes."""
-        self._create_recipes()
-
-    def _create_items(self):
         """Create all meal items and add them to the bucket."""
-        items = [
+        self.add_item(
             Item(
                 "beef_skewer",
-                base_item="bread",
                 food={"nutrition": 16, "saturation": 25.6},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "beef_stew",
                 base_item="rabbit_stew",
                 food={"nutrition": 10, "saturation": 12},
-            ),
+            )
+        )
+        self.add_item(Item("cod_roll", food={"nutrition": 7, "saturation": 9.4}))
+        self.add_item(Item("cheese", food={"nutrition": 8, "saturation": 5.6}))
+        self.add_item(
             Item(
-                "cod_roll", base_item="bread", food={"nutrition": 7, "saturation": 9.4}
-            ),
-            Item(
-                "fried_egg", base_item="bread", food={"nutrition": 8, "saturation": 2.4}
-            ),
+                "cheese_slice",
+                food={"nutrition": 2, "saturation": 1.4},
+            )
+        )
+        self.add_item(Item("fried_egg", food={"nutrition": 8, "saturation": 2.4}))
+        self.add_item(
             Item(
                 "fruit_salad",
                 base_item="beetroot_soup",
@@ -73,10 +63,11 @@ class Meals(Category):
                         }
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "fungus_skewer",
-                base_item="bread",
                 food={"nutrition": 5, "saturation": 6},
                 consumable={
                     "on_consume_effects": [
@@ -93,44 +84,47 @@ class Meals(Category):
                     ]
                 },
                 use_remainder={"id": "minecraft:stick"},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "honey_cookie",
-                base_item="bread",
                 food={"nutrition": 2, "saturation": 0.4},
-            ),
-            Item(
-                "ice_cream_cone",
-                base_item="bread",
-                food={"nutrition": 2, "saturation": 0.4},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "ice_cream",
-                base_item="bread",
                 food={"nutrition": 4, "saturation": 3.6},
                 max_stack_size=16,
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "kelp_roll",
-                base_item="bread",
                 food={"nutrition": 10, "saturation": 12.6},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "kelp_roll_slice",
-                base_item="bread",
                 food={"nutrition": 2.5, "saturation": 6.2},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "melon_popsicle",
-                base_item="bread",
                 food={"nutrition": 3, "saturation": 0.5},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "mushroom_skewer",
-                base_item="bread",
                 food={"nutrition": 6, "saturation": 7.2},
                 use_remainder={"id": "minecraft:stick"},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "nether_salad",
                 base_item="beetroot_soup",
@@ -149,27 +143,33 @@ class Meals(Category):
                         }
                     ]
                 },
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "potato_fries",
-                base_item="bread",
                 food={"nutrition": 1.5, "saturation": 1.5},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "salmon_roll",
-                base_item="bread",
                 food={"nutrition": 7, "saturation": 9.4},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "stuffed_potato",
-                base_item="bread",
                 food={"nutrition": 6, "saturation": 7.8},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "sweet_berry_cookie",
-                base_item="bread",
                 food={"nutrition": 2, "saturation": 0.4},
-            ),
+            )
+        )
+        self.add_item(
             Item(
                 "warped_mutton",
                 base_item="rabbit_stew",
@@ -188,47 +188,54 @@ class Meals(Category):
                         }
                     ]
                 },
-            ),
-        ]
+            )
+        )
 
-        for item in items:
-            self.bucket.add_item(item, category="meals")
-
-    def _create_recipes(self):
+    def create_recipes(self):
         """Create all meal recipes and add them to the bucket."""
 
-        # Beef Skewer
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["b", "b", "s"],
                 key={"b": "cooked_beef", "s": "stick"},
                 result=self.bucket.get("beef_skewer"),
             ),
-            category="meals",
         )
 
-        # Beef Stew
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=["bowl", "cooked_beef", "carrot", "baked_potato"],
                 result=self.bucket.get("beef_stew"),
             ),
-            category="meals",
         )
 
-        # Fried Egg
-        self.bucket.add_recipe(
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient="milk_bucket",
+                result=self.bucket.get("cheese"),
+                base_cooking_time=200,
+                experience=0.5,
+            ),
+        )
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("cheese"),
+                result=self.bucket.get("cheese_slice"),
+                result_count=4,
+            ),
+        )
+
+        self.add_recipe(
             AutoCookingRecipe(
                 ingredient="#minecraft:eggs",
                 result=self.bucket.get("fried_egg"),
                 base_cooking_time=140,
                 experience=0.1,
             ),
-            category="meals",
         )
 
-        # Fruit Salad
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=[
                     "bowl",
@@ -241,60 +248,45 @@ class Meals(Category):
                 ],
                 result=self.bucket.get("fruit_salad"),
             ),
-            category="meals",
         )
 
-        # Fungus Skewer (two variations)
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["w", "c", "s"],
                 key={"w": "warped_fungus", "c": "crimson_fungus", "s": "stick"},
                 result=self.bucket.get("fungus_skewer"),
             ),
-            category="meals",
         )
 
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["c", "w", "s"],
                 key={"w": "warped_fungus", "c": "crimson_fungus", "s": "stick"},
                 result=self.bucket.get("fungus_skewer"),
                 recipe_id="fungus_skewer_reversed",
             ),
-            category="meals",
         )
 
-        # Honey Cookie
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["whw"],
                 key={"h": "honey_bottle", "w": "wheat"},
                 result=self.bucket.get("honey_cookie"),
             ),
-            category="meals",
         )
 
-        # Ice Cream Cone
-        self.bucket.add_recipe(
-            NewShapedRecipe(
-                pattern=["W", "W", "W"],
-                key={"W": "wheat"},
-                result=self.bucket.get("ice_cream_cone"),
-            ),
-            category="meals",
-        )
-
-        # Ice Cream
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
-                ingredients=["snowball", "sugar", "bread"],
+                ingredients=[
+                    "snowball",
+                    "sugar",
+                    self.bucket.get_ingredient("ice_cream_cone"),
+                ],
                 result=self.bucket.get("ice_cream"),
             ),
-            category="meals",
         )
 
-        # Melon Popsicle
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=[
                     "melon_slice",
@@ -307,78 +299,63 @@ class Meals(Category):
                 ],
                 result=self.bucket.get("melon_popsicle"),
             ),
-            category="meals",
         )
 
-        # Mushroom Skewer (two variations)
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["b", "r", "s"],
                 key={"b": "brown_mushroom", "r": "red_mushroom", "s": "stick"},
                 result=self.bucket.get("mushroom_skewer"),
             ),
-            category="meals",
         )
 
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["r", "b", "s"],
                 key={"b": "brown_mushroom", "r": "red_mushroom", "s": "stick"},
                 result=self.bucket.get("mushroom_skewer"),
                 recipe_id="mushroom_skewer_reversed",
             ),
-            category="meals",
         )
 
-        # Nether Salad
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=["bowl", "crimson_fungus", "warped_fungus"],
                 result=self.bucket.get("nether_salad"),
             ),
-            category="meals",
         )
 
-        # Potato Fries (cutting board)
-        self.bucket.add_recipe(
-            NewCuttingBoardRecipe(
+        self.add_recipe(
+            CuttingBoardRecipe(
                 ingredient="baked_potato",
                 result=self.bucket.get("potato_fries"),
                 result_count=4,
             ),
-            category="meals",
         )
 
-        # Sweet Berry Cookie
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["wbw"],
                 key={"b": "sweet_berries", "w": "wheat"},
                 result=self.bucket.get("sweet_berry_cookie"),
             ),
-            category="meals",
         )
 
-        # Stuffed Potato
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=["baked_potato", "cooked_beef", "carrot", "milk_bucket"],
                 result=self.bucket.get("stuffed_potato"),
             ),
-            category="meals",
         )
 
-        # Warped Mutton
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapelessRecipe(
                 ingredients=["warped_roots", "warped_roots", "bowl", "cooked_mutton"],
                 result=self.bucket.get("warped_mutton"),
             ),
-            category="meals",
         )
 
-        # Kelp Roll
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["rcr", "kkk"],
                 key={
@@ -388,21 +365,17 @@ class Meals(Category):
                 },
                 result=self.bucket.get("kelp_roll"),
             ),
-            category="meals",
         )
 
-        # Kelp Roll Slice (cutting board)
-        self.bucket.add_recipe(
-            NewCuttingBoardRecipe(
+        self.add_recipe(
+            CuttingBoardRecipe(
                 ingredient=self.bucket.get("kelp_roll"),
                 result=self.bucket.get("kelp_roll_slice"),
                 result_count=4,
             ),
-            category="meals",
         )
 
-        # Salmon Roll
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["s", "s", "r"],
                 key={
@@ -412,11 +385,9 @@ class Meals(Category):
                 result=self.bucket.get("salmon_roll"),
                 result_count=2,
             ),
-            category="meals",
         )
 
-        # Cod Roll
-        self.bucket.add_recipe(
+        self.add_recipe(
             NewShapedRecipe(
                 pattern=["c", "c", "r"],
                 key={
@@ -426,5 +397,4 @@ class Meals(Category):
                 result=self.bucket.get("cod_roll"),
                 result_count=2,
             ),
-            category="meals",
         )
