@@ -77,7 +77,10 @@ class Item:
         Args:
             ctx: The Tasty Supplies context
         """
-        ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
+        # Only generate model if it doesn't already exist in src/
+        if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
+            ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
+
         ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model()
         self._register_model_case(ctx)
 
