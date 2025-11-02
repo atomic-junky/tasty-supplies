@@ -167,4 +167,4 @@ bucket.register_all(ctx)
 
 ## Credits
 
-Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight), [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge) and [FastFood Delight](https://github.com/akaneoMT/FastFoodDelight).
+Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) and [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge).

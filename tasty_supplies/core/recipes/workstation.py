@@ -1,7 +1,7 @@
 from beet import Function
 from .. import (
     TSContext,
-    BlockItem,
+    Item,
     ShapedRecipe,
     Category,
     Bucket,
@@ -22,13 +22,12 @@ class Worksation(Category):
     def create_items(self):
         """Create all workstation items and add them to the bucket."""
         self.add_item(
-            BlockItem(
-                "cutting_board",
-                alias="Oak Cutting Board",
-                base_item="minecraft:oak_pressure_plate",
+            Item(
+                item_name="cutting_board",
+                base_item="armor_stand",
+                texture_path="tasty_supplies:block/cutting_board",
+                model_type="block",
                 max_stack_size=64,
-                placed_block="minecraft:oak_pressure_plate",
-                item_model="tasty_supplies:cutting_board",
             )
         )
 

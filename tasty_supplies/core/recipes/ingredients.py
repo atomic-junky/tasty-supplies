@@ -105,8 +105,8 @@ class Ingredients(Category):
         self.add_recipe(
             ShapedRecipe(
                 key={"W": "wheat"},
-                pattern=[["W"], ["W"], ["W"]],
+                pattern=["W", "W", "W"],
                 result=self.bucket.get("ice_cream_cone"),
-                result_count=4,
+                result_count=3,
             ),
         )
