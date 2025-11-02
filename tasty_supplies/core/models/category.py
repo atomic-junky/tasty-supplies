@@ -1,18 +1,47 @@
-from ..bucket import Bucket
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ..bucket import Bucket
+    from .item import Item
+
 from . import TSContext
 
 
 class Category:
-    def __init__(self, category_name="", bucket=None):
-        self.category_name = category_name
-        self.bucket: Bucket = bucket
+    """Base class for item and recipe categories.
 
-    def add_item(self, item):
-        """Add an item with automatic category tagging."""
+    Categories organize items and recipes into logical groups,
+    automatically tagging them for easier management.
+    """
+
+    def __init__(self, category_name: str = "", bucket: Optional["Bucket"] = None):
+        """Initialize a category.
+
+        Args:
+            category_name: Name of the category (e.g., "Meals", "Tools")
+            bucket: Bucket instance to store items and recipes
+        """
+        self.category_name = category_name
+        self.bucket: Optional["Bucket"] = bucket
+
+    def add_item(self, item: "Item") -> None:
+        """Add an item with automatic category tagging.
+
+        Args:
+            item: The Item instance to add
+        """
+        if self.bucket is None:
+            raise ValueError("Bucket is not initialized for this category")
         self.bucket.add_item(item, category=self.category_name.lower())
 
-    def add_recipe(self, recipe):
-        """Add a recipe with automatic category tagging."""
+    def add_recipe(self, recipe) -> None:
+        """Add a recipe with automatic category tagging.
+
+        Args:
+            recipe: The recipe instance to add
+        """
+        if self.bucket is None:
+            raise ValueError("Bucket is not initialized for this category")
         self.bucket.add_recipe(recipe, category=self.category_name.lower())
 
     def create_items(self):

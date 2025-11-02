@@ -6,11 +6,11 @@ register items and recipes, retrieve them by name or category, and manage
 the generation pipeline.
 """
 
-import json
-from typing import Dict, List, Optional, Set, Union, Protocol, runtime_checkable
+from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
+
 from .models.item import Item
 from .models.context import TSContext
-from core.logger import log
+from .logger import log
 
 
 @runtime_checkable
@@ -45,15 +45,13 @@ class Bucket:
         _recipe_categories (Dict[str, List[str]]): Dictionary mapping categories to recipe IDs.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize an empty Bucket."""
         self._items: Dict[str, Item] = {}
         self._recipes: List[RecipeProtocol] = []
         self._item_categories: Dict[str, List[str]] = {}
         self._recipe_categories: Dict[str, List[str]] = {}
-        self._recipe_id_counter: Dict[str, int] = (
-            {}
-        )  # Track recipe_id usage for auto-generation
+        self._recipe_id_counter: Dict[str, int] = {}  # Track recipe_id usage
 
     def add_item(self, item: Item, category: Optional[str] = None) -> None:
         """Add an item to the bucket.
@@ -95,14 +93,14 @@ class Bucket:
             return recipe.recipe_id
 
         # Try to extract base name from result
-        base_name = "recipe"
+        base_name: str = "recipe"
         if hasattr(recipe, "result"):
-            result = recipe.result
+            result: Any = recipe.result
             if isinstance(result, Item):
                 base_name = result.name
             elif isinstance(result, dict) and "id" in result:
                 # Extract item name from dict result
-                item_id = result["id"]
+                item_id: str = result["id"]
                 if ":" in item_id:
                     base_name = item_id.split(":")[1]
                 else:
@@ -131,7 +129,7 @@ class Bucket:
         if hasattr(recipe, "recipes") and isinstance(recipe.recipes, list):
             # This is an AutoCookingRecipe
             # If base_recipe_id is empty, generate one from the first sub-recipe
-            base_id = ""
+            base_id: str = ""
             if hasattr(recipe, "base_recipe_id"):
                 base_id = recipe.base_recipe_id
 
@@ -140,7 +138,7 @@ class Bucket:
                 base_id = self._generate_recipe_id(recipe.recipes[0])
 
             # Now assign IDs to each sub-recipe with appropriate suffixes
-            suffixes = ["blasting", "smoking", "campfire"]
+            suffixes: List[str] = ["blasting", "smoking", "campfire"]
             for i, sub_recipe in enumerate(recipe.recipes):
                 # Generate recipe_id if needed
                 if not hasattr(sub_recipe, "recipe_id") or not sub_recipe.recipe_id:
@@ -306,8 +304,15 @@ class Bucket:
         """
         from beet import Function
 
-        def remove_minecraft_namespace(data):
-            """Remove 'minecraft:' prefix from component keys."""
+        def remove_minecraft_namespace(data: Any) -> Any:
+            """Remove 'minecraft:' prefix from component keys.
+
+            Args:
+                data: The data structure to process (dict, list, or primitive)
+
+            Returns:
+                Data with minecraft namespace removed from keys
+            """
             if isinstance(data, dict):
                 return {
                     key.replace("minecraft:", ""): remove_minecraft_namespace(value)
@@ -318,13 +323,22 @@ class Bucket:
             else:
                 return data
 
-        def to_snbt(data):
-            """Convert Python data to SNBT (Stringified NBT) format for Minecraft commands."""
+        def to_snbt(data: Any) -> str:
+            """Convert Python data to SNBT (Stringified NBT) format for Minecraft commands.
+
+            Args:
+                data: The data to convert (dict, list, string, bool, number)
+
+            Returns:
+                SNBT formatted string
+            """
             if isinstance(data, dict):
-                items = [f"{key}:{to_snbt(value)}" for key, value in data.items()]
+                items: List[str] = [
+                    f"{key}:{to_snbt(value)}" for key, value in data.items()
+                ]
                 return "{" + ",".join(items) + "}"
             elif isinstance(data, list):
-                items = [to_snbt(item) for item in data]
+                items: List[str] = [to_snbt(item) for item in data]
                 return "[" + ",".join(items) + "]"
             elif isinstance(data, str):
                 # Escape quotes in strings
@@ -337,22 +351,23 @@ class Bucket:
                 return str(data)
 
         for item_name, item in self._items.items():
-            item_data = item.to_result()
-            base_item = item_data["id"]
-            count = item_data.get("count", 1)
-            components = item_data.get("components", {})
+            item_data: Dict[str, Any] = item.to_result()
+            base_item: str = item_data["id"]
+            count: int = item_data.get("count", 1)
+            components: Dict[str, Any] = item_data.get("components", {})
             components = remove_minecraft_namespace(components)
 
             # Generate SNBT for components
+            snbt_components: str
             if components:
-                component_items = [
+                component_items: List[str] = [
                     f"{key}={to_snbt(value)}" for key, value in components.items()
                 ]
                 snbt_components = ",".join(component_items)
             else:
                 snbt_components = ""
 
-            give_command = f"give @s {base_item}[{snbt_components}] {count}"
+            give_command: str = f"give @s {base_item}[{snbt_components}] {count}"
 
             ctx.data["tasty_supplies"].functions[f"give/{item_name}"] = Function(
                 [give_command]
@@ -383,13 +398,13 @@ class Bucket:
         """
         by_base: Dict[str, List[str]] = {}
         for item_name, item in self._items.items():
-            base = item.base_item
+            base: str = item.base_item
             if base not in by_base:
                 by_base[base] = []
             by_base[base].append(item_name)
         return by_base
 
-    def export_summary(self) -> Dict:
+    def export_summary(self) -> Dict[str, Any]:
         """Export a summary of all items, recipes, and categories in the bucket.
 
         Returns:

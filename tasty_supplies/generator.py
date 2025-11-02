@@ -1,7 +1,24 @@
-from core import *
+"""Main generator for Tasty Supplies datapack.
+
+This module orchestrates the generation of all items, recipes, and
+related datapack resources.
+"""
+
+from core import TSContext, Bucket, log
+from core.recipes.beverage import Beverage
+from core.recipes.ingredients import Ingredients
+from core.recipes.meals import Meals
+from core.recipes.sweets import Sweets
+from core.recipes.tools import Tools
+from core.recipes.workstation import Worksation
 
 
-def generate(ctx: TSContext):
+def generate(ctx: TSContext) -> None:
+    """Generate all datapack content.
+
+    Args:
+        ctx: The Tasty Supplies context
+    """
     bucket = Bucket()
 
     categories = [
