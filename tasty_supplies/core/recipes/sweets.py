@@ -5,15 +5,12 @@ All items and recipes are managed through the Bucket system.
 """
 
 from .. import (
-    TSContext,
     Bucket,
     Item,
     ShapelessRecipe,
     ShapedRecipe,
     CuttingBoardRecipe,
-    AutoCookingRecipe,
     Category,
-    aliases,
 )
 
 
@@ -30,13 +27,16 @@ class Sweets(Category):
 
     def create_items(self):
         """Create all sweet items and add them to the bucket."""
+
         self.add_item(Item("apple_pie", food={"nutrition": 8, "saturation": 6}))
+
         self.add_item(
             Item(
                 "apple_pie_slice",
                 food={"nutrition": 2, "saturation": 1.5},
             )
         )
+
         self.add_item(
             Item(
                 "cherry_blossom_pie",
@@ -57,6 +57,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "cherry_blossom_pie_slice",
@@ -77,6 +78,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "chocolate_pie",
@@ -97,6 +99,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "chocolate_pie_slice",
@@ -117,6 +120,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "chorus_pie",
@@ -129,6 +133,7 @@ class Sweets(Category):
                 use_cooldown={"seconds": 2.0, "cooldown_group": "chorus_pie"},
             )
         )
+
         self.add_item(
             Item(
                 "chorus_pie_slice",
@@ -139,6 +144,7 @@ class Sweets(Category):
                 use_cooldown={"seconds": 1.0, "cooldown_group": "chorus_pie"},
             )
         )
+
         self.add_item(
             Item(
                 "glow_berry_pie",
@@ -159,6 +165,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "glow_berry_pie_slice",
@@ -179,6 +186,22 @@ class Sweets(Category):
                 },
             )
         )
+
+        self.add_item(
+            Item(
+                "ice_cream",
+                food={"nutrition": 4, "saturation": 3.6},
+                max_stack_size=16,
+            )
+        )
+
+        self.add_item(
+            Item(
+                "melon_popsicle",
+                food={"nutrition": 3, "saturation": 0.5},
+            )
+        )
+
         self.add_item(
             Item(
                 "sweet_berry_cheesecake",
@@ -199,6 +222,7 @@ class Sweets(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "sweet_berry_cheesecake_slice",
@@ -219,13 +243,30 @@ class Sweets(Category):
                 },
             )
         )
+
+        self.add_item(
+            Item(
+                "honey_cookie",
+                food={"nutrition": 2, "saturation": 0.4},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "sweet_berry_cookie",
+                food={"nutrition": 2, "saturation": 0.4},
+            )
+        )
+
         self.add_item(Item("croissant", food={"nutrition": 6, "saturation": 3.4}))
+
         self.add_item(
             Item(
                 "honeyed_apple",
                 food={"nutrition": 6, "saturation": 8.6},
             )
         )
+
         self.add_item(
             Item(
                 "sweet_roll",
@@ -336,6 +377,32 @@ class Sweets(Category):
         )
 
         self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "snowball",
+                    "sugar",
+                    self.bucket.get_ingredient("ice_cream_cone"),
+                ],
+                result=self.bucket.get("ice_cream"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "melon_slice",
+                    "melon_slice",
+                    "melon_slice",
+                    "melon_slice",
+                    "ice",
+                    "ice",
+                    "stick",
+                ],
+                result=self.bucket.get("melon_popsicle"),
+            ),
+        )
+
+        self.add_recipe(
             ShapedRecipe(
                 pattern=["GGG", "SSS", "MBM"],
                 key={
@@ -373,6 +440,22 @@ class Sweets(Category):
                 ingredient=self.bucket.get("sweet_berry_cheesecake"),
                 result=self.bucket.get("sweet_berry_cheesecake_slice"),
                 result_count=4,
+            ),
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
+                pattern=["whw"],
+                key={"h": "honey_bottle", "w": "wheat"},
+                result=self.bucket.get("honey_cookie"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
+                pattern=["wbw"],
+                key={"b": "sweet_berries", "w": "wheat"},
+                result=self.bucket.get("sweet_berry_cookie"),
             ),
         )
 

@@ -5,7 +5,6 @@ All items and recipes are managed through the Bucket system.
 """
 
 from .. import (
-    TSContext,
     Bucket,
     Item,
     ShapelessRecipe,
@@ -42,6 +41,7 @@ class Beverage(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "apple_cider_horn",
@@ -59,6 +59,7 @@ class Beverage(Category):
                 use_remainder={"id": "minecraft:goat_horn"},
             )
         )
+
         self.add_item(
             Item(
                 "glow_berry_custard",
@@ -75,6 +76,7 @@ class Beverage(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "glow_berry_custard_horn",
@@ -92,6 +94,7 @@ class Beverage(Category):
                 use_remainder={"id": "minecraft:goat_horn"},
             )
         )
+
         self.add_item(
             Item(
                 "hot_cocoa",
@@ -108,6 +111,7 @@ class Beverage(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "hot_cocoa_horn",
@@ -125,6 +129,7 @@ class Beverage(Category):
                 use_remainder={"id": "minecraft:goat_horn"},
             )
         )
+
         self.add_item(
             Item(
                 "melon_juice",
@@ -137,6 +142,7 @@ class Beverage(Category):
                 },
             )
         )
+
         self.add_item(
             Item(
                 "melon_juice_horn",
@@ -150,6 +156,7 @@ class Beverage(Category):
                 use_remainder={"id": "minecraft:goat_horn"},
             )
         )
+
         self.add_item(
             Item(
                 "magma_gelatin",

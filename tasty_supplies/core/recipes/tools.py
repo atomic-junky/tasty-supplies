@@ -5,7 +5,6 @@ All items and recipes are managed through the Bucket system.
 """
 
 from core.models import (
-    TSContext,
     Item,
     ShapedRecipe,
     SmithingTransformRecipe,
@@ -95,6 +94,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(4.5, 2.3, "netherite_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "diamond_knife",
@@ -105,6 +105,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(4, 2.3, "diamond_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "golden_knife",
@@ -115,6 +116,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(2, 2.3, "golden_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "iron_knife",
@@ -125,6 +127,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(3.5, 2.3, "iron_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "copper_knife",
@@ -135,6 +138,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(3, 2.3, "copper_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "flint_knife",
@@ -145,6 +149,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(3, 2.3, "flint_knife"),
             )
         )
+
         self.add_item(
             Item(
                 "netherite_cleaver",
@@ -155,6 +160,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(9, 1.2, "netherite_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "diamond_cleaver",
@@ -165,6 +171,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(8, 1.2, "diamond_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "golden_cleaver",
@@ -175,6 +182,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(6, 1.2, "golden_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "iron_cleaver",
@@ -185,6 +193,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(8, 1.1, "iron_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "copper_cleaver",
@@ -195,6 +204,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(8, 1.0, "copper_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "stone_cleaver",
@@ -205,6 +215,7 @@ class Tools(Category):
                 attribute_modifiers=tool_attr(8, 1.0, "stone_cleaver"),
             )
         )
+
         self.add_item(
             Item(
                 "wooden_cleaver",

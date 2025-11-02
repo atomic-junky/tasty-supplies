@@ -5,7 +5,6 @@ All items and recipes are managed through the Bucket system.
 """
 
 from .. import (
-    TSContext,
     Bucket,
     Item,
     AutoCookingRecipe,
