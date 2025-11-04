@@ -10,6 +10,7 @@ from .. import (
     AutoCookingRecipe,
     CuttingBoardRecipe,
     ShapedRecipe,
+    ShapelessRecipe,
     Category,
     aliases,
 )
@@ -109,4 +110,18 @@ class Ingredients(Category):
                 result=self.bucket.get("ice_cream_cone"),
                 result_count=3,
             ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients={
+                    "water_bucket",
+                    "bucket",
+                    "wheat_seeds",
+                    "wheat_seeds",
+                    "wheat_seeds",
+                    "wheat_seeds",
+                },
+                result="milk_bucket",
+            )
         )
