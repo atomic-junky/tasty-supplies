@@ -11,6 +11,7 @@ from core.recipes.meals import Meals
 from core.recipes.sweets import Sweets
 from core.recipes.tools import Tools
 from core.recipes.workstation import Worksation
+from core.recipes.crops import Crops
 
 
 def generate(ctx: TSContext) -> None:
@@ -21,6 +22,8 @@ def generate(ctx: TSContext) -> None:
     """
     bucket = Bucket()
 
+    crops_category = Crops(bucket)
+
     categories = [
         Beverage(bucket),
         Ingredients(bucket),
@@ -28,6 +31,7 @@ def generate(ctx: TSContext) -> None:
         Sweets(bucket),
         Tools(bucket),
         Worksation(bucket),
+        crops_category,
     ]
 
     for category in categories:
@@ -35,6 +39,9 @@ def generate(ctx: TSContext) -> None:
 
     for category in categories:
         category.create_recipes()
+
+    crop_manager = crops_category.build_manager(ctx)
+    crop_manager.register()
 
     bucket.register_all(ctx)
 

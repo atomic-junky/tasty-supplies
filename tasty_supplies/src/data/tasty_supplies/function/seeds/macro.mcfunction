@@ -1,0 +1,1 @@
+$execute if items entity @s weapon.$(hand) *[minecraft:custom_model_data~{tasty_supplies:{seed:"cabbage"}}] run return run function tasty_supplies:seeds/cabbage/place

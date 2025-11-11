@@ -11,6 +11,7 @@ from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
 from .models.item import Item
 from .models.context import TSContext
 from .logger import log
+from .utils import remove_minecraft_namespace, to_snbt
 
 
 @runtime_checkable
@@ -303,52 +304,6 @@ class Bucket:
             ctx: The Tasty Supplies context
         """
         from beet import Function
-
-        def remove_minecraft_namespace(data: Any) -> Any:
-            """Remove 'minecraft:' prefix from component keys.
-
-            Args:
-                data: The data structure to process (dict, list, or primitive)
-
-            Returns:
-                Data with minecraft namespace removed from keys
-            """
-            if isinstance(data, dict):
-                return {
-                    key.replace("minecraft:", ""): remove_minecraft_namespace(value)
-                    for key, value in data.items()
-                }
-            elif isinstance(data, list):
-                return [remove_minecraft_namespace(item) for item in data]
-            else:
-                return data
-
-        def to_snbt(data: Any) -> str:
-            """Convert Python data to SNBT (Stringified NBT) format for Minecraft commands.
-
-            Args:
-                data: The data to convert (dict, list, string, bool, number)
-
-            Returns:
-                SNBT formatted string
-            """
-            if isinstance(data, dict):
-                items: List[str] = [
-                    f"{key}:{to_snbt(value)}" for key, value in data.items()
-                ]
-                return "{" + ",".join(items) + "}"
-            elif isinstance(data, list):
-                items: List[str] = [to_snbt(item) for item in data]
-                return "[" + ",".join(items) + "]"
-            elif isinstance(data, str):
-                # Escape quotes in strings
-                return '"' + data.replace('"', '\\"') + '"'
-            elif isinstance(data, bool):
-                return "true" if data else "false"
-            elif isinstance(data, (int, float)):
-                return str(data)
-            else:
-                return str(data)
 
         for item_name, item in self._items.items():
             item_data: Dict[str, Any] = item.to_result()

@@ -12,6 +12,11 @@ COOKED_RICE: str = "field_masoned_banner_pattern"
 RAW_SALMON_SLICE: str = "bordure_indented_banner_pattern"
 RAW_COD_SLICE: str = "flower_banner_pattern"
 
+# Crop items
+TOMATO: str = "heart_pottery_sherd"
+CORN: str = "shelter_pottery_sherd"
+CABBAGE: str = "snort_pottery_sherd"
+
 # Tool items
 DIAMOND_KNIFE: str = "disc_fragment_5"
 DIAMOND_CLEAVER: str = "echo_shard"
