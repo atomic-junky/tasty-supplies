@@ -5,6 +5,7 @@ related datapack resources.
 """
 
 from core import TSContext, Bucket, log
+from core.advancements import register_advancements
 from core.recipes.beverage import Beverage
 from core.recipes.ingredients import Ingredients
 from core.recipes.meals import Meals
@@ -36,6 +37,8 @@ def generate(ctx: TSContext) -> None:
     for category in categories:
         category.create_recipes()
 
+    register_advancements(bucket)
+
     bucket.register_all(ctx)
 
     # Generate cutting board drop function
@@ -49,7 +52,9 @@ def generate(ctx: TSContext) -> None:
 
     item_count = len(bucket.export_item_names())
     recipe_count = len(bucket.export_recipe_ids())
+    advancement_count = len(bucket.export_advancement_ids())
 
     log.info(f"Items generated")
     log.info(f"\t- {item_count} items")
     log.info(f"\t- {recipe_count} recipes")
+    log.info(f"\t- {advancement_count} advancements")
