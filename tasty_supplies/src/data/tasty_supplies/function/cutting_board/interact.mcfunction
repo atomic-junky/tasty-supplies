@@ -6,7 +6,9 @@
 execute at @s on target if data entity @s SelectedItem{id:"minecraft:wooden_sword"} run return run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction
 
 # Do nothing if there is already an item on the cutting board
-execute at @s unless data entity @e[type=item_display, distance=..1, limit=1, sort=nearest] item.components."minecraft:custom_data"{tags:["cutting_board_display"]} run return run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction
+# If an item_display slice exists within reach, remove the interaction and stop.
+execute at @s if entity @e[type=item_display, tag=cutting_board_slice, distance=..1] run execute as @e[type=interaction, sort=nearest, limit=1] run data remove entity @s interaction
+execute at @s if entity @e[type=item_display, tag=cutting_board_slice, distance=..1] run return fail
 
 # Store that the item is custom for later
 data modify storage minecraft:temp cutting_board set value {custom_item: false}
