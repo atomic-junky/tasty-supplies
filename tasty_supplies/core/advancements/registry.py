@@ -21,8 +21,6 @@ from ..models.advancement import (
 from ..models.item import Item
 from ..utils import ensure_namespace
 
-_BACKGROUND = "minecraft:textures/block/bricks.png"
-
 
 def _recipe_criteria(recipe_id: str) -> AdvancementCriteria:
     return AdvancementCriteria(
@@ -37,7 +35,9 @@ def _recipe_criteria(recipe_id: str) -> AdvancementCriteria:
     )
 
 
-def _item_condition(item: Item, extra_components: Optional[Dict[str, object]] = None) -> Dict[str, object]:
+def _item_condition(
+    item: Item, extra_components: Optional[Dict[str, object]] = None
+) -> Dict[str, object]:
     components = {
         f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
             "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{item.name}"]
@@ -94,11 +94,15 @@ def _inventory_vanilla_item_criteria(item_id: str) -> AdvancementCriteria:
 def _require_item(bucket: Bucket, item_name: str) -> Item:
     item = bucket.get(item_name)
     if not item:
-        raise ValueError(f"Missing item '{item_name}' required for advancement generation.")
+        raise ValueError(
+            f"Missing item '{item_name}' required for advancement generation."
+        )
     return item
 
 
-def _optional_components(item: Item, keys: Iterable[str]) -> Optional[Dict[str, object]]:
+def _optional_components(
+    item: Item, keys: Iterable[str]
+) -> Optional[Dict[str, object]]:
     collected: Dict[str, object] = {}
     for key in keys:
         if key in item.components:
@@ -116,9 +120,11 @@ def register_advancements(bucket: Bucket) -> None:
         title="Tasty Supplies",
         description="A world of flavor awaits you!",
         icon=AdvancementIcon("minecraft:cake"),
-        criteria={"seeds": {"conditions": {}, "trigger": "minecraft:inventory_changed"}},
+        criteria={
+            "seeds": {"conditions": {}, "trigger": "minecraft:inventory_changed"}
+        },
         requirements=[["seeds"]],
-        background=_BACKGROUND,
+        background="block/bricks",
         show_toast=False,
         announce_to_chat=False,
     )
@@ -161,7 +167,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria={"cutting_board": _recipe_criteria("cutting_board")},
         requirements=[["cutting_board"]],
         parent=root,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(prep_station, category="progression")
 
@@ -176,7 +181,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["butter"], ["cooked_rice"]],
         parent=prep_station,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(pantry_basics, category="cooking")
 
@@ -192,7 +196,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["wheat"], ["carrot"], ["potato"]],
         parent=prep_station,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.GOAL,
     )
     bucket.add_advancement(field_to_table, category="challenges")
@@ -210,7 +213,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["entered_nether"]],
         parent=root,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(nether, category="progression")
 
@@ -226,9 +228,16 @@ def register_advancements(bucket: Bucket) -> None:
             "diamond_knife": _recipe_criteria("diamond_knife"),
             "netherite_knife": _recipe_criteria("netherite_knife"),
         },
-        requirements=[["flint_knife", "iron_knife", "golden_knife", "diamond_knife", "netherite_knife"]],
+        requirements=[
+            [
+                "flint_knife",
+                "iron_knife",
+                "golden_knife",
+                "diamond_knife",
+                "netherite_knife",
+            ]
+        ],
         parent=prep_station,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(knife, category="crafting")
 
@@ -240,7 +249,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria=knife.criteria.copy(),
         requirements=[[key] for key in knife.criteria.keys()],
         parent=knife,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.CHALLENGE,
     )
     bucket.add_advancement(all_knives, category="challenges")
@@ -256,7 +264,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["cheese_slice"], ["raw_cod_slice"]],
         parent=knife,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(precise_slices, category="cooking")
 
@@ -271,7 +278,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["salmon_roll"], ["cod_roll"]],
         parent=precise_slices,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.GOAL,
     )
     bucket.add_advancement(roll_with_it, category="meals")
@@ -284,7 +290,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria={"pie_crust": _recipe_criteria("pie_crust")},
         requirements=[["pie_crust"]],
         parent=pantry_basics,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(sweet_beginnings, category="desserts")
 
@@ -299,7 +304,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["apple_pie"], ["chocolate_pie"]],
         parent=sweet_beginnings,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.GOAL,
     )
     bucket.add_advancement(pie_party, category="desserts")
@@ -316,7 +320,6 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["apple_slice"], ["cherry_slice"], ["glow_slice"]],
         parent=pie_party,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.CHALLENGE,
     )
     bucket.add_advancement(dessert_sampler, category="desserts")
@@ -330,7 +333,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria={"apple_cider": _recipe_criteria("apple_cider")},
         requirements=[["apple_cider"]],
         parent=root,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(brewery_basics, category="crafting")
 
@@ -348,7 +350,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria=barman_criteria,
         requirements=[[name] for name in barman_criteria.keys()],
         parent=brewery_basics,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(barman, category="crafting")
 
@@ -361,7 +362,6 @@ def register_advancements(bucket: Bucket) -> None:
         criteria={"hot_cocoa": _consume_item_criteria(hot_cocoa)},
         requirements=[["hot_cocoa"]],
         parent=brewery_basics,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(comforting, category="consumption")
 
@@ -376,9 +376,13 @@ def register_advancements(bucket: Bucket) -> None:
             "glow_berry_custard_horn": _recipe_criteria("glow_berry_custard_horn"),
             "melon_juice_horn": _recipe_criteria("melon_juice_horn"),
         },
-        requirements=[["apple_cider_horn"], ["hot_cocoa_horn"], ["glow_berry_custard_horn"], ["melon_juice_horn"]],
+        requirements=[
+            ["apple_cider_horn"],
+            ["hot_cocoa_horn"],
+            ["glow_berry_custard_horn"],
+            ["melon_juice_horn"],
+        ],
         parent=brewery_basics,
-        background=_BACKGROUND,
         advancement_type=ADVANCEMENT_TYPE.GOAL,
     )
     bucket.add_advancement(horn_of_plenty, category="challenges")
@@ -400,9 +404,16 @@ def register_advancements(bucket: Bucket) -> None:
             "magma_gelatin": _recipe_criteria("magma_gelatin"),
             "warped_mutton": _recipe_criteria("warped_mutton"),
         },
-        requirements=[["nether_salad", "fungus_skewer", "fungus_skewer_reversed", "magma_gelatin", "warped_mutton"]],
+        requirements=[
+            [
+                "nether_salad",
+                "fungus_skewer",
+                "fungus_skewer_reversed",
+                "magma_gelatin",
+                "warped_mutton",
+            ]
+        ],
         parent=nether,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(fungus_among_us, category="nether")
 
@@ -417,6 +428,5 @@ def register_advancements(bucket: Bucket) -> None:
         },
         requirements=[["nether_salad", "fungus_skewer"]],
         parent=nether,
-        background=_BACKGROUND,
     )
     bucket.add_advancement(is_it_poisonous, category="consumption")
