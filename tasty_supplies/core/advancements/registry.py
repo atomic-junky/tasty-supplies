@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from copy import deepcopy
-from typing import Dict, Iterable, Optional
+from typing import Any, Dict, Iterable, Optional, List
+
+import json
+import os
 
 from ..bucket import Bucket
 from ..constants import (
@@ -16,6 +19,7 @@ from ..models.advancement import (
     Advancement,
     AdvancementIcon,
     AdvancementCriteria,
+    AdvancementRewards,
     ADVANCEMENT_TYPE,
 )
 from ..models.item import Item
@@ -46,7 +50,7 @@ def _item_condition(
     if extra_components:
         components.update(deepcopy(extra_components))
     return {
-        "items": f"{MINECRAFT_NAMESPACE}:{item.base_item}",
+        "items": [f"{MINECRAFT_NAMESPACE}:{item.base_item}"],
         "components": components,
     }
 
@@ -55,7 +59,7 @@ def _consume_item_criteria(item: Item) -> AdvancementCriteria:
     return AdvancementCriteria(
         trigger="minecraft:consume_item",
         conditions={
-            "item": _item_condition(item),
+            "item": _item_condition(item, item.components if getattr(item, 'components', None) else None),
         },
     )
 
@@ -67,7 +71,7 @@ def _inventory_item_criteria(
         trigger="minecraft:inventory_changed",
         conditions={
             "items": [
-                _item_condition(item, extra_components),
+                _item_condition(item, extra_components if extra_components is not None else (item.components if getattr(item, 'components', None) else None)),
             ],
         },
     )
@@ -110,323 +114,335 @@ def _optional_components(
     return collected or None
 
 
+def _item_predicate_from_item(item: Item) -> Dict[str, object]:
+    """Return a Minecraft item predicate dict for the given Item, including components."""
+    return _item_condition(item, item.components if getattr(item, "components", None) else None)
+
+
+def _item_predicate_from_name(bucket: Bucket, name: str) -> Dict[str, object]:
+    """Lookup an item by name from the bucket and return its item predicate."""
+    itm = _require_item(bucket, name)
+    return _item_predicate_from_item(itm)
+
+
+def _inventory_criterion_from_names(bucket: Bucket, names: Iterable[str]) -> AdvancementCriteria:
+    """Build a single `minecraft:inventory_changed` criterion matching any of the provided item names.
+
+    Each name is resolved via `_require_item` so the predicate includes the exact components.
+    """
+    predicates = [_item_predicate_from_name(bucket, n) for n in names]
+    return AdvancementCriteria(trigger="minecraft:inventory_changed", conditions={"items": predicates})
+
+
+def _resolve_placeholders(obj: Any, bucket: Bucket) -> Any:
+    """Recursively resolve placeholder strings in the provided object.
+
+    Supported placeholder forms (as complete string values):
+      - `$name` -> returns an item-predicate dict for the bucket item `name`
+      - `$name.id` or `$name.name` -> returns the namespaced item id string `tasty_supplies:name`
+      - `$name.icon` -> returns an icon dict compatible with AdvancementIcon (id + components)
+    """
+    # Primitive types
+    if isinstance(obj, str):
+        if not obj.startswith("$"):
+            return obj
+        token = obj[1:]
+        if "." in token:
+            name, attr = token.split(".", 1)
+        else:
+            name, attr = token, None
+
+        itm = bucket.get(name)
+        if not itm:
+            log.warning(f"Template references unknown item '{name}'")
+            return obj
+
+        if attr is None:
+            return _item_predicate_from_item(itm)
+
+        # explicit predicate request
+        if attr in ("predicate", "item_predicate"):
+            return _item_predicate_from_item(itm)
+
+        if attr in ("id", "name", "namespaced"):
+            return f"{TASTY_SUPPLIES_NAMESPACE}:{name}"
+
+        if attr in ("icon", "icon_dict"):
+            icon = {"id": f"{MINECRAFT_NAMESPACE}:{itm.base_item}"}
+            if getattr(itm, "components", None):
+                icon["components"] = deepcopy(itm.components)
+            return icon
+
+        # Unknown attribute -> return original string
+        return obj
+
+    # Lists
+    if isinstance(obj, list):
+        return [_resolve_placeholders(v, bucket) for v in obj]
+
+    # Dicts
+    if isinstance(obj, dict):
+        # Support a JSON-native placeholder object like {"$ref": "apple_pie.predicate"}
+        if len(obj) == 1:
+            k = next(iter(obj.keys()))
+            if isinstance(k, str) and k.startswith("$"):
+                v = obj[k]
+                # allow either "$ref": "name.attr" or "$predicate": "name"
+                if isinstance(v, str):
+                    token = v if not v.startswith("$") else v[1:]
+                    if "." in token:
+                        name, attr = token.split(".", 1)
+                    else:
+                        name, attr = token, None
+
+                    itm = bucket.get(name)
+                    if not itm:
+                        log.warning(f"Template references unknown item '{name}'")
+                        return obj
+
+                    if attr is None:
+                        return _item_predicate_from_item(itm)
+
+                    if attr in ("predicate", "item_predicate"):
+                        return _item_predicate_from_item(itm)
+
+                    if attr in ("id", "name", "namespaced"):
+                        return f"{TASTY_SUPPLIES_NAMESPACE}:{name}"
+
+                    if attr in ("icon", "icon_dict"):
+                        icon = {"id": f"{MINECRAFT_NAMESPACE}:{itm.base_item}"}
+                        if getattr(itm, "components", None):
+                            icon["components"] = deepcopy(itm.components)
+                        return icon
+
+                    return obj
+
+        out: dict = {}
+        for k, v in obj.items():
+            out[k] = _resolve_placeholders(v, bucket)
+        return out
+
+    # Other types pass-through
+    return obj
+
+
+def _template_directories() -> List[str]:
+    """Directories that may contain advancement templates."""
+
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    candidates = [
+        os.path.join(
+            base_dir,
+            "src",
+            "data",
+            TASTY_SUPPLIES_NAMESPACE,
+            "advancements",
+        ),
+        os.path.join(base_dir, "advancements"),
+    ]
+    return [path for path in candidates if os.path.isdir(path)]
+
+
+def _namespace_from_templates_dir(path: str) -> str:
+    parts = os.path.normpath(path).split(os.sep)
+    if "data" in parts:
+        idx = parts.index("data")
+        if idx + 1 < len(parts):
+            return parts[idx + 1]
+    return TASTY_SUPPLIES_NAMESPACE
+
+
+def _strip_namespace_prefix(identifier: str, namespace: str) -> str:
+    """Remove redundant "namespace/" prefixes from a resource path."""
+
+    prefix = f"{namespace}/"
+    if identifier.startswith(prefix):
+        return identifier[len(prefix) :]
+    return identifier
+
+
+def _normalize_advancement_path(raw_id: str, namespace: str) -> str:
+    """Coerce advancement identifiers to a path relative to the namespace."""
+
+    if ":" in raw_id:
+        ns, path = raw_id.split(":", 1)
+        if ns != namespace:
+            raise ValueError(
+                f"Unsupported namespace '{ns}' for advancement template (expected '{namespace}')"
+            )
+        raw_id = path
+
+    return _strip_namespace_prefix(raw_id, namespace)
+
+
+def _normalize_parent_reference(parent: str, namespace: str) -> str:
+    """Normalize parent references to avoid duplicated namespace segments."""
+
+    target_namespace = namespace
+    path = parent
+
+    if ":" in parent:
+        target_namespace, path = parent.split(":", 1)
+
+    if target_namespace == namespace:
+        return _strip_namespace_prefix(path, namespace)
+
+    return f"{target_namespace}:{_strip_namespace_prefix(path, target_namespace)}"
+
+
+def _load_advancement_templates(bucket: Bucket) -> bool:
+    """Load advancement templates (if present)."""
+
+    template_dirs = _template_directories()
+    loaded = False
+
+    for templates_dir in template_dirs:
+        namespace = _namespace_from_templates_dir(templates_dir)
+        for root_dir, _, files in os.walk(templates_dir):
+            for fname in files:
+                if not fname.endswith(".json"):
+                    continue
+                path = os.path.join(root_dir, fname)
+                try:
+                    with open(path, "r", encoding="utf-8") as fh:
+                        data = json.load(fh)
+                except Exception as exc:
+                    log.warning(
+                        f"Failed to load advancement template {os.path.relpath(path, templates_dir)}: {exc}"
+                    )
+                    continue
+
+                resolved = _resolve_placeholders(data, bucket)
+
+                adv_id_raw = resolved.get("advancement_id") or resolved.get("id")
+                if not adv_id_raw:
+                    rel = os.path.splitext(
+                        os.path.relpath(path, os.path.join(templates_dir))
+                    )[0].replace(os.sep, "/")
+                    ns_prefix = f"{namespace}/"
+                    if rel.startswith(ns_prefix):
+                        rel = rel[len(ns_prefix) :]
+                    adv_id = rel
+                else:
+                    try:
+                        adv_id = _normalize_advancement_path(adv_id_raw, namespace)
+                    except ValueError as exc:
+                        log.warning(
+                            "Skipping advancement template %s: %s",
+                            os.path.relpath(path, templates_dir),
+                            exc,
+                        )
+                        continue
+
+                if "id" in resolved:
+                    log.debug(
+                        "Template %s still declares an 'id' field; prefer `advancement_id` or rely on file path.",
+                        os.path.relpath(path, templates_dir),
+                    )
+
+                display_data = resolved.get("display")
+                if not isinstance(display_data, dict):
+                    display_data = {}
+
+                title = resolved.get("title", display_data.get("title", ""))
+                description = resolved.get(
+                    "description", display_data.get("description", "")
+                )
+                icon = resolved.get("icon") or display_data.get("icon")
+                criteria = resolved.get("criteria", {})
+                parent = resolved.get("parent")
+                if isinstance(parent, str):
+                    parent = _normalize_parent_reference(parent, namespace)
+                requirements = resolved.get("requirements")
+                adv_type = resolved.get("type") or display_data.get("frame")
+                background = resolved.get("background") or display_data.get(
+                    "background"
+                )
+                show_toast = resolved.get(
+                    "show_toast", display_data.get("show_toast", True)
+                )
+                announce = resolved.get(
+                    "announce_to_chat", display_data.get("announce_to_chat", False)
+                )
+                hidden = resolved.get("hidden", display_data.get("hidden", False))
+                telemetry = resolved.get(
+                    "sends_telemetry_event",
+                    display_data.get("sends_telemetry_event", True),
+                )
+
+                rewards_payload = resolved.get("rewards")
+                rewards = None
+                if isinstance(rewards_payload, dict):
+                    rewards = AdvancementRewards(
+                        experience=rewards_payload.get("experience", 0),
+                        recipes=rewards_payload.get("recipes"),
+                        loot=rewards_payload.get("loot"),
+                        function=rewards_payload.get("function"),
+                    )
+
+                adv_type_enum = ADVANCEMENT_TYPE.TASK
+                if isinstance(adv_type, str):
+                    try:
+                        adv_type_enum = ADVANCEMENT_TYPE(adv_type)
+                    except ValueError:
+                        pass
+
+                handled_display_keys = {
+                    "title",
+                    "description",
+                    "icon",
+                    "frame",
+                    "background",
+                    "hidden",
+                    "show_toast",
+                    "announce_to_chat",
+                    "sends_telemetry_event",
+                }
+                display_extras = {
+                    key: value
+                    for key, value in display_data.items()
+                    if key not in handled_display_keys
+                }
+
+                try:
+                    adv = Advancement(
+                        advancement_id=adv_id,
+                        title=title,
+                        description=description,
+                        icon=icon if icon is not None else "minecraft:stone",
+                        criteria=criteria,
+                        parent=parent,
+                        advancement_type=adv_type_enum,
+                        requirements=requirements,
+                        rewards=rewards,
+                        background=background,
+                        show_toast=show_toast,
+                        announce_to_chat=announce,
+                        hidden=hidden,
+                        sends_telemetry_event=telemetry,
+                        **display_extras,
+                    )
+                except Exception as exc:
+                    log.warning(
+                        f"Failed to construct Advancement from template {os.path.relpath(path, templates_dir)}: {exc}"
+                    )
+                    continue
+
+                bucket.add_advancement(adv, category=resolved.get("category"))
+                loaded = True
+
+    return loaded
+
+
 def register_advancements(bucket: Bucket) -> None:
     """Register all advancements using the provided bucket content."""
 
     log.debug("Registering advancements via bucket")
 
-    root = Advancement(
-        advancement_id="tasty_supplies/root",
-        title="Tasty Supplies",
-        description="A world of flavor awaits you!",
-        icon=AdvancementIcon("minecraft:cake"),
-        criteria={
-            "seeds": {"conditions": {}, "trigger": "minecraft:inventory_changed"}
-        },
-        requirements=[["seeds"]],
-        background="block/bricks",
-        show_toast=False,
-        announce_to_chat=False,
+    if _load_advancement_templates(bucket):
+        return
+
+    raise RuntimeError(
+        "No advancement templates were loaded. Ensure JSON files exist under "
+        "src/data/tasty_supplies/advancements or tasty_supplies/advancements."
     )
-    bucket.add_advancement(root, category="progression")
-
-    cutting_board = _require_item(bucket, "cutting_board")
-    butter = _require_item(bucket, "butter")
-    cooked_rice = _require_item(bucket, "cooked_rice")
-    cheese_slice = _require_item(bucket, "cheese_slice")
-    raw_cod_slice = _require_item(bucket, "raw_cod_slice")
-    salmon_roll = _require_item(bucket, "salmon_roll")
-    cod_roll = _require_item(bucket, "cod_roll")
-    pie_crust = _require_item(bucket, "pie_crust")
-    apple_pie = _require_item(bucket, "apple_pie")
-    chocolate_pie = _require_item(bucket, "chocolate_pie")
-    apple_pie_slice = _require_item(bucket, "apple_pie_slice")
-    cherry_blossom_pie_slice = _require_item(bucket, "cherry_blossom_pie_slice")
-    glow_berry_pie_slice = _require_item(bucket, "glow_berry_pie_slice")
-
-    apple_cider = _require_item(bucket, "apple_cider")
-    apple_cider_horn = _require_item(bucket, "apple_cider_horn")
-    glow_berry_custard = _require_item(bucket, "glow_berry_custard")
-    glow_berry_custard_horn = _require_item(bucket, "glow_berry_custard_horn")
-    hot_cocoa = _require_item(bucket, "hot_cocoa")
-    hot_cocoa_horn = _require_item(bucket, "hot_cocoa_horn")
-    melon_juice = _require_item(bucket, "melon_juice")
-    melon_juice_horn = _require_item(bucket, "melon_juice_horn")
-
-    flint_knife = _require_item(bucket, "flint_knife")
-    iron_knife = _require_item(bucket, "iron_knife")
-    golden_knife = _require_item(bucket, "golden_knife")
-    diamond_knife = _require_item(bucket, "diamond_knife")
-    netherite_knife = _require_item(bucket, "netherite_knife")
-
-    prep_station = Advancement(
-        advancement_id="tasty_supplies/prep_station",
-        title="Prep Station",
-        description="Craft a cutting board to begin your culinary journey.",
-        icon=AdvancementIcon(cutting_board),
-        criteria={"cutting_board": _recipe_criteria("cutting_board")},
-        requirements=[["cutting_board"]],
-        parent=root,
-    )
-    bucket.add_advancement(prep_station, category="progression")
-
-    pantry_basics = Advancement(
-        advancement_id="tasty_supplies/pantry_basics",
-        title="Pantry Staples",
-        description="Process milk and grains into butter and cooked rice.",
-        icon=AdvancementIcon(butter),
-        criteria={
-            "butter": _recipe_criteria("butter"),
-            "cooked_rice": _inventory_item_criteria(cooked_rice),
-        },
-        requirements=[["butter"], ["cooked_rice"]],
-        parent=prep_station,
-    )
-    bucket.add_advancement(pantry_basics, category="cooking")
-
-    field_to_table = Advancement(
-        advancement_id="tasty_supplies/field_to_table",
-        title="Field to Table",
-        description="Harvest staple crops to support your kitchen.",
-        icon=AdvancementIcon("minecraft:hay_block"),
-        criteria={
-            "wheat": _inventory_vanilla_item_criteria("wheat"),
-            "carrot": _inventory_vanilla_item_criteria("carrot"),
-            "potato": _inventory_vanilla_item_criteria("potato"),
-        },
-        requirements=[["wheat"], ["carrot"], ["potato"]],
-        parent=prep_station,
-        advancement_type=ADVANCEMENT_TYPE.GOAL,
-    )
-    bucket.add_advancement(field_to_table, category="challenges")
-
-    nether = Advancement(
-        advancement_id="tasty_supplies/nether",
-        title="Nether",
-        description="A portal to a whole range of new culinary possibilities",
-        icon=AdvancementIcon("minecraft:red_nether_bricks"),
-        criteria={
-            "entered_nether": {
-                "trigger": "minecraft:changed_dimension",
-                "conditions": {"to": "minecraft:the_nether"},
-            }
-        },
-        requirements=[["entered_nether"]],
-        parent=root,
-    )
-    bucket.add_advancement(nether, category="progression")
-
-    knife = Advancement(
-        advancement_id="tasty_supplies/knife",
-        title="Small but handy",
-        description="Craft a knife",
-        icon=AdvancementIcon(flint_knife),
-        criteria={
-            "flint_knife": _recipe_criteria("flint_knife"),
-            "iron_knife": _recipe_criteria("iron_knife"),
-            "golden_knife": _recipe_criteria("golden_knife"),
-            "diamond_knife": _recipe_criteria("diamond_knife"),
-            "netherite_knife": _recipe_criteria("netherite_knife"),
-        },
-        requirements=[
-            [
-                "flint_knife",
-                "iron_knife",
-                "golden_knife",
-                "diamond_knife",
-                "netherite_knife",
-            ]
-        ],
-        parent=prep_station,
-    )
-    bucket.add_advancement(knife, category="crafting")
-
-    all_knives = Advancement(
-        advancement_id="tasty_supplies/all_knives",
-        title="Cut them all",
-        description="Craft all type of knives",
-        icon=AdvancementIcon(netherite_knife),
-        criteria=knife.criteria.copy(),
-        requirements=[[key] for key in knife.criteria.keys()],
-        parent=knife,
-        advancement_type=ADVANCEMENT_TYPE.CHALLENGE,
-    )
-    bucket.add_advancement(all_knives, category="challenges")
-
-    precise_slices = Advancement(
-        advancement_id="tasty_supplies/precise_slices",
-        title="Precision Slicing",
-        description="Slice cheese and fish on the cutting board.",
-        icon=AdvancementIcon(cheese_slice),
-        criteria={
-            "cheese_slice": _inventory_item_criteria(cheese_slice),
-            "raw_cod_slice": _inventory_item_criteria(raw_cod_slice),
-        },
-        requirements=[["cheese_slice"], ["raw_cod_slice"]],
-        parent=knife,
-    )
-    bucket.add_advancement(precise_slices, category="cooking")
-
-    roll_with_it = Advancement(
-        advancement_id="tasty_supplies/roll_with_it",
-        title="Roll With It",
-        description="Prepare both cod and salmon rolls.",
-        icon=AdvancementIcon(salmon_roll),
-        criteria={
-            "salmon_roll": _recipe_criteria("salmon_roll"),
-            "cod_roll": _recipe_criteria("cod_roll"),
-        },
-        requirements=[["salmon_roll"], ["cod_roll"]],
-        parent=precise_slices,
-        advancement_type=ADVANCEMENT_TYPE.GOAL,
-    )
-    bucket.add_advancement(roll_with_it, category="meals")
-
-    sweet_beginnings = Advancement(
-        advancement_id="tasty_supplies/sweet_beginnings",
-        title="Sweet Beginnings",
-        description="Shape a pie crust ready for dessert work.",
-        icon=AdvancementIcon(pie_crust),
-        criteria={"pie_crust": _recipe_criteria("pie_crust")},
-        requirements=[["pie_crust"]],
-        parent=pantry_basics,
-    )
-    bucket.add_advancement(sweet_beginnings, category="desserts")
-
-    pie_party = Advancement(
-        advancement_id="tasty_supplies/pie_party",
-        title="Pie Party",
-        description="Bake both apple and chocolate pies.",
-        icon=AdvancementIcon(apple_pie),
-        criteria={
-            "apple_pie": _recipe_criteria("apple_pie"),
-            "chocolate_pie": _recipe_criteria("chocolate_pie"),
-        },
-        requirements=[["apple_pie"], ["chocolate_pie"]],
-        parent=sweet_beginnings,
-        advancement_type=ADVANCEMENT_TYPE.GOAL,
-    )
-    bucket.add_advancement(pie_party, category="desserts")
-
-    dessert_sampler = Advancement(
-        advancement_id="tasty_supplies/dessert_sampler",
-        title="Dessert Sampler",
-        description="Taste slices from your signature pies.",
-        icon=AdvancementIcon(cherry_blossom_pie_slice),
-        criteria={
-            "apple_slice": _inventory_item_criteria(apple_pie_slice),
-            "cherry_slice": _inventory_item_criteria(cherry_blossom_pie_slice),
-            "glow_slice": _inventory_item_criteria(glow_berry_pie_slice),
-        },
-        requirements=[["apple_slice"], ["cherry_slice"], ["glow_slice"]],
-        parent=pie_party,
-        advancement_type=ADVANCEMENT_TYPE.CHALLENGE,
-    )
-    bucket.add_advancement(dessert_sampler, category="desserts")
-
-    apple_cider_icon_components = _optional_components(apple_cider, ["potion_contents"])
-    brewery_basics = Advancement(
-        advancement_id="tasty_supplies/brewery_basics",
-        title="Brewery Basics",
-        description="Brew your first specialty drink.",
-        icon=AdvancementIcon(apple_cider, components=apple_cider_icon_components),
-        criteria={"apple_cider": _recipe_criteria("apple_cider")},
-        requirements=[["apple_cider"]],
-        parent=root,
-    )
-    bucket.add_advancement(brewery_basics, category="crafting")
-
-    barman_criteria = {
-        "apple_cider": _recipe_criteria("apple_cider"),
-        "hot_cocoa": _recipe_criteria("hot_cocoa"),
-        "glow_berry_custard": _recipe_criteria("glow_berry_custard"),
-        "melon_juice": _recipe_criteria("melon_juice"),
-    }
-    barman = Advancement(
-        advancement_id="tasty_supplies/barman",
-        title="Barman",
-        description="Craft every signature drink on the menu.",
-        icon=AdvancementIcon(apple_cider, components=apple_cider_icon_components),
-        criteria=barman_criteria,
-        requirements=[[name] for name in barman_criteria.keys()],
-        parent=brewery_basics,
-    )
-    bucket.add_advancement(barman, category="crafting")
-
-    comforting_icon_components = _optional_components(hot_cocoa, ["potion_contents"])
-    comforting = Advancement(
-        advancement_id="tasty_supplies/comforting",
-        title="Comforting",
-        description="Drink a hot cocoa",
-        icon=AdvancementIcon(hot_cocoa, components=comforting_icon_components),
-        criteria={"hot_cocoa": _consume_item_criteria(hot_cocoa)},
-        requirements=[["hot_cocoa"]],
-        parent=brewery_basics,
-    )
-    bucket.add_advancement(comforting, category="consumption")
-
-    horn_of_plenty = Advancement(
-        advancement_id="tasty_supplies/horn_of_plenty",
-        title="Horn of Plenty",
-        description="Fill goat horns with every beverage.",
-        icon=AdvancementIcon("minecraft:goat_horn"),
-        criteria={
-            "apple_cider_horn": _recipe_criteria("apple_cider_horn"),
-            "hot_cocoa_horn": _recipe_criteria("hot_cocoa_horn"),
-            "glow_berry_custard_horn": _recipe_criteria("glow_berry_custard_horn"),
-            "melon_juice_horn": _recipe_criteria("melon_juice_horn"),
-        },
-        requirements=[
-            ["apple_cider_horn"],
-            ["hot_cocoa_horn"],
-            ["glow_berry_custard_horn"],
-            ["melon_juice_horn"],
-        ],
-        parent=brewery_basics,
-        advancement_type=ADVANCEMENT_TYPE.GOAL,
-    )
-    bucket.add_advancement(horn_of_plenty, category="challenges")
-
-    nether_salad = _require_item(bucket, "nether_salad")
-    fungus_skewer = _require_item(bucket, "fungus_skewer")
-    magma_gelatin = _require_item(bucket, "magma_gelatin")
-    warped_mutton = _require_item(bucket, "warped_mutton")
-
-    fungus_among_us = Advancement(
-        advancement_id="tasty_supplies/fungus_among_us",
-        title="Fungus Amoung Us",
-        description="Craft something with fungus",
-        icon=AdvancementIcon("minecraft:crimson_fungus"),
-        criteria={
-            "nether_salad": _recipe_criteria("nether_salad"),
-            "fungus_skewer": _recipe_criteria("fungus_skewer"),
-            "fungus_skewer_reversed": _recipe_criteria("fungus_skewer_reversed"),
-            "magma_gelatin": _recipe_criteria("magma_gelatin"),
-            "warped_mutton": _recipe_criteria("warped_mutton"),
-        },
-        requirements=[
-            [
-                "nether_salad",
-                "fungus_skewer",
-                "fungus_skewer_reversed",
-                "magma_gelatin",
-                "warped_mutton",
-            ]
-        ],
-        parent=nether,
-    )
-    bucket.add_advancement(fungus_among_us, category="nether")
-
-    is_it_poisonous = Advancement(
-        advancement_id="tasty_supplies/is_it_poisonous",
-        title="Is this poisonous?",
-        description="Eating food that makes you nauseous",
-        icon=AdvancementIcon("minecraft:suspicious_stew"),
-        criteria={
-            "nether_salad": _consume_item_criteria(nether_salad),
-            "fungus_skewer": _consume_item_criteria(fungus_skewer),
-        },
-        requirements=[["nether_salad", "fungus_skewer"]],
-        parent=nether,
-    )
-    bucket.add_advancement(is_it_poisonous, category="consumption")

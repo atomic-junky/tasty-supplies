@@ -1,0 +1,43 @@
+{
+  "display": {
+    "title": {
+      "text": "Pastry Chef"
+    },
+    "description": {
+      "text": "Let's open a bakery!"
+    },
+    "icon": "$croissant.icon",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "sweets": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$apple_pie.predicate",
+          "$chocolate_pie.predicate",
+          "$croissant.predicate",
+          "$cherry_blossom_pie.predicate",
+          "$glow_berry_pie.predicate",
+          "$chorus_pie.predicate",
+          "$sweet_berry_cheesecake.predicate",
+          "$sweet_berry_cookie.predicate",
+          "$sweet_roll.predicate",
+          "$ice_cream.predicate",
+          "$ice_cream_cone.predicate",
+          "$melon_popsicle.predicate",
+          "$honey_cookie.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sweets"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:tasty_supplies/root"
+}

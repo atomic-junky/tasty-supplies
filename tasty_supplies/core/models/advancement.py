@@ -21,8 +21,17 @@ from ..utils import ensure_namespace
 
 IconType = Union[str, Item, Dict[str, Any]]
 PlayerPredicateType = Union[Dict[str, Any], List[Dict[str, Any]]]
+TextComponent = Union[str, Dict[str, Any], List[Any]]
 CriteriaEntry = Union["AdvancementCriteria", Dict[str, Any]]
 CriteriaMapping = Dict[str, CriteriaEntry]
+
+
+def _coerce_text_component(value: TextComponent) -> Any:
+    """Convert primitive strings into valid Minecraft text components."""
+
+    if isinstance(value, str):
+        return {"text": value}
+    return deepcopy(value)
 
 
 class ADVANCEMENT_TYPE(Enum):
@@ -177,12 +186,12 @@ class Advancement:
     def __init__(
         self,
         advancement_id: str,
-        title: str,
+        title: TextComponent,
         icon: Union[AdvancementIcon, IconType],
         criteria: CriteriaMapping,
         *,
         parent: Optional[Union["Advancement", str]] = None,
-        description: str = "",
+        description: TextComponent = "",
         advancement_type: ADVANCEMENT_TYPE = ADVANCEMENT_TYPE.TASK,
         requirements: Optional[List[List[str]]] = None,
         rewards: Optional[AdvancementRewards] = None,
@@ -191,7 +200,11 @@ class Advancement:
         announce_to_chat: bool = False,
         hidden: bool = False,
         sends_telemetry_event: bool = True,
-        display_extras: Optional[Dict[str, Any]] = None,
+        # Any extra kwargs passed here will be merged into the generated
+        # `display` object when serializing the advancement. This allows
+        # callers to override or add arbitrary display fields without a
+        # dedicated parameter name.
+        **display_kwargs: Any,
     ) -> None:
         self.advancement_id = advancement_id
         self.parent = parent
@@ -210,7 +223,9 @@ class Advancement:
         self.announce_to_chat = announce_to_chat
         self.hidden = hidden
         self.sends_telemetry_event = sends_telemetry_event
-        self.display_extras = display_extras or {}
+        # Store arbitrary display kwargs to be merged into the final
+        # `display` JSON. Provided values take precedence over defaults.
+        self.display_extras = deepcopy(display_kwargs) if display_kwargs else {}
 
     @property
     def qualified_id(self) -> str:
@@ -233,8 +248,8 @@ class Advancement:
 
     def _to_json(self) -> Dict[str, Any]:
         display: Dict[str, Any] = {
-            "title": self.title,
-            "description": self.description,
+            "title": _coerce_text_component(self.title),
+            "description": _coerce_text_component(self.description),
             "icon": self.icon.to_json(),
             "frame": self.type.value,
             "show_toast": self.show_toast,

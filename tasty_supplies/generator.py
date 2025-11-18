@@ -4,7 +4,10 @@ This module orchestrates the generation of all items, recipes, and
 related datapack resources.
 """
 
+import json
+
 from core import TSContext, Bucket, log
+from core.constants import TASTY_SUPPLIES_NAMESPACE
 from core.advancements import register_advancements
 from core.recipes.beverage import Beverage
 from core.recipes.ingredients import Ingredients
@@ -40,6 +43,7 @@ def generate(ctx: TSContext) -> None:
     register_advancements(bucket)
 
     bucket.register_all(ctx)
+    _validate_generated_advancements(ctx)
 
     # Generate cutting board drop function
     cutting_board = bucket.get("cutting_board")
@@ -58,3 +62,16 @@ def generate(ctx: TSContext) -> None:
     log.info(f"\t- {item_count} items")
     log.info(f"\t- {recipe_count} recipes")
     log.info(f"\t- {advancement_count} advancements")
+
+
+def _validate_generated_advancements(ctx: TSContext) -> None:
+    """Ensure all advancements registered in the context serialize cleanly."""
+
+    pack = ctx.data[TASTY_SUPPLIES_NAMESPACE]
+    for adv_id, adv in pack.advancements.items():
+        try:
+            json.dumps(adv.data)
+        except TypeError as exc:
+            raise RuntimeError(
+                f"Advancement '{adv_id}' contains non-serializable content: {exc}"
+            ) from exc

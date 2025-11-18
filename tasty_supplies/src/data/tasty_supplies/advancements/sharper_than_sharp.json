@@ -1,0 +1,33 @@
+{
+  "display": {
+    "title": {
+      "text": "Sharper than sharp"
+    },
+    "description": {
+      "text": "Refine your edge."
+    },
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "netherite_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$netherite_knife.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_knife"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:tasty_supplies/bfb9000"
+}

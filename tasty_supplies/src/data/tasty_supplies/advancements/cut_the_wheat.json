@@ -1,0 +1,28 @@
+{
+  "display": {
+    "title": {
+      "text": "Cut the wheat"
+    },
+    "description": {
+      "text": "Harvest and prepare grain."
+    },
+    "icon": {
+      "id": "minecraft:wheat"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:tasty_supplies/cut_into_a_thousand_pieces"
+}

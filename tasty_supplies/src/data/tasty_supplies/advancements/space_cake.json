@@ -1,0 +1,31 @@
+{
+  "display": {
+    "title": {
+      "text": "Space Cake"
+    },
+    "description": {
+      "text": "A mysterious confection."
+    },
+    "icon": {
+      "id": "minecraft:glowstone"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "eat_chorus_pie": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": "$chorus_pie.predicate"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "eat_chorus_pie"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:tasty_supplies/pie"
+}

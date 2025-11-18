@@ -1,0 +1,66 @@
+{
+  "display": {
+    "title": {
+      "text": "Cornocupia"
+    },
+    "description": {
+      "text": "Overflowing with ingredients."
+    },
+    "icon": {
+      "id": "minecraft:chest"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "apple_cider_horn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$apple_cider_horn.predicate"
+        ]
+      }
+    },
+    "glow_berry_custard_horn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$glow_berry_custard_horn.predicate"
+        ]
+      }
+    },
+    "hot_cocoa_horn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$hot_cocoa_horn.predicate"
+        ]
+      }
+    },
+    "melon_juice_horn": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$melon_juice_horn.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "apple_cider_horn"
+    ],
+    [
+      "glow_berry_custard_horn"
+    ],
+    [
+      "hot_cocoa_horn"
+    ],
+    [
+      "melon_juice_horn"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:tasty_supplies/barman_root"
+}
