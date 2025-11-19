@@ -6,9 +6,7 @@
     "description": {
       "text": "Balance classic and modern techniques."
     },
-    "icon": {
-      "id": "minecraft:book"
-    },
+    "icon": "$item.salmon_roll.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false

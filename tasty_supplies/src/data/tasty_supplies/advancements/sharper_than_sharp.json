@@ -6,9 +6,7 @@
     "description": {
       "text": "Refine your edge."
     },
-    "icon": {
-      "id": "minecraft:iron_sword"
-    },
+    "icon": "$item.netherite_knife.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -29,5 +27,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:bfb9000"
+  "parent": "tasty_supplies:small_but_handy"
 }

@@ -6,9 +6,7 @@
     "description": {
       "text": "Craft every signature drink on the menu."
     },
-    "icon": {
-      "id": "minecraft:potion"
-    },
+    "icon": "$item.apple_cider.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false

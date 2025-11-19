@@ -7,9 +7,9 @@
       "text": "Overflowing with ingredients."
     },
     "icon": {
-      "id": "minecraft:chest"
+      "id": "minecraft:goat_horn"
     },
-    "frame": "task",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": false
   },
@@ -62,5 +62,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:barman_root"
+  "parent": "tasty_supplies:a_viking_drink"
 }

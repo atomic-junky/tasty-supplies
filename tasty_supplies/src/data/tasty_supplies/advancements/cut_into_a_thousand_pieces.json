@@ -7,7 +7,7 @@
       "text": "Annihilate your foes with fine cuts."
     },
     "icon": {
-      "id": "minecraft:scute"
+      "id": "minecraft:angler_pottery_sherd"
     },
     "frame": "task",
     "show_toast": true,
@@ -24,5 +24,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:butcher_of_blaviken"
+  "parent": "tasty_supplies:small_but_handy"
 }

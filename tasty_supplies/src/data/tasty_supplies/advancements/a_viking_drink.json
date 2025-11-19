@@ -60,5 +60,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:barman_root"
+  "parent": "tasty_supplies:barman"
 }

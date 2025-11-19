@@ -6,7 +6,7 @@
     "description": {
       "text": "Serve a tasteful slice."
     },
-    "icon": "$item.cherry_blossom_pie_slice.icon",
+    "icon": "$item.sweet_berry_cheesecake_slice.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false

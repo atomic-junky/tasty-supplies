@@ -50,16 +50,19 @@ def replace_item_expr(ctx: TSContext, bucket: Bucket, token: Token) -> None:
 
     result = ""
 
+    if item is None:
+        raise ValueError("Item '%s' not found." % expr_item)
+
     if hasattr(item, expr_property):
         result = getattr(item, expr_property)
     else:
-        raise "Invalid property '%s' in expression '%s'." % (
+        raise TypeError("Invalid property '%s' in expression '%s'." % (
             expr_property,
             token.expression,
-        )
+        ))
 
     if not isinstance(result, (dict, str)):
-        raise "Invalid type result of property '%s'." % expr_property
+        raise TypeError("Invalid type result of property '%s'." % expr_property)
 
     if isinstance(result, dict):
         result = json.dumps(result)

@@ -7,7 +7,7 @@
       "text": "Discover honeyed flavors."
     },
     "icon": {
-      "id": "minecraft:honey_block"
+      "id": "minecraft:honeycomb"
     },
     "frame": "task",
     "show_toast": true,
