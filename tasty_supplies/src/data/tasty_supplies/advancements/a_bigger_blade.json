@@ -6,7 +6,7 @@
     "description": {
       "text": "Craft a cleaver."
     },
-    "icon": "$iron_cleaver.icon",
+    "icon": "$item.iron_cleaver.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,7 +16,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$wooden_cleaver.predicate"
+          "$item.wooden_cleaver.predicate"
         ]
       }
     },
@@ -24,7 +24,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$stone_cleaver.predicate"
+          "$item.stone_cleaver.predicate"
         ]
       }
     },
@@ -32,7 +32,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$iron_cleaver.predicate"
+          "$item.iron_cleaver.predicate"
         ]
       }
     },
@@ -40,7 +40,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$golden_cleaver.predicate"
+          "$item.golden_cleaver.predicate"
         ]
       }
     },
@@ -48,7 +48,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$diamond_cleaver.predicate"
+          "$item.diamond_cleaver.predicate"
         ]
       }
     },
@@ -56,7 +56,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$copper_cleaver.predicate"
+          "$item.copper_cleaver.predicate"
         ]
       }
     },
@@ -64,7 +64,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$netherite_cleaver.predicate"
+          "$item.netherite_cleaver.predicate"
         ]
       }
     }
@@ -93,5 +93,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/small_but_handy"
+  "parent": "tasty_supplies:small_but_handy"
 }

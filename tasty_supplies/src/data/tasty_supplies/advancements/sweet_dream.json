@@ -18,13 +18,13 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$sweet_berry_cheesecake.predicate",
-          "$sweet_berry_cookie.predicate",
-          "$sweet_roll.predicate",
-          "$croissant.predicate",
-          "$ice_cream.predicate",
-          "$ice_cream_cone.predicate",
-          "$melon_popsicle.predicate"
+          "$item.sweet_berry_cheesecake.predicate",
+          "$item.sweet_berry_cookie.predicate",
+          "$item.sweet_roll.predicate",
+          "$item.croissant.predicate",
+          "$item.ice_cream.predicate",
+          "$item.ice_cream_cone.predicate",
+          "$item.melon_popsicle.predicate"
         ]
       }
     }
@@ -35,5 +35,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/pie"
+  "parent": "tasty_supplies:pie"
 }

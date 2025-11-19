@@ -6,7 +6,7 @@
     "description": {
       "text": "Let's open a bakery!"
     },
-    "icon": "$croissant.icon",
+    "icon": "$item.croissant.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,19 +16,19 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$apple_pie.predicate",
-          "$chocolate_pie.predicate",
-          "$croissant.predicate",
-          "$cherry_blossom_pie.predicate",
-          "$glow_berry_pie.predicate",
-          "$chorus_pie.predicate",
-          "$sweet_berry_cheesecake.predicate",
-          "$sweet_berry_cookie.predicate",
-          "$sweet_roll.predicate",
-          "$ice_cream.predicate",
-          "$ice_cream_cone.predicate",
-          "$melon_popsicle.predicate",
-          "$honey_cookie.predicate"
+          "$item.apple_pie.predicate",
+          "$item.chocolate_pie.predicate",
+          "$item.croissant.predicate",
+          "$item.cherry_blossom_pie.predicate",
+          "$item.glow_berry_pie.predicate",
+          "$item.chorus_pie.predicate",
+          "$item.sweet_berry_cheesecake.predicate",
+          "$item.sweet_berry_cookie.predicate",
+          "$item.sweet_roll.predicate",
+          "$item.ice_cream.predicate",
+          "$item.ice_cream_cone.predicate",
+          "$item.melon_popsicle.predicate",
+          "$item.honey_cookie.predicate"
         ]
       }
     }
@@ -39,5 +39,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/root"
+  "parent": "tasty_supplies:root"
 }

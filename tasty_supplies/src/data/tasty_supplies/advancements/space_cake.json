@@ -17,7 +17,7 @@
     "eat_chorus_pie": {
       "trigger": "minecraft:consume_item",
       "conditions": {
-        "item": "$chorus_pie.predicate"
+        "item": "$item.chorus_pie.predicate"
       }
     }
   },
@@ -27,5 +27,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/pie"
+  "parent": "tasty_supplies:pie"
 }

@@ -24,5 +24,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/cut_the_wheat"
+  "parent": "tasty_supplies:cut_the_wheat"
 }

@@ -6,7 +6,7 @@
     "description": {
       "text": "Brew a hearty beverage."
     },
-    "icon": "$apple_cider_horn.icon",
+    "icon": "$item.apple_cider_horn.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,7 +16,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$apple_cider_horn.predicate"
+          "$item.apple_cider_horn.predicate"
         ]
       }
     },
@@ -24,7 +24,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$glow_berry_custard_horn.predicate"
+          "$item.glow_berry_custard_horn.predicate"
         ]
       }
     },
@@ -32,7 +32,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$hot_cocoa_horn.predicate"
+          "$item.hot_cocoa_horn.predicate"
         ]
       }
     },
@@ -40,7 +40,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$melon_juice_horn.predicate"
+          "$item.melon_juice_horn.predicate"
         ]
       }
     }
@@ -60,5 +60,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/barman_root"
+  "parent": "tasty_supplies:barman_root"
 }

@@ -18,7 +18,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$apple_cider.predicate"
+          "$item.apple_cider.predicate"
         ]
       }
     },
@@ -26,7 +26,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$glow_berry_custard.predicate"
+          "$item.glow_berry_custard.predicate"
         ]
       }
     },
@@ -34,7 +34,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$hot_cocoa.predicate"
+          "$item.hot_cocoa.predicate"
         ]
       }
     },
@@ -42,7 +42,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$melon_juice.predicate"
+          "$item.melon_juice.predicate"
         ]
       }
     }
@@ -62,5 +62,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/root"
+  "parent": "tasty_supplies:root"
 }

@@ -24,5 +24,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/cut_them_all"
+  "parent": "tasty_supplies:cut_them_all"
 }

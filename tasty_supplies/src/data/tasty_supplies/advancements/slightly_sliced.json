@@ -6,7 +6,7 @@
     "description": {
       "text": "Serve a tasteful slice."
     },
-    "icon": "$cherry_blossom_pie_slice.icon",
+    "icon": "$item.cherry_blossom_pie_slice.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,7 +16,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$apple_pie_slice.predicate"
+          "$item.apple_pie_slice.predicate"
         ]
       }
     },
@@ -24,7 +24,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$cherry_blossom_pie_slice.predicate"
+          "$item.cherry_blossom_pie_slice.predicate"
         ]
       }
     },
@@ -32,7 +32,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$glow_berry_pie_slice.predicate"
+          "$item.glow_berry_pie_slice.predicate"
         ]
       }
     }
@@ -49,5 +49,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/pie"
+  "parent": "tasty_supplies:pie"
 }

@@ -27,5 +27,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/between_tradition_and_modernity"
+  "parent": "tasty_supplies:between_tradition_and_modernity"
 }

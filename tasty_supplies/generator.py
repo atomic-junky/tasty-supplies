@@ -9,6 +9,7 @@ import json
 from core import TSContext, Bucket, log
 from core.constants import TASTY_SUPPLIES_NAMESPACE
 from core.advancements import register_advancements
+from core.convert import convert_data
 from core.recipes.beverage import Beverage
 from core.recipes.ingredients import Ingredients
 from core.recipes.meals import Meals
@@ -40,10 +41,9 @@ def generate(ctx: TSContext) -> None:
     for category in categories:
         category.create_recipes()
 
-    register_advancements(bucket)
-
     bucket.register_all(ctx)
-    _validate_generated_advancements(ctx)
+    convert_data(ctx, bucket)
+    # _validate_generated_advancements(ctx)
 
     # Generate cutting board drop function
     cutting_board = bucket.get("cutting_board")

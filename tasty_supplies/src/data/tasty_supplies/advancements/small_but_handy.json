@@ -6,7 +6,7 @@
     "description": {
       "text": "Craft a knife"
     },
-    "icon": "$flint_knife.icon",
+    "icon": "$item.flint_knife.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,7 +16,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$flint_knife.predicate"
+          "$item.flint_knife.predicate"
         ]
       }
     },
@@ -24,7 +24,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$iron_knife.predicate"
+          "$item.iron_knife.predicate"
         ]
       }
     },
@@ -32,7 +32,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$golden_knife.predicate"
+          "$item.golden_knife.predicate"
         ]
       }
     },
@@ -40,7 +40,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$diamond_knife.predicate"
+          "$item.diamond_knife.predicate"
         ]
       }
     },
@@ -48,7 +48,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$netherite_knife.predicate"
+          "$item.netherite_knife.predicate"
         ]
       }
     }
@@ -63,5 +63,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/root"
+  "parent": "tasty_supplies:root"
 }

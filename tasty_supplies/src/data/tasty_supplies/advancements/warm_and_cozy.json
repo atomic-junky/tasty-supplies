@@ -18,7 +18,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$hot_cocoa.predicate"
+          "$item.hot_cocoa.predicate"
         ]
       }
     },
@@ -26,7 +26,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$hot_cocoa_horn.predicate"
+          "$item.hot_cocoa_horn.predicate"
         ]
       }
     }
@@ -38,5 +38,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/barman_root"
+  "parent": "tasty_supplies:barman_root"
 }

@@ -6,7 +6,7 @@
     "description": {
       "text": "Craft a netherite cleaver."
     },
-    "icon": "$netherite_cleaver.icon",
+    "icon": "$item.netherite_cleaver.icon",
     "frame": "task",
     "show_toast": true,
     "announce_to_chat": false
@@ -16,7 +16,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$netherite_cleaver.predicate"
+          "$item.netherite_cleaver.predicate"
         ]
       }
     }
@@ -27,5 +27,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/a_bigger_blade"
+  "parent": "tasty_supplies:a_bigger_blade"
 }

@@ -18,7 +18,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$netherite_knife.predicate"
+          "$item.netherite_knife.predicate"
         ]
       }
     }
@@ -29,5 +29,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/bfb9000"
+  "parent": "tasty_supplies:bfb9000"
 }

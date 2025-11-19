@@ -18,7 +18,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$honey_cookie.predicate"
+          "$item.honey_cookie.predicate"
         ]
       }
     },
@@ -26,7 +26,7 @@
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
-          "$honeyed_apple.predicate"
+          "$item.honeyed_apple.predicate"
         ]
       }
     }
@@ -40,5 +40,5 @@
     ]
   ],
   "sends_telemetry_event": true,
-  "parent": "tasty_supplies:tasty_supplies/pastry_chef"
+  "parent": "tasty_supplies:pastry_chef"
 }

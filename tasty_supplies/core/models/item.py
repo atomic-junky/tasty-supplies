@@ -2,6 +2,7 @@ from typing import Any, Dict, Optional
 
 from beet import Model, ItemModel
 
+from ..constants import MINECRAFT_NAMESPACE
 from .context import TSContext
 from ..utils import to_absolute_path
 from ..logger import log
@@ -198,19 +199,29 @@ class Item:
         Returns:
             dict: The result data for use in recipes and commands
         """
-        from ..constants import MINECRAFT_NAMESPACE
 
         result = {
             "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
             "count": count,
-            "components": {
-                f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
-                    "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
-                },
-                **self.components,
-            },
+            "components": self.custom_model_data | self.components,
         }
         return result
+
+    @property
+    def custom_model_data(self) -> dict:
+        return {
+            f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
+                "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
+            }
+        }
+
+    @property
+    def icon(self) -> dict:
+        return {"id": self.base_item, "count": 1, "components": self.custom_model_data}
+
+    @property
+    def predicate(self) -> dict:
+        return {"items": self.base_item, "components": self.components}
 
 
 class BlockItem(Item):
