@@ -1,0 +1,37 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "tasty_supplies:item/wheat_hat",
+		"particle": "tasty_supplies:item/wheat_hat"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 0, 16],
+			"faces": {
+				"up": {"uv": [11.75, 16, 7.75, 12], "texture": "#0"},
+				"down": {"uv": [11.75, 12, 7.75, 16], "texture": "#0"}
+			}
+		},
+		{
+			"from": [4, 0, 4],
+			"to": [12, 4, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 0, 7]},
+			"faces": {
+				"north": {"uv": [14, 2, 16, 3], "texture": "#0"},
+				"east": {"uv": [12, 2, 14, 3], "texture": "#0"},
+				"south": {"uv": [8, 2, 10, 3], "texture": "#0"},
+				"west": {"uv": [10, 2, 12, 3], "texture": "#0"},
+				"up": {"uv": [10, 0, 12, 2], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 16.25, 0],
+			"scale": [1.81, 1.81, 1.81]
+		}
+	}
+}

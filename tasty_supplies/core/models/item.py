@@ -34,6 +34,7 @@ class Item:
         base_item: str = DEFAULT_BASE_ITEM,
         texture_path: Optional[str] = None,
         model_type: str = MODEL_TYPE_ITEM,
+        max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
         **components: Any,
     ):
         """Initialize a custom item.
@@ -51,22 +52,19 @@ class Item:
             texture_path or f"{TASTY_SUPPLIES_NAMESPACE}:{model_type}/{item_name}"
         )
         self.model_type = model_type
+    
+        self.components: Dict[str, Any] = {}
+        self.components = self.components | components
 
-        # Set default max_stack_size if not provided
-        if COMPONENT_MAX_STACK_SIZE not in components:
-            components[COMPONENT_MAX_STACK_SIZE] = DEFAULT_MAX_STACK_SIZE
+        self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
 
-        # Auto-generate display name if not provided
-        if COMPONENT_CUSTOM_NAME not in components:
-            # Convert snake_case to Title Case
-            display_name = " ".join(word.capitalize() for word in item_name.split("_"))
-            components[COMPONENT_CUSTOM_NAME] = {
-                "text": display_name,
-                "italic": TEXT_ITALIC_FALSE,
-                "color": TEXT_COLOR_WHITE,
-            }
-
-        self.components: Dict[str, Any] = components
+        # Convert snake_case to Title Case
+        display_name = " ".join(word.capitalize() for word in item_name.split("_"))
+        self.components[COMPONENT_CUSTOM_NAME] = {
+            "text": display_name,
+            "italic": TEXT_ITALIC_FALSE,
+            "color": TEXT_COLOR_WHITE,
+        }
 
     def register(self, ctx: TSContext):
         """Register this item with the Beet context.
