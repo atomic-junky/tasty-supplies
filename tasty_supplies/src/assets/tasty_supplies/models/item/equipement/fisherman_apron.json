@@ -29,40 +29,10 @@
 	},
 	"groups": [
 		{
-			"name": "head",
-			"origin": [8, 24, 8],
-			"color": 0,
-			"children": []
-		},
-		{
 			"name": "body",
 			"origin": [8, 24, 8],
 			"color": 0,
 			"children": [0]
-		},
-		{
-			"name": "left_shoe",
-			"origin": [6.1, 12, 8],
-			"color": 0,
-			"children": []
-		},
-		{
-			"name": "right_shoe",
-			"origin": [9.9, 12, 8],
-			"color": 0,
-			"children": []
-		},
-		{
-			"name": "left_arm",
-			"origin": [3, 22, 8],
-			"color": 0,
-			"children": []
-		},
-		{
-			"name": "right_arm",
-			"origin": [13, 22, 8],
-			"color": 0,
-			"children": []
 		}
 	]
 }

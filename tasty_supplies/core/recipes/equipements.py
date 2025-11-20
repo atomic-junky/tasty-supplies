@@ -106,8 +106,18 @@ class Equipements(Category):
 
     def create_items(self):
         """Create all equipement items and add them to the bucket."""
+
+        ## Equipment other than helmets cannot be added without mods due to technical limitations.
+
+        # self.add_item(
+        #     EquipementItem("fisherman_apron", slot="chest", equipement_id="fisherman")
+        # )
+
         self.add_item(EquipementItem("farmer_hat", slot="head", equipement_id="farmer"))
-        # self.add_item(Item("farmer_hat", base_item="leather_helmet", max_stack_size=1))
+
+        # self.add_item(
+        #     EquipementItem("butcher_apron", slot="chest", equipement_id="butcher")
+        # )
 
         self.add_item(
             EquipementItem("fisherman_hat", slot="head", equipement_id="fisherman")
@@ -120,7 +130,7 @@ class Equipements(Category):
                 result=self.bucket.get("farmer_hat"),
                 pattern=[
                     " W ",
-                    "W W",
+                    "WWW",
                 ],
                 key={
                     "W": "minecraft:wheat",
