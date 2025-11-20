@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from beet import Model, ItemModel
+from beet import Model, ItemModel, ResourcePackNamespace
 
 from .context import TSContext
 from ..utils import to_absolute_path
@@ -52,7 +52,7 @@ class Item:
             texture_path or f"{TASTY_SUPPLIES_NAMESPACE}:{model_type}/{item_name}"
         )
         self.model_type = model_type
-    
+
         self.components: Dict[str, Any] = {}
         self.components = self.components | components
 
@@ -79,8 +79,13 @@ class Item:
         if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
             ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
 
-        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model()
+        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model(ctx)
         self._register_model_case(ctx)
+        if not self._texture_path_exist(ctx):
+            log.warning(f"Non-existent texture for item '{self.name}.'")
+
+    def _texture_path_exist(self, ctx: TSContext) -> bool:
+        return not ctx.assets.textures.get(self.texture_path) is None
 
     def _register_model_case(self, ctx: TSContext):
         item_models: dict = ctx.assets["minecraft"].item_models
@@ -153,7 +158,7 @@ class Item:
         }
         return Model(json_model, f"{self.name}.json")
 
-    def _get_item_model(self) -> ItemModel:
+    def _get_item_model(self, _ctx: TSContext) -> ItemModel:
         """Generate the item_model JSON.
 
         Returns:
