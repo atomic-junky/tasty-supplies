@@ -1,1 +1,1 @@
-$summon minecraft:item_display ~ ~0.078125 ~ {item:{id:"$(id)", count:1, components:$(components)}, item_display:"ground"}
+$summon minecraft:item_display ~ ~0.078125 ~ {item:{id:"$(id)", count:1, components:$(components)}, item_display:"ground", Tags:["cutting_board_slice","cutting_board_new"]}
