@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.13.0] - 2025-10-08
+### :bug: Bug Fixes
+- [`9759543`](https://github.com/atomic-junky/tasty-supplies/commit/9759543d82cdbfd7524404c26de0805a242647db) - Food gives no effect when eaten (fix [#8](https://github.com/atomic-junky/tasty-supplies/pull/8)) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+- [`1673079`](https://github.com/atomic-junky/tasty-supplies/commit/167307927c9c6edac640c7580e2053335e2358b1) - Cutting Board not working, automate cutting board recipes and remove item_showcase generation *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+- [`351d08e`](https://github.com/atomic-junky/tasty-supplies/commit/351d08e762e19408ef1b2e9713df862bc0c74367) - swap balsting and smelting recipes *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+### :wrench: Chores
+- [`bf34dfd`](https://github.com/atomic-junky/tasty-supplies/commit/bf34dfdadcf8bc6df20203bc32bbcc5bdfbe553e) - Cherry Blossom Pie and Cherry Blossom Pie Slice *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.11.2] - 2024-06-16
 ### :bug: Bug Fixes
 - [`d1c7c9d`](https://github.com/atomic-junky/tasty-supplies/commit/d1c7c9d9ef9b0c07f3de7337486c8a5c16e5c49e) - Custom item removed instead of the right one when placing an item on a cutting board *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -47,3 +57,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.11.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.10.1...v0.11.0
 [v0.11.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.0...v0.11.1
 [v0.11.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.1...v0.11.2
+[v0.13.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.12.0...v0.13.0

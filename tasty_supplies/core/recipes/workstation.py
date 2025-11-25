@@ -1,46 +1,45 @@
-from beet import Function
 from .. import (
     TSContext,
     BlockItem,
     ShapedRecipe,
-    Result,
     Category,
+    Bucket,
 )
 
 
 class Worksation(Category):
-    def __init__(self):
-        super().__init__("Workstation")
+    """Category for workstation items (cutting board, etc.)."""
 
-    def generate(self, ctx: TSContext):
-        cutting_board_item: BlockItem = BlockItem(
-            "cutting_board",
+    def __init__(self, bucket: Bucket):
+        """Initialize Workstation category with bucket reference.
+
+        Args:
+            bucket: The Bucket instance to store items and recipes
+        """
+        super().__init__("Workstation", bucket)
+
+    def create_items(self):
+        """Create all workstation items and add them to the bucket."""
+        self.add_item(
+            BlockItem(
+                item_name="cutting_board",
+                base_item="armor_stand",
+                max_stack_size=64,
+                entity_data={
+                    "id": "minecraft:armor_stand",
+                    "Tags": ["cutting_board_placer"],
+                    "Invisible": True,
+                    "Small": True,
+                },
+            )
+        )
+
+    def create_recipes(self):
+        """Create all workstation recipes."""
+        self.add_recipe(
             ShapedRecipe(
-                key={"p": "#minecraft:planks", "s": "minecraft:stick"},
                 pattern=["spp", "spp"],
-                result=Result(
-                    count=1,
-                    max_stack_size=64,
-                    extra_components={
-                        "custom_data": {"tags": ["cutting_board_placer"]},
-                        "entity_data": {
-                            "id": "minecraft:armor_stand",
-                            "Tags": ["cutting_board_placer"],
-                            "Invisible": True,
-                            "Small": True,
-                        },
-                    },
-                ),
+                key={"p": "#minecraft:planks", "s": "minecraft:stick"},
+                result=self.bucket.get("cutting_board"),
             ),
         )
-
-        ctx.data["tasty_supplies:cutting_board/drop"] = Function(
-            [
-                "summon minecraft:item ~ ~.5 ~ {Item:%s}"
-                % cutting_board_item.recipe.result._to_json(
-                    cutting_board_item.name, cutting_board_item.base_item
-                )
-            ]
-        )
-
-        cutting_board_item.register(ctx)

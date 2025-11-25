@@ -1,14 +1,16 @@
 from .context import TSContext
 from .category import Category
+
+# Recipe system (independent from items)
 from .recipe import (
+    Recipe,
     ShapedRecipe,
     ShapelessRecipe,
-    AutoBakeRecipe,
-    BlastingRecipe,
     SmeltingRecipe,
-    SmokingRecipe,
-    CampfireRecipe,
+    AutoCookingRecipe,
+    SmithingTransformRecipe,
     CuttingBoardRecipe,
 )
-from .result import Result, PotionResult, FoodResult, FoodSliceResult, Effect
+
+# Item system (independent from recipes)
 from .item import Item, BlockItem

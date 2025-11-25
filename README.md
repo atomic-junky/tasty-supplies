@@ -1,5 +1,4 @@
 ![Tasty Supplies Banner](./docs/_media/tasty_supplies_title.png)
-> A [Farmer's Delight](https://modrinth.com/mod/farmers-delight) inspired Datapack for Minecraft 1.21.5+.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Y8Y7DH7YN)
 
@@ -41,380 +40,131 @@ Replace `beet` with `beet -p ./tasty_supplies/` if you want to stay in the root 
 
 Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 
-## How it works (technical documentation)
+## How it works
 
-This project uses [beet](https://github.com/mcbeet/beet) to automatically generate Minecraft datapacks with custom food items. The system provides a simple Python API to create items without dealing with complex JSON structures subject to change in future updates.
+This project uses [beet](https://github.com/mcbeet/beet) to automatically generate Minecraft datapacks and resource packs. Instead of writing complex JSON files manually, you define items and recipes in Python.
 
-### Basic Usage
+### Architecture
 
-```py
-Item(
-    "fried_egg",
-    AutoBakeRecipe(
-        ingredient="egg",
-        experience=0.1,
-        cookingtime=140,
-        result=FoodResult(nutrition=8, saturation=2.4)
-    )
-).register(ctx)
+The generator uses a **bucket pattern**:
+
+```
+Python Code → Bucket (Registry) → JSON Files (Datapack + Resource Pack)
 ```
 
-### Models
+### Core Concepts
 
-#### Item
+#### **Bucket** - Central Registry
 
-<details>
-<summary>
-    <code>Item(name, recipe, base_item)</code>
-</summary>
+The `Bucket` class manages all items and recipes:
 
-Create a new custom item.
+```python
+bucket = Bucket()
 
-> [!IMPORTANT]  
-> You need to put the item texture in `tasty_supplies/src/assets/tasty_supplies/textures/item/` folder with the right item name.
+# Add items and recipes with categories
+bucket.add_item(butter, category="ingredients")
+bucket.add_recipe(butter_recipe, category="cooking")
 
-**Parameters:**
-
-- `name` *(str)*: Item identifier
-- `recipe` *(Recipe)*: Recipe for crafting/cooking the item
-- `base_item` *(str, optional)*: Base Minecraft item. Default: `"bread"`
-
-**Methods:**
-
-- `register(ctx)`: Registers the item and generates all files
-
-**Generates:**
-
-- **[Resource Pack]** `assets/tasty_supplies/models/item/{name}.json`
-- **[Resource Pack]** `assets/tasty_supplies/item_models/{name}.json`
-- **[Resource Pack]** `assets/minecraft/item_models/{base_item}.json`
-
-**Example:**
-
-```py
-Item(
-    "cheese",
-    recipe=AutoBakeRecipe(...),
-    base_item="bread"
-).register(ctx)
+# Export everything to datapack/resource pack
+bucket.register_all(ctx)
 ```
 
-</details>
-
-<details>
-<summary>
-    <code>BlockItem(name, recipe, base_item)</code>
-</summary>
-
-Create a new custom item.
-
-> [!IMPORTANT]  
-> You need to put the item texture in `tasty_supplies/src/assets/tasty_supplies/textures/item/` folder with the right item name.
-
-**Parameters:**
-
-- `name` *(str)*: Item identifier
-- `recipe` *(Recipe)*: Recipe for crafting/cooking the item
-- `base_item` *(str, optional)*: Base Minecraft item. Default: `"bread"`
-
-**Methods:**
-
-- `register(ctx)`: Registers the item and generates all files
-
-**Generates:**
-
-- **[Resource Pack]** `assets/tasty_supplies/models/item/{name}.json`
-- **[Resource Pack]** `assets/tasty_supplies/item_models/{name}.json`
-- **[Resource Pack]** `assets/minecraft/item_models/{base_item}.json`
-
-**Example:**
-
-```py
-Item(
-    "cheese",
-    recipe=AutoBakeRecipe(...),
-    base_item="bread"
-).register(ctx)
-```
-
-</details>
-
-#### Recipes
-
-<details>
-<summary>
-    <code>ShapedRecipe(key, pattern, result, category)</code>
-</summary>
-
-Crafting table with specific pattern.
-
-**Parameters:**
-
-- `key` *(dict)*: Maps pattern letters to items
-- `pattern` *(list[str])*: Crafting pattern
-- `result` *(Result)*: Item properties when crafted
-- `category` *(str, optional)*: Recipe category. Default: `"misc"`
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}.json`
-
-**Example:**
-
-```py
-ShapedRecipe(
-    key={
-        "W": "wheat", 
-        "A": "apple", 
-        "S": "sugar", 
-        "C": "bread"
-    },
-    pattern=["WWW", "AAA", "SCS"],
-    result=FoodResult(nutrition=8, saturation=6)
-)
-```
-
-</details>
-
-<details>
-<summary>
-    <code>ShapelessRecipe(ingredients, result, category)</code>
-</summary>
-
-Crafting recipe without specific positioning.
-
-**Parameters:**
-
-- `ingredients` *(list[str])*: Required items (supports tags with `#`)
-- `result` *(Result)*: Item properties when crafted
-- `category` *(str, optional)*: Recipe category. Default: `"misc"`
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}.json`
-
-**Example:**
-
-```py
-ShapelessRecipe(
-    ingredients=["bowl", "apple", "melon_slice", "#tasty_supplies:berries"],
-    result=FoodResult(nutrition=18, saturation=7.6)
-)
-```
-
-</details>
-
-<details>
-<summary>
-    <code>AutoBakeRecipe(ingredient, experience, cookingtime, result)</code>
-</summary>
-
-Auto-generates item recipes for blasting, smoking and campfire. Smoked recipes cook 30% faster, while campfire recipes cook 30% slower.
-
-**Parameters:**
-
-- `ingredient` *(str)*: Item to cook
-- `experience` *(float)*: XP reward
-- `cookingtime` *(int)*: Cooking time in ticks
-- `result` *(Result)*: Item properties when cooked
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_blasting.json`
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_smoking.json`
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_campfire.json`
-
-**Example:**
-
-```py
-AutoBakeRecipe(
-    ingredient="milk_bucket",
-    experience=0.5,
-    cookingtime=200,
-    result=FoodResult(nutrition=8, saturation=5.6)
-)
-```
-
-</details>
-
-<details>
-<summary>
-    <code>BlastingRecipe(ingredient, experience, cookingtime, result)</code>
-</summary>
-
-Blast furnace recipe.
-
-**Parameters:**
-
-- `ingredient` *(str)*: Item to cook
-- `experience` *(float)*: XP reward
-- `cookingtime` *(int)*: Cooking time in ticks
-- `result` *(Result)*: Item properties when cooked
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}.json`
-
-</details>
-
-<details>
-<summary>
-    <code>SmeltingRecipe(ingredient, experience, cookingtime, result)</code>
-</summary>
-
-Furnace recipe.
-
-**Parameters:**
-
-- `ingredient` *(str)*: Item to cook
-- `experience` *(float)*: XP reward
-- `cookingtime` *(int)*: Cooking time in ticks
-- `result` *(Result)*: Item properties when cooked
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_smelting.json`
-
-</details>
-
-<details>
-<summary>
-    <code>SmokingRecipe(ingredient, experience, cookingtime, result)</code>
-</summary>
-
-Smoker recipe.
-
-**Parameters:**
-
-- `ingredient` *(str)*: Item to cook
-- `experience` *(float)*: XP reward
-- `cookingtime` *(int)*: Cooking time in ticks
-- `result` *(Result)*: Item properties when cooked
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_smoking.json`
-
-</details>
-
-<details>
-<summary>
-    <code>CampfireRecipe(ingredient, cookingtime, result)</code>
-</summary>
-
-Campfire cooking recipe.
-
-**Parameters:**
-
-- `ingredient` *(str)*: Item to cook
-- `cookingtime` *(int)*: Cooking time in ticks
-- `result` *(Result)*: Item properties when cooked
-
-**Generates:**
-
-- **[Datapack]** `data/tasty_supplies/recipes/{name}_campfire.json`
-
-</details>
-
-#### Results
-
-<details>
-<summary>
-    <code>Result(count, max_stack_size, extra_components)</code>
-</summary>
-
-Basic item properties with custom components.
-
-**Parameters:**
-
-- `count` *(int, optional)*: Item count. Default: `1`
-- `max_stack_size` *(int, optional)*: Stack limit. Default: `64`
-- `extra_components` *(dict, optional)*: Additional item components
-
-**Example:**
-
-```py
-Result(
-    count=1,
+**Features:**
+- Automatic recipe ID generation
+- Category organization
+- Generates `/give` commands for all items
+
+#### **Items**
+
+Custom items use Minecraft's `custom_model_data` to override vanilla item models:
+
+```python
+butter = Item(
+    name="butter",
+    base_item="poisonous_potato",  # Vanilla item to extend
+    display_name="Butter",
     max_stack_size=64,
-    extra_components={"max_damage": 100}
+    food_properties={"nutrition": 3, "saturation": 2.4}
 )
 ```
 
-</details>
+Place your texture in `src/assets/tasty_supplies/textures/item/butter.png`
 
-<details>
-<summary>
-    <code>FoodResult(nutrition, saturation, effects, ...)</code>
-</summary>
+#### **Recipes**
 
-Edible item properties with nutrition and effects.
+Recipes are independent from items and support both vanilla and custom items:
 
-**Parameters:**
+```python
+# Shapeless crafting
+butter_recipe = ShapelessRecipe(
+    ingredients=["milk_bucket"],
+    result=butter,
+    recipe_id="butter"
+)
 
-- `nutrition` *(int)*: Hunger points restored
-- `saturation` *(float)*: Saturation value
-- `effects` *(list[Effect], optional)*: Potion effects when eaten
-- `can_always_eat` *(bool, optional)*: Edible when full. Default: `False`
-- `max_stack_size` *(int, optional)*: Stack limit. Default: `64`
-- `extra_components` *(dict, optional)*: Additional item components
-
-**Example:**
-
-```py
-FoodResult(
-    nutrition=8,
-    saturation=6,
-    effects=[Effect("speed", 3600, 1)]
+# Auto-cooking (generates blasting, smoking, and campfire recipes)
+cooked_rice = AutoCookingRecipe(
+    ingredient="wheat_seeds",
+    result=rice_item,
+    experience=0.1,
+    base_cooking_time=200
 )
 ```
 
-</details>
+**Available recipe types:**
+- `ShapelessRecipe` - Any arrangement in crafting grid
+- `ShapedRecipe` - Specific pattern required
+- `SmeltingRecipe` - Furnace/blast furnace/smoker/campfire
+- `AutoCookingRecipe` - Generates all cooking variants
+- `SmithingTransformRecipe` - Smithing table
+- `CuttingBoardRecipe` - Custom workstation
 
-<details>
-<summary>
-    <code>PotionResult(potion_effects, max_stack_size, ...)</code>
-</summary>
+### Generation Pipeline
 
-Drinkable item properties with potion effects.
+```mermaid
+graph LR
+    A[generator.py] --> B[Create Categories]
+    B --> C[Register Items/Recipes]
+    C --> D[Bucket.register_all]
+    D --> E[Generate Item JSONs]
+    D --> F[Generate Recipe JSONs]
+    D --> G[Generate Give Commands]
+    E --> H[Resource Pack]
+    F --> I[Datapack]
+    G --> I
+```
 
-**Parameters:**
+The generator follows these steps:
+1. **Define categories** (ingredients, meals, sweets, etc.)
+2. **Register items and recipes** to the bucket with categories
+3. **Export everything** with `bucket.register_all(ctx)`
+4. **Generate files**: Item models, recipe JSONs, and `/give` commands
 
-- `potion_effects` *(list[Effect])*: Effects when consumed
-- `max_stack_size` *(int, optional)*: Stack limit. Default: `1`
-- `extra_components` *(dict, optional)*: Additional item components
+### Example
 
-**Example:**
+```python
+# Create a custom fried egg item with cooking recipe
+bucket = Bucket()
 
-```py
-PotionResult(
-    potion_effects=[Effect("regeneration", 600)]
+fried_egg = Item(
+    name="fried_egg",
+    base_item="poisonous_potato",
+    display_name="Fried Egg",
+    food_properties={"nutrition": 8, "saturation": 2.4}
 )
+
+egg_recipe = AutoCookingRecipe(
+    ingredient="egg",
+    result=fried_egg,
+    experience=0.1,
+    base_cooking_time=140
+)
+
+bucket.add_item(fried_egg, category="ingredients")
+bucket.add_recipe(egg_recipe, category="cooking")
+bucket.register_all(ctx)
 ```
-
-</details>
-
-<details>
-<summary>
-    <code>Effect(effect, duration, amplifier)</code>
-</summary>
-
-Potion effect definition.
-
-**Parameters:**
-
-- `effect` *(str)*: Effect ID (e.g., `"speed"`, `"regeneration"`)
-- `duration` *(int, optional)*: Duration in ticks (20 = 1 second). Default: `0`
-- `amplifier` *(int, optional)*: Effect level (0 = I, 1 = II). Default: `0`
-
-**Example:**
-
-```py
-Effect("speed", 3600, 1)  # Speed II for 3 minutes
-```
-
-</details>
 
 ## Credits
 
-Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight), [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge) and [FastFood Delight](https://github.com/akaneoMT/FastFoodDelight).
+Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) and [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge).

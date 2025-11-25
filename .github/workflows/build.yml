@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
+  workflow_dispatch:
 
 env:
   PYTHON_VERSION: "3.12.2"
@@ -39,8 +40,8 @@ jobs:
         run: |
           cd ./tasty_supplies/build/
           for dir in *; do
-            cd ./$dir
-            zip -r ../$dir.zip ./*
+            cd "./$dir"
+            zip -r "../$dir.zip" ./*
             cd ..
           done
       

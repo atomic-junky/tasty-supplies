@@ -1,29 +1,91 @@
-from beet import Model, ItemModel
+from typing import Any, Dict, Optional
+
+from beet import Model, ItemModel, ResourcePackNamespace
 
 from .context import TSContext
-from .recipe import _Recipe, FakeRecipe
-from .tools import to_absolute_path
-from core.logger import log
+from ..utils import to_absolute_path
+from ..logger import log
+from ..constants import (
+    DEFAULT_MAX_STACK_SIZE,
+    DEFAULT_BASE_ITEM,
+    TASTY_SUPPLIES_NAMESPACE,
+    COMPONENT_MAX_STACK_SIZE,
+    COMPONENT_CUSTOM_NAME,
+    COMPONENT_CUSTOM_MODEL_DATA,
+    TEXT_COLOR_WHITE,
+    TEXT_ITALIC_FALSE,
+    MODEL_TYPE_ITEM,
+    MODEL_TYPE_SELECT,
+    MODEL_TYPE_MODEL,
+    MODEL_TYPE_GENERATED,
+)
 
 
 class Item:
+    """Represents a custom Minecraft item with its visual properties.
+
+    Items are independent from recipes and can be referenced by any recipe.
+    They define how the item looks and which base Minecraft item it uses.
+    """
+
     def __init__(
-        self, item_name: str, recipe: _Recipe = FakeRecipe(), base_item: str = "bread"
+        self,
+        item_name: str,
+        base_item: str = DEFAULT_BASE_ITEM,
+        texture_path: Optional[str] = None,
+        model_type: str = MODEL_TYPE_ITEM,
+        max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
+        **components: Any,
     ):
+        """Initialize a custom item.
+
+        Args:
+            item_name: The unique identifier for this custom item
+            base_item: The vanilla Minecraft item to use as a base
+            texture_path: Optional custom texture path
+            model_type: Either "item" or "block" to determine texture location
+            **components: Item components (food, consumable, max_stack_size, etc.)
+        """
         self.name = item_name
-        self.recipe = recipe
         self.base_item = base_item
+        self.texture_path = (
+            texture_path or f"{TASTY_SUPPLIES_NAMESPACE}:{model_type}/{item_name}"
+        )
+        self.model_type = model_type
+
+        self.components: Dict[str, Any] = {}
+        self.components = self.components | components
+
+        self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
+
+        # Convert snake_case to Title Case
+        display_name = " ".join(word.capitalize() for word in item_name.split("_"))
+        self.components[COMPONENT_CUSTOM_NAME] = {
+            "text": display_name,
+            "italic": TEXT_ITALIC_FALSE,
+            "color": TEXT_COLOR_WHITE,
+        }
 
     def register(self, ctx: TSContext):
-        if not self.name in ctx.showcase_items:
-            ctx.showcase_items.append(self.name)
+        """Register this item with the Beet context.
 
-        ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
-        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model()
+        This creates the necessary model and item_model files and registers
+        the custom model data case with the base item.
+
+        Args:
+            ctx: The Tasty Supplies context
+        """
+        # Only generate model if it doesn't already exist in src/
+        if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
+            ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
+
+        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model(ctx)
         self._register_model_case(ctx)
+        if not self._texture_path_exist(ctx):
+            log.warning(f"Non-existent texture for item '{self.name}.'")
 
-        if not isinstance(self.recipe, FakeRecipe):
-            self.recipe._register(self.name, self.base_item, ctx)
+    def _texture_path_exist(self, ctx: TSContext) -> bool:
+        return not ctx.assets.textures.get(self.texture_path) is None
 
     def _register_model_case(self, ctx: TSContext):
         item_models: dict = ctx.assets["minecraft"].item_models
@@ -32,27 +94,39 @@ class Item:
 
         item_model: dict = ctx.assets["minecraft"].item_models[self.base_item].data
 
-        if item_model["model"].get("cases", None) is None:
+        if item_model["model"].get("cases") is None:
             raise ValueError(f"Item model cases not found for {self.base_item}.")
 
+        model_path = f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}"
         for candidate in item_model["model"]["cases"]:
-            if candidate["model"]["model"] == f"tasty_supplies:item/{self.name}":
+            if candidate["model"]["model"] == model_path:
                 log.warning(
-                    f"Item model case for {self.name} already exists in minecraft:items/{self.base_item}. Skipping model registration."
+                    f"Item model case for {self.name} already exists in "
+                    f"minecraft:items/{self.base_item}. Skipping model registration."
                 )
                 return
 
         item_model["model"]["cases"].append(
             {
-                "when": f"tasty_supplies/{self.name}",
+                "when": f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}",
                 "model": {
-                    "type": "minecraft:model",
-                    "model": f"tasty_supplies:item/{self.name}",
+                    "type": MODEL_TYPE_MODEL,
+                    "model": model_path,
                 },
             }
         )
 
     def create_base_item_model(self, ctx: TSContext) -> None:
+        """Create the base item model with custom_model_data selection.
+
+        Args:
+            ctx: The Tasty Supplies context
+
+        Raises:
+            ValueError: If base item model not found in vanilla assets
+        """
+        from ..constants import MINECRAFT_NAMESPACE
+
         base_item_model = ctx.vanilla.assets.item_models.get(
             to_absolute_path(self.base_item)
         )
@@ -61,11 +135,11 @@ class Item:
                 f"Base item model for {self.base_item} not found in vanilla assets."
             )
 
-        ctx.assets["minecraft"].item_models[self.base_item] = ItemModel(
+        ctx.assets[MINECRAFT_NAMESPACE].item_models[self.base_item] = ItemModel(
             {
                 "model": {
-                    "type": "minecraft:select",
-                    "property": "minecraft:custom_model_data",
+                    "type": MODEL_TYPE_SELECT,
+                    "property": f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}",
                     "cases": [],
                     "fallback": base_item_model.data["model"],
                 },
@@ -73,45 +147,102 @@ class Item:
         )
 
     def _get_model(self) -> Model:
+        """Generate the item model JSON.
+
+        Returns:
+            Model: The Beet Model object for this item
+        """
         json_model = {
-            "parent": "minecraft:item/generated",
-            "textures": {"layer0": f"tasty_supplies:item/{self.name}"},
+            "parent": MODEL_TYPE_GENERATED,
+            "textures": {"layer0": self.texture_path},
         }
         return Model(json_model, f"{self.name}.json")
 
-    def _get_item_model(self) -> ItemModel:
+    def _get_item_model(self, _ctx: TSContext) -> ItemModel:
+        """Generate the item_model JSON.
+
+        Returns:
+            ItemModel: The Beet ItemModel object for this item
+        """
         return ItemModel(
             {
                 "model": {
-                    "type": "minecraft:model",
-                    "model": "tasty_supplies:item/" + self.name,
+                    "type": MODEL_TYPE_MODEL,
+                    "model": f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}",
                 }
             }
         )
 
+    def to_ingredient(self) -> Dict[str, Any]:
+        """Convert this item to a recipe ingredient format.
+
+        Returns:
+            dict: The ingredient data for use in recipes
+        """
+        from ..constants import MINECRAFT_NAMESPACE
+
+        return {
+            "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "components": {
+                f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
+                    "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
+                }
+            },
+        }
+
+    def to_result(self, count: int = 1) -> Dict[str, Any]:
+        """Convert this item to a recipe result format.
+
+        Uses the item's stored components to ensure consistency across all uses.
+
+        Args:
+            count: Number of items to produce (default: 1)
+
+        Returns:
+            dict: The result data for use in recipes and commands
+        """
+        from ..constants import MINECRAFT_NAMESPACE
+
+        result = {
+            "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "count": count,
+            "components": {
+                f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
+                    "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
+                },
+                **self.components,
+            },
+        }
+        return result
+
 
 class BlockItem(Item):
+    """Represents a custom item that uses block textures.
+
+    This is a convenience class for items that should reference
+    textures from the block texture folder instead of the item folder.
+    BlockItems can also have special components for entity placement.
+    """
+
     def __init__(
         self,
         item_name: str,
-        recipe: _Recipe = FakeRecipe(),
         base_item: str = "armor_stand",
+        **components: Any,
     ):
-        super().__init__(item_name, recipe, base_item)
+        """Initialize a block item.
 
-    def _get_model(self) -> Model:
-        json_model = {
-            "parent": "minecraft:item/generated",
-            "textures": {"layer0": f"tasty_supplies:block/{self.name}"},
-        }
-        return Model(json_model, f"{self.name}.json")
+        Args:
+            item_name: The unique identifier for this custom item
+            base_item: The vanilla Minecraft item to use as a base (default: "armor_stand")
+            **components: Item components including custom_data, entity_data, etc.
+        """
+        from ..constants import MODEL_TYPE_BLOCK
 
-    def _get_item_model(self) -> ItemModel:
-        return ItemModel(
-            {
-                "model": {
-                    "type": "minecraft:model",
-                    "model": "tasty_supplies:item/" + self.name,
-                }
-            }
+        super().__init__(
+            item_name=item_name,
+            base_item=base_item,
+            texture_path=f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_BLOCK}/{item_name}",
+            model_type=MODEL_TYPE_BLOCK,
+            **components,
         )
