@@ -30,6 +30,22 @@ class Ingredients(Category):
         """Create all ingredient items and add them to the bucket."""
         self.add_item(
             Item(
+                "raw_bacon",
+                food={"nutrition": 1.5, "saturation": 0.3},
+                base_item=aliases.RAW_BACON,
+            )
+        )
+
+        self.add_item(
+            Item(
+                "cooked_bacon",
+                food={"nutrition": 4, "saturation": 6.4},
+                base_item=aliases.COOKED_BACON,
+            )
+        )
+
+        self.add_item(
+            Item(
                 "butter",
                 base_item=aliases.BUTTER,
                 food={"nutrition": 2, "saturation": 1.2},
@@ -68,6 +84,23 @@ class Ingredients(Category):
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient="porkchop",
+                result=self.bucket.get("raw_bacon"),
+                result_count=2,
+            )
+        )
+
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("raw_bacon"),
+                result=self.bucket.get("cooked_bacon"),
+                base_cooking_time=75,
+                experience=0.2,
+            )
+        )
 
         self.add_recipe(
             CuttingBoardRecipe(
