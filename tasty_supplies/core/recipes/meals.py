@@ -167,14 +167,14 @@ class Meals(Category):
         self.add_item(
             Item(
                 "egg_sandwich",
-                food={"nutrition": 8, "saturation": 16.4},
+                food={"nutrition": 11, "saturation": 16.4},
             )
         )
 
         self.add_item(
             Item(
                 "rabbit_burger",
-                food={"nutrition": 10, "saturation": 18.2},
+                food={"nutrition": 10, "saturation": 17.2},
             )
         )
 
@@ -189,6 +189,13 @@ class Meals(Category):
             Item(
                 "cheeseburger",
                 food={"nutrition": 14, "saturation": 20.8},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "fish_burger",
+                food={"nutrition": 13, "saturation": 18.4},
             )
         )
 
@@ -470,5 +477,16 @@ class Meals(Category):
                     "kelp",
                 ],
                 result=self.bucket.get("cheeseburger"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    "cooked_cod",
+                    "kelp",
+                ],
+                result=self.bucket.get("fish_burger"),
             )
         )
