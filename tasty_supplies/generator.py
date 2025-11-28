@@ -5,12 +5,7 @@ related datapack resources.
 """
 
 from core import TSContext, Bucket, log
-from core.recipes.beverage import Beverage
-from core.recipes.ingredients import Ingredients
-from core.recipes.meals import Meals
-from core.recipes.sweets import Sweets
-from core.recipes.tools import Tools
-from core.recipes.workstation import Worksation
+from core.recipes import *
 
 
 def generate(ctx: TSContext) -> None:
@@ -23,6 +18,7 @@ def generate(ctx: TSContext) -> None:
 
     categories = [
         Beverage(bucket),
+        Equipements(bucket),
         Ingredients(bucket),
         Meals(bucket),
         Sweets(bucket),

@@ -1,6 +1,6 @@
 from typing import Any, Dict, Optional
 
-from beet import Model, ItemModel
+from beet import Model, ItemModel, ResourcePackNamespace
 
 from .context import TSContext
 from ..utils import to_absolute_path
@@ -34,6 +34,7 @@ class Item:
         base_item: str = DEFAULT_BASE_ITEM,
         texture_path: Optional[str] = None,
         model_type: str = MODEL_TYPE_ITEM,
+        max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
         **components: Any,
     ):
         """Initialize a custom item.
@@ -52,21 +53,18 @@ class Item:
         )
         self.model_type = model_type
 
-        # Set default max_stack_size if not provided
-        if COMPONENT_MAX_STACK_SIZE not in components:
-            components[COMPONENT_MAX_STACK_SIZE] = DEFAULT_MAX_STACK_SIZE
+        self.components: Dict[str, Any] = {}
+        self.components = self.components | components
 
-        # Auto-generate display name if not provided
-        if COMPONENT_CUSTOM_NAME not in components:
-            # Convert snake_case to Title Case
-            display_name = " ".join(word.capitalize() for word in item_name.split("_"))
-            components[COMPONENT_CUSTOM_NAME] = {
-                "text": display_name,
-                "italic": TEXT_ITALIC_FALSE,
-                "color": TEXT_COLOR_WHITE,
-            }
+        self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
 
-        self.components: Dict[str, Any] = components
+        # Convert snake_case to Title Case
+        display_name = " ".join(word.capitalize() for word in item_name.split("_"))
+        self.components[COMPONENT_CUSTOM_NAME] = {
+            "text": display_name,
+            "italic": TEXT_ITALIC_FALSE,
+            "color": TEXT_COLOR_WHITE,
+        }
 
     def register(self, ctx: TSContext):
         """Register this item with the Beet context.
@@ -81,8 +79,13 @@ class Item:
         if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
             ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
 
-        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model()
+        ctx.assets["tasty_supplies"].item_models[self.name] = self._get_item_model(ctx)
         self._register_model_case(ctx)
+        if not self._texture_path_exist(ctx):
+            log.warning(f"Non-existent texture for item '{self.name}.'")
+
+    def _texture_path_exist(self, ctx: TSContext) -> bool:
+        return not ctx.assets.textures.get(self.texture_path) is None
 
     def _register_model_case(self, ctx: TSContext):
         item_models: dict = ctx.assets["minecraft"].item_models
@@ -155,7 +158,7 @@ class Item:
         }
         return Model(json_model, f"{self.name}.json")
 
-    def _get_item_model(self) -> ItemModel:
+    def _get_item_model(self, _ctx: TSContext) -> ItemModel:
         """Generate the item_model JSON.
 
         Returns:
