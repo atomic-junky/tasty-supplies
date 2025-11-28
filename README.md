@@ -9,11 +9,11 @@ You'll be able to prepare a wide variety of delicious dishes from cookies to sal
 
 ## Features
 
-For now, Tasty Supplies add **+40 recipes**, **8 advancements** and **1 workstation**.<br>
+For now, Tasty Supplies add **+80 recipes**, **2 sets of tools** and **1 workstation**.<br>
 To know more about it, we invite you to read the [documentation](https://atomic-junky.github.io/tasty-supplies/#/).
 
 <p align="center">
-  <img src="./docs/_media/showcase/item_showcase.png" />
+  <img alt="Showcase" src="https://cdn.modrinth.com/data/cached_images/7cb41f96f11dc46a961166225d8ed5d457341d24.png">
 </p>
 
 *Some of these textures come from the [Farmer's Delight](https://modrinth.com/mod/farmers-delight) mod*

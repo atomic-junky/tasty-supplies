@@ -1,4 +1,5 @@
 from .. import (
+    aliases,
     Bucket,
     Item,
     ShapelessRecipe,
@@ -46,7 +47,13 @@ class Meals(Category):
             )
         )
 
-        self.add_item(Item("fried_egg", food={"nutrition": 8, "saturation": 2.4}))
+        self.add_item(
+            Item(
+                "fried_egg",
+                food={"nutrition": 8, "saturation": 2.4},
+                base_item=aliases.FRIED_EGG,
+            )
+        )
 
         self.add_item(
             Item(
@@ -140,6 +147,62 @@ class Meals(Category):
             Item(
                 "potato_fries",
                 food={"nutrition": 1.5, "saturation": 1.5},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "bacon_sandwich",
+                food={"nutrition": 14, "saturation": 20.8},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "chicken_sandwich",
+                food={"nutrition": 12, "saturation": 19.0},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "egg_sandwich",
+                food={"nutrition": 11, "saturation": 16.4},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "rabbit_burger",
+                food={"nutrition": 10, "saturation": 17.2},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "hamburger",
+                food={"nutrition": 11, "saturation": 16.4},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "cheeseburger",
+                food={"nutrition": 14, "saturation": 20.8},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "fish_burger",
+                food={"nutrition": 13, "saturation": 18.4},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "mutton_wrap",
+                food={"nutrition": 14, "saturation": 24.4},
             )
         )
 
@@ -343,4 +406,87 @@ class Meals(Category):
                 result=self.bucket.get("cod_roll"),
                 result_count=2,
             ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    self.bucket.get_ingredient("fried_egg"),
+                    self.bucket.get_ingredient("fried_egg"),
+                ],
+                result=self.bucket.get("egg_sandwich"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    self.bucket.get_ingredient("cooked_bacon"),
+                    self.bucket.get_ingredient("cooked_bacon"),
+                    "kelp",
+                ],
+                result=self.bucket.get("bacon_sandwich"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["bread", "cooked_rabbit", "carrot", "kelp"],
+                result=self.bucket.get("rabbit_burger"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["bread", "cooked_chicken", "carrot", "kelp"],
+                result=self.bucket.get("chicken_sandwich"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    "cooked_mutton",
+                    self.bucket.get_ingredient("cooked_rice"),
+                    "kelp",
+                ],
+                result=self.bucket.get("mutton_wrap"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    "cooked_beef",
+                    "kelp",
+                ],
+                result=self.bucket.get("hamburger"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    "cooked_beef",
+                    self.bucket.get_ingredient("cheese_slice"),
+                    "kelp",
+                ],
+                result=self.bucket.get("cheeseburger"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    "cooked_cod",
+                    "kelp",
+                ],
+                result=self.bucket.get("fish_burger"),
+            )
         )
