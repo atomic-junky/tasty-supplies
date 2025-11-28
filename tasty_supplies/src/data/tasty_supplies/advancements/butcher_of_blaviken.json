@@ -1,0 +1,28 @@
+{
+  "display": {
+    "title": {
+      "text": "Butcher of Blaviken"
+    },
+    "description": {
+      "text": "Kill a monster using a cleaver or knife."
+    },
+    "icon": {
+      "id": "minecraft:bone"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:small_but_handy"
+}
