@@ -1,3 +1,4 @@
+import json
 from typing import Any, Dict, Optional
 
 from beet import Model, ItemModel, ResourcePackNamespace
@@ -225,6 +226,36 @@ class Item:
     @property
     def predicate(self) -> dict:
         return {"items": self.base_item, "components": self.components}
+    
+    @property
+    def entry(self, weight: int = 100, count: int = 1, **kwargs) -> dict:
+        entry = {
+            "type": "minecraft:item",
+            "name": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "functions": [
+                {
+                    "function": "minecraft:set_nbt",
+                    "tag": json.dumps(self.to_result()),
+                }
+            ],
+        }
+        
+        entry["functions"].append(
+            {
+                "function": "minecraft:set_count",
+                "count": count,
+            }
+        )
+
+        for key, value in kwargs.items():
+            entry["functions"].append(
+                {
+                    "function": key,
+                    **value,
+                }
+            )
+
+        return entry
 
 
 class BlockItem(Item):
