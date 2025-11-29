@@ -81,6 +81,75 @@ class Ingredients(Category):
                 food={"nutrition": 2, "saturation": 0.4},
             )
         )
+        self.add_item(
+            Item(
+                "tentacle",
+                base_item=aliases.TENTACLE,
+                food={"nutrition": 3, "saturation": 2.4},
+                consumable={},
+            )
+        )
+        self.add_item(
+            Item(
+                "guardian_tail",
+                base_item=aliases.GUARDIAN_TAIL,
+                food={"nutrition": 2, "saturation": 1.6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:mining_fatigue",
+                                    "duration": 600,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(
+            Item(
+                "barnacle_thong",
+                base_item=aliases.BARNACLE_TENTACLE,
+                food={"nutrition": 1, "saturation": 0.8},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:nausea",
+                                    "duration": 150,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(
+            Item(
+                "glare_eye",
+                base_item=aliases.GLARE_EYE,
+                food={"nutrition": 1, "saturation": 0.6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:night_vision",
+                                    "duration": 100,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(Item("great_hunger_teeth", base_item=aliases.GREAT_HUNGER_TEETH))
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""

@@ -1,0 +1,7 @@
+{
+    "$merge.pools.0.entries": [
+        "$item.tentacle.entry(weight=3, max_count=4.0)",
+        "$item.barnacle_thong.entry()",
+        "$item.guardian_tail.entry()"
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "$merge.pools.0.entries": [
+        "$item.tentacle.entry()",
+        "$item.guardian_tail.entry()"
+    ]
+}

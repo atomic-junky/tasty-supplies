@@ -1,0 +1,20 @@
+{
+    "$merge.pools": [
+        {
+            "rolls": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+            },
+            "bonus_rolls": 0.0,
+            "entries": [
+                "$item.glare_eye.entry(max_count=2.0)",
+                "$item.great_hunger_teeth.entry(weight=4, max_count=4.0)",
+                {
+                    "type": "minecraft:empty",
+                    "weight": 5
+                }
+            ]
+        }
+    ]
+}

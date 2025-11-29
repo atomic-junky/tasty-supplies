@@ -58,6 +58,17 @@ class Item:
         self.components: Dict[str, Any] = {}
         self.components = self.components | components
 
+        # If item defines food properties but no consumable component,
+        # ensure a default empty consumable component is present so
+        # the item is correctly marked as eatable by the datapack.
+        from ..constants import COMPONENT_FOOD, COMPONENT_CONSUMABLE
+
+        if (
+            COMPONENT_FOOD in self.components
+            and COMPONENT_CONSUMABLE not in self.components
+        ):
+            self.components[COMPONENT_CONSUMABLE] = {}
+
         self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
 
         # Convert snake_case to Title Case
@@ -225,27 +236,65 @@ class Item:
 
     @property
     def predicate(self) -> dict:
-        return {"items": self.base_item, "components": self.components}
-    
-    @property
-    def entry(self, weight: int = 100, count: int = 1, **kwargs) -> dict:
+        return {
+            "items": self.base_item,
+            "components": self.custom_model_data | self.components,
+        }
+
+    def entry(
+        self,
+        weight: int = 1,
+        min_count: float = 1.0,
+        max_count: float = 1.0,
+        min_looting: float = 0.0,
+        max_looting: float = 0.0,
+        **kwargs,
+    ) -> dict:
         entry = {
             "type": "minecraft:item",
             "name": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
             "functions": [
                 {
-                    "function": "minecraft:set_nbt",
-                    "tag": json.dumps(self.to_result()),
+                    "function": "minecraft:set_components",
+                    "components": self.custom_model_data | self.components,
                 }
             ],
+            "weight": int(weight),
         }
-        
-        entry["functions"].append(
-            {
-                "function": "minecraft:set_count",
-                "count": count,
-            }
-        )
+
+        if min_count == max_count:
+            entry["functions"].append(
+                {
+                    "function": "minecraft:set_count",
+                    "add": False,
+                    "count": min_count,
+                }
+            )
+        else:
+            entry["functions"].append(
+                {
+                    "function": "minecraft:set_count",
+                    "add": False,
+                    "count": {
+                        "type": "minecraft:uniform",
+                        "min": min_count,
+                        "max": max_count,
+                    },
+                }
+            )
+
+        if min_looting > 0 or max_looting > 0:
+            entry["functions"].append(
+                {
+                    "function": "minecraft:enchanted_count_increase",
+                    "enchantment": "minecraft:looting",
+                    "count": {
+                        "type": "minecraft:uniform",
+                        "min": min_looting,
+                        "max": max_looting,
+                    },
+                }
+            )
 
         for key, value in kwargs.items():
             entry["functions"].append(
