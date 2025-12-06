@@ -44,7 +44,7 @@ def get_logger(name: str = "ts_logger") -> logging.Logger:
         Configured logger with colored console output
     """
     logger: logging.Logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(level=logging.INFO)
 
     if logger.hasHandlers():
         logger.handlers.clear()

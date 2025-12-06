@@ -1,14 +1,9 @@
 import json
 import re
-import logging
 
 from core.models.context import TSContext
 from core.bucket import Bucket
-
-
-# Configure logging for debugging
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__)
+from core.logger import log
 
 
 class Token:
@@ -108,20 +103,17 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
 
     processed_key = (token.path, token.expression)
     if processed_key in processed:
-        logger.debug("Merge for %s already handled, skipping.", processed_key)
+        log.debug("Merge for %s already handled, skipping.", processed_key)
         return
 
     split_expr = token.split_expression()
-    logger.debug(f"Processing token: {token}")
 
     merge_path = split_expr[1:]
     merge_expr_key = f"$merge.{'.'.join(merge_path)}" if merge_path else "$merge"
-    logger.debug(f"Merge path: {merge_path} -> key {merge_expr_key}")
 
     file = list(ctx.data.all(token.path))[0]
     namespace_file = file[1]
     content = str(namespace_file.get_content())
-    logger.debug(f"Original file content: {content}")
 
     merge_entries: dict[str, list] = {}
 
@@ -132,28 +124,25 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
                 merge_entries.setdefault(key, []).append(value)
                 continue
             if key in obj:
-                logger.warning("Duplicate key '%s' detected outside merge scope.", key)
+                log.warning("Duplicate key '%s' detected outside merge scope.", key)
             obj[key] = value
         return obj
 
     try:
         custom_json = json.loads(content, object_pairs_hook=capture_pairs)
     except Exception as e:
-        logger.error(f"Failed to parse JSON content: {e}")
+        log.error(f"Failed to parse JSON content: {e}")
         return
 
     merge_values = merge_entries.get(merge_expr_key, [])
     if not merge_values:
-        logger.warning("No merge values found for key %s.", merge_expr_key)
+        log.warning("No merge values found for key %s.", merge_expr_key)
         return
-
-    logger.debug(f"Collected merge values: {merge_values}")
 
     try:
         vanilla_json = get_vanilla_file(ctx, token.path)
-        logger.debug(f"Loaded vanilla JSON: {vanilla_json}")
     except FileNotFoundError as e:
-        logger.error(f"Vanilla file not found: {e}")
+        log.error(f"Vanilla file not found: {e}")
         return
 
     def deep_merge_json(a, b):
@@ -186,7 +175,7 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
             if is_index:
                 # Navigate through array index
                 if not isinstance(current, list) or key_or_index >= len(current):
-                    logger.error(
+                    log.error(
                         "Array index %d out of bounds or current is not a list",
                         key_or_index,
                     )
@@ -195,7 +184,7 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
             else:
                 # Navigate through dict key
                 if not isinstance(current, dict):
-                    logger.error(
+                    log.error(
                         "Expected dict at path component %d but got %s",
                         i,
                         type(current),
@@ -215,7 +204,7 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
 
         parent, final_component = ensure_path(target_json, path)
         if parent is None or final_component is None:
-            logger.error("Failed to navigate path: %s", path)
+            log.error("Failed to navigate path: %s", path)
             return target_json
 
         final_key, is_index = parse_path_component(final_component)
@@ -223,16 +212,16 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
         if is_index:
             # Merge into array element
             if not isinstance(parent, list):
-                logger.error("Expected list for array index but got %s", type(parent))
+                log.error("Expected list for array index but got %s", type(parent))
                 return target_json
             if final_key >= len(parent):
-                logger.error("Array index %d out of bounds", final_key)
+                log.error("Array index %d out of bounds", final_key)
                 return target_json
 
             current_value = parent[final_key]
             if isinstance(value, list):
                 if not isinstance(current_value, list):
-                    logger.debug(
+                    log.debug(
                         "Overriding non-list value at index %d with list merge.",
                         final_key,
                     )
@@ -247,7 +236,7 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
         else:
             # Merge into dict key
             if not isinstance(parent, dict):
-                logger.error("Expected dict for key but got %s", type(parent))
+                log.error("Expected dict for key but got %s", type(parent))
                 return target_json
 
             if final_key not in parent:
@@ -256,7 +245,7 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
             current_value = parent[final_key]
             if isinstance(value, list):
                 if not isinstance(current_value, list):
-                    logger.debug(
+                    log.debug(
                         "Overriding non-list value at %s with list merge.", final_key
                     )
                     parent[final_key] = []
@@ -284,7 +273,6 @@ def replace_merge_expr(ctx: TSContext, token: Token) -> None:
     )
 
     processed.add(processed_key)
-    logger.info("File content successfully updated for merge %s.", processed_key)
 
 
 def is_method_expression(expression: str) -> bool:
