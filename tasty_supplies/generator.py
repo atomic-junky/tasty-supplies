@@ -6,6 +6,7 @@ related datapack resources.
 
 from core import TSContext, Bucket, log
 from core.recipes import *
+from core.convert import convert_data
 
 
 def generate(ctx: TSContext) -> None:
@@ -33,6 +34,7 @@ def generate(ctx: TSContext) -> None:
         category.create_recipes()
 
     bucket.register_all(ctx)
+    convert_data(ctx, bucket)
 
     # Generate cutting board drop function
     cutting_board = bucket.get("cutting_board")

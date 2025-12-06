@@ -1,0 +1,37 @@
+{
+  "display": {
+    "title": {
+      "text": "Sweet dream!"
+    },
+    "description": {
+      "text": "Indulge in a sweet treat."
+    },
+    "icon": "$item.sweet_roll.icon",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "sugary": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.sweet_berry_cheesecake.predicate",
+          "$item.sweet_berry_cookie.predicate",
+          "$item.sweet_roll.predicate",
+          "$item.croissant.predicate",
+          "$item.ice_cream.predicate",
+          "$item.ice_cream_cone.predicate",
+          "$item.melon_popsicle.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sugary"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:pastry_chef"
+}

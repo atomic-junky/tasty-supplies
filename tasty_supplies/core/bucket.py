@@ -443,5 +443,5 @@ class Bucket:
         return (
             f"Bucket(items={self.item_count()}, recipes={self.recipe_count()}, "
             f"item_categories={len(self._item_categories)}, "
-            f"recipe_categories={len(self._recipe_categories)})"
+            f"recipe_categories={len(self._recipe_categories)}, "
         )

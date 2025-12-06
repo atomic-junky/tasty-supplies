@@ -24,6 +24,33 @@ class Meals(Category):
 
         self.add_item(
             Item(
+                "baked_tentacle_on_a_stick",
+                food={"nutrition": 14, "saturation": 16.8},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "baked_barnacle_thong_on_a_stick",
+                food={"nutrition": 12, "saturation": 14.8},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:water_breathing",
+                                    "duration": 3600,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+
+        self.add_item(
+            Item(
                 "beef_skewer",
                 food={"nutrition": 16, "saturation": 25.6},
             )
@@ -34,11 +61,22 @@ class Meals(Category):
                 "beef_stew",
                 base_item="rabbit_stew",
                 food={"nutrition": 10, "saturation": 12},
+                use_remainder={"id": "minecraft:bowl"},
             )
         )
-        self.add_item(Item("cod_roll", food={"nutrition": 7, "saturation": 9.4}))
+        self.add_item(
+            Item(
+                "cod_roll",
+                food={"nutrition": 7, "saturation": 9.4},
+            )
+        )
 
-        self.add_item(Item("cheese", food={"nutrition": 8, "saturation": 5.6}))
+        self.add_item(
+            Item(
+                "cheese",
+                food={"nutrition": 8, "saturation": 5.6},
+            )
+        )
 
         self.add_item(
             Item(
@@ -58,8 +96,8 @@ class Meals(Category):
         self.add_item(
             Item(
                 "fruit_salad",
-                base_item="beetroot_soup",
                 food={"nutrition": 18, "saturation": 7.6},
+                use_remainder={"id": "minecraft:bowl"},
                 consumable={
                     "on_consume_effects": [
                         {
@@ -124,8 +162,8 @@ class Meals(Category):
         self.add_item(
             Item(
                 "nether_salad",
-                base_item="beetroot_soup",
                 food={"nutrition": 5, "saturation": 6},
+                use_remainder={"id": "minecraft:bowl"},
                 consumable={
                     "on_consume_effects": [
                         {
@@ -201,6 +239,13 @@ class Meals(Category):
 
         self.add_item(
             Item(
+                "guardian_roll",
+                food={"nutrition": 8, "saturation": 10.2},
+            )
+        )
+
+        self.add_item(
+            Item(
                 "mutton_wrap",
                 food={"nutrition": 14, "saturation": 24.4},
             )
@@ -215,16 +260,47 @@ class Meals(Category):
 
         self.add_item(
             Item(
+                "sea_stew",
+                food={"nutrition": 12, "saturation": 10.2},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "seagrass_soup",
+                food={"nutrition": 4, "saturation": 3.6},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "squid_sandwich",
+                food={"nutrition": 14, "saturation": 19.6},
+            )
+        )
+
+        self.add_item(
+            Item(
                 "stuffed_potato",
-                food={"nutrition": 6, "saturation": 7.8},
+                food={"nutrition": 8, "saturation": 10.8},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "stuffed_nautilus_shell",
+                food={"nutrition": 12, "saturation": 16.4},
+                use_remainder={"id": "minecraft:nautilus_shell"},
             )
         )
 
         self.add_item(
             Item(
                 "warped_mutton",
-                base_item="rabbit_stew",
                 food={"nutrition": 6, "saturation": 11},
+                use_remainder={"id": "minecraft:bowl"},
                 consumable={
                     "on_consume_effects": [
                         {
@@ -244,6 +320,28 @@ class Meals(Category):
 
     def create_recipes(self):
         """Create all meal recipes and add them to the bucket."""
+
+        self.add_recipe(
+            ShapedRecipe(
+                pattern=["T", "T", "s"],
+                key={
+                    "T": self.bucket.get_ingredient("cooked_tentacle"),
+                    "s": "stick",
+                },
+                result=self.bucket.get("baked_tentacle_on_a_stick"),
+            )
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
+                pattern=["T", "s"],
+                key={
+                    "T": self.bucket.get_ingredient("cooked_barnacle_thong"),
+                    "s": "stick",
+                },
+                result=self.bucket.get("baked_barnacle_thong_on_a_stick"),
+            )
+        )
 
         self.add_recipe(
             ShapedRecipe(
@@ -409,6 +507,18 @@ class Meals(Category):
         )
 
         self.add_recipe(
+            ShapedRecipe(
+                pattern=["g", "g", "r"],
+                key={
+                    "g": self.bucket.get_ingredient("guardian_tail"),
+                    "r": self.bucket.get_ingredient("cooked_rice"),
+                },
+                result=self.bucket.get("guardian_roll"),
+                result_count=2,
+            ),
+        )
+
+        self.add_recipe(
             ShapelessRecipe(
                 ingredients=[
                     "bread",
@@ -488,5 +598,53 @@ class Meals(Category):
                     "kelp",
                 ],
                 result=self.bucket.get("fish_burger"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("cooked_tentacle"),
+                    "cooked_cod",
+                    "#tasty_supplies:water",
+                ],
+                result=self.bucket.get("sea_stew"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    "seagrass",
+                    "seagrass",
+                    "#tasty_supplies:water",
+                ],
+                result=self.bucket.get("seagrass_soup"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bread",
+                    self.bucket.get_ingredient("cooked_tentacle"),
+                    self.bucket.get_ingredient("cooked_tentacle"),
+                    "kelp",
+                ],
+                result=self.bucket.get("squid_sandwich"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "nautilus_shell",
+                    "carrot",
+                    "kelp",
+                    "baked_potato",
+                ],
+                result=self.bucket.get("stuffed_nautilus_shell"),
             )
         )

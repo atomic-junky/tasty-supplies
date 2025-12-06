@@ -1,0 +1,97 @@
+{
+  "display": {
+    "title": {
+      "text": "A bigger blade"
+    },
+    "description": {
+      "text": "Craft a cleaver."
+    },
+    "icon": "$item.iron_cleaver.icon",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "wooden_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.wooden_cleaver.predicate"
+        ]
+      }
+    },
+    "stone_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.stone_cleaver.predicate"
+        ]
+      }
+    },
+    "iron_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.iron_cleaver.predicate"
+        ]
+      }
+    },
+    "golden_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.golden_cleaver.predicate"
+        ]
+      }
+    },
+    "diamond_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.diamond_cleaver.predicate"
+        ]
+      }
+    },
+    "copper_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.copper_cleaver.predicate"
+        ]
+      }
+    },
+    "netherite_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.netherite_cleaver.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wooden_cleaver"
+    ],
+    [
+      "stone_cleaver"
+    ],
+    [
+      "iron_cleaver"
+    ],
+    [
+      "golden_cleaver"
+    ],
+    [
+      "diamond_cleaver"
+    ],
+    [
+      "copper_cleaver"
+    ],
+    [
+      "netherite_cleaver"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:small_but_handy"
+}

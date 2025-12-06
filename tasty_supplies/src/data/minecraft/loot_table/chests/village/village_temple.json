@@ -1,0 +1,5 @@
+{
+    "$merge.pools.0.entries": [
+        "$item.glare_eye.entry(max_count=2.0)"
+    ]
+}

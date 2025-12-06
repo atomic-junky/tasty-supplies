@@ -3,7 +3,7 @@ author: Atomic Junky
 
 data_pack:
   name: "Tasty Supplies - Data Pack"
-  description: "Data pack that adds over 50 new recipes to Minecraft!"
+  description: "Data pack that adds over 100 new recipes to Minecraft!"
   pack_format: 88
   min_format: 80
   max_format: [88, 0]

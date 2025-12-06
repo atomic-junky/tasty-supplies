@@ -1,0 +1,67 @@
+{
+  "display": {
+    "title": {
+      "text": "Small but handy"
+    },
+    "description": {
+      "text": "Craft a knife"
+    },
+    "icon": "$item.flint_knife.icon",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "flint_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.flint_knife.predicate"
+        ]
+      }
+    },
+    "iron_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.iron_knife.predicate"
+        ]
+      }
+    },
+    "golden_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.golden_knife.predicate"
+        ]
+      }
+    },
+    "diamond_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.diamond_knife.predicate"
+        ]
+      }
+    },
+    "netherite_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          "$item.netherite_knife.predicate"
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "flint_knife",
+      "iron_knife",
+      "golden_knife",
+      "diamond_knife",
+      "netherite_knife"
+    ]
+  ],
+  "sends_telemetry_event": true,
+  "parent": "tasty_supplies:root"
+}

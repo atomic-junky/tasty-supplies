@@ -1,0 +1,35 @@
+{
+    "$merge.pools": [
+        {
+            "rolls": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 0.0
+            },
+            "bonus_rolls": 0.0,
+            "entries": [
+                "$item.guardian_tail.entry(max_count=2.0)",
+                {
+                    "type": "minecraft:empty",
+                    "weight": 25
+                }
+            ]
+        },
+        {
+            "rolls": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+            },
+            "bonus_rolls": 0.0,
+            "entries": [
+                "$item.tentacle.entry(min_count=1.0, max_count=4.0)",
+                "$item.barnacle_thong.entry(max_count=2.0)",
+                {
+                    "type": "minecraft:empty",
+                    "weight": 2
+                }
+            ]
+        }
+    ]
+}

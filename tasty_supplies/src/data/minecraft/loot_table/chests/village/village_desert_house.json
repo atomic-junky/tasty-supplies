@@ -1,0 +1,5 @@
+{
+    "$merge.pools.0.entries": [
+        "$item.great_hunger_teeth.entry(max_count=2.0)"
+    ]
+}

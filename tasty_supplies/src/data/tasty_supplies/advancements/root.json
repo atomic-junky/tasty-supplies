@@ -1,0 +1,29 @@
+{
+  "display": {
+    "title": {
+      "text": "Tasty Supplies"
+    },
+    "description": {
+      "text": "A world of flavor awaits you!"
+    },
+    "icon": {
+      "id": "minecraft:cake"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "background": "block/bricks"
+  },
+  "criteria": {
+    "seeds": {
+      "conditions": {},
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "seeds"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

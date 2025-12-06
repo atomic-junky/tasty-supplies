@@ -81,6 +81,88 @@ class Ingredients(Category):
                 food={"nutrition": 2, "saturation": 0.4},
             )
         )
+        self.add_item(
+            Item(
+                "tentacle",
+                base_item=aliases.TENTACLE,
+                food={"nutrition": 2, "saturation": 1.4},
+            )
+        )
+        self.add_item(
+            Item(
+                "cooked_tentacle",
+                base_item=aliases.COOKED_TENTACLE,
+                food={"nutrition": 4, "saturation": 3.8},
+            )
+        )
+        self.add_item(
+            Item(
+                "guardian_tail",
+                base_item=aliases.GUARDIAN_TAIL,
+                food={"nutrition": 2, "saturation": 1.6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:mining_fatigue",
+                                    "duration": 600,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(
+            Item(
+                "barnacle_thong",
+                base_item=aliases.BARNACLE_THONG,
+                food={"nutrition": 1, "saturation": 0.8},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:nausea",
+                                    "duration": 250,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(
+            Item(
+                "cooked_barnacle_thong",
+                base_item=aliases.COOKED_BARNACLE_THONG,
+                food={"nutrition": 2, "saturation": 2.6},
+            )
+        )
+        self.add_item(
+            Item(
+                "glare_eye",
+                base_item=aliases.GLARE_EYE,
+                food={"nutrition": 1, "saturation": 0.6},
+                consumable={
+                    "on_consume_effects": [
+                        {
+                            "type": "apply_effects",
+                            "effects": [
+                                {
+                                    "id": "minecraft:night_vision",
+                                    "duration": 100,
+                                }
+                            ],
+                        }
+                    ]
+                },
+            )
+        )
+        self.add_item(Item("great_hunger_teeth", base_item=aliases.GREAT_HUNGER_TEETH))
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""
@@ -97,7 +179,7 @@ class Ingredients(Category):
             AutoCookingRecipe(
                 ingredient=self.bucket.get_ingredient("raw_bacon"),
                 result=self.bucket.get("cooked_bacon"),
-                base_cooking_time=75,
+                base_cooking_time=150,
                 experience=0.2,
             )
         )
@@ -142,4 +224,22 @@ class Ingredients(Category):
                 result=self.bucket.get("ice_cream_cone"),
                 result_count=3,
             ),
+        )
+
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("tentacle"),
+                result=self.bucket.get("cooked_tentacle"),
+                base_cooking_time=250,
+                experience=0.2,
+            )
+        )
+
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("barnacle_thong"),
+                result=self.bucket.get("cooked_barnacle_thong"),
+                base_cooking_time=200,
+                experience=0.2,
+            )
         )
