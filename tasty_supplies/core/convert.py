@@ -37,10 +37,9 @@ class Token:
 
     def get_method_and_args(self) -> tuple[str | None, dict | None]:
         last = self.split_expression()[-1]
-        match = re.match(r"(\w+)\((.*)\)", last)
-        if match:
-            method = match.group(1)
-            args_str = match.group(2)
+        if match := re.match(r"(\w+)\((.*)\)", last):
+            method = match[1]
+            args_str = match[2]
             args = {}
             for arg in re.findall(r"(\w+)\s*=\s*([^,]+)", args_str):
                 key, value = arg
