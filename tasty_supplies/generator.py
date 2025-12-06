@@ -8,6 +8,7 @@ from core import TSContext, Bucket, log
 from core.recipes import *
 from core.convert import convert_data
 
+
 def generate(ctx: TSContext) -> None:
     """Generate all datapack content.
 
@@ -46,9 +47,7 @@ def generate(ctx: TSContext) -> None:
 
     item_count = len(bucket.export_item_names())
     recipe_count = len(bucket.export_recipe_ids())
-    advancement_count = len(bucket.export_advancement_ids())
 
     log.info(f"Items generated")
     log.info(f"\t- {item_count} items")
     log.info(f"\t- {recipe_count} recipes")
-    log.info(f"\t- {advancement_count} advancements")

@@ -29,17 +29,7 @@ class AutoCookingRecipeProtocol(Protocol):
     recipes: List[RecipeProtocol]
 
 
-@runtime_checkable
-class AdvancementProtocol(Protocol):
-    """Protocol for advancement-like objects."""
-
-    advancement_id: str
-
-    def register(self, ctx: TSContext) -> None: ...
-
-
 RecipeType = Union[RecipeProtocol, AutoCookingRecipeProtocol]
-AdvancementType = AdvancementProtocol
 
 
 class Bucket:
@@ -59,10 +49,8 @@ class Bucket:
         """Initialize an empty Bucket."""
         self._items: Dict[str, Item] = {}
         self._recipes: List[RecipeProtocol] = []
-        self._advancements: List[AdvancementType] = []
         self._item_categories: Dict[str, List[str]] = {}
         self._recipe_categories: Dict[str, List[str]] = {}
-        self._advancement_categories: Dict[str, List[str]] = {}
         self._recipe_id_counter: Dict[str, int] = {}  # Track recipe_id usage
 
     def add_item(self, item: Item, category: Optional[str] = None) -> None:
@@ -180,31 +168,6 @@ class Bucket:
 
             log.debug(f"Added recipe '{recipe.recipe_id}' to bucket.")
 
-    def add_advancement(self, advancement: AdvancementType, category: Optional[str] = None) -> None:
-        """Add an advancement to the bucket.
-
-        Args:
-            advancement: The advancement object to add.
-            category: Optional category label used for reporting.
-        """
-
-        # Avoid duplicates by id
-        existing_ids = {adv.advancement_id for adv in self._advancements}
-        if advancement.advancement_id in existing_ids:
-            log.warning(
-                f"Advancement '{advancement.advancement_id}' already registered in bucket. Skipping duplicate."
-            )
-            return
-
-        self._advancements.append(advancement)
-
-        if category:
-            if category not in self._advancement_categories:
-                self._advancement_categories[category] = []
-            self._advancement_categories[category].append(advancement.advancement_id)
-
-        log.debug(f"Added advancement '{advancement.advancement_id}' to bucket.")
-
     def get(self, item_name: str) -> Optional[Item]:
         """Retrieve an item by name.
 
@@ -281,18 +244,6 @@ class Bucket:
         """
         return list(self._recipe_categories.keys())
 
-    def get_advancements_by_category(self, category: str) -> List[str]:
-        """Get all advancement IDs in a specific category.
-
-        Args:
-            category: The category name.
-
-        Returns:
-            List of advancement IDs in the category, or empty list if not found.
-        """
-
-        return self._advancement_categories.get(category, []).copy()
-
     def contains_item(self, item_name: str) -> bool:
         """Check if an item exists in the bucket.
 
@@ -320,11 +271,6 @@ class Bucket:
         """
         return len(self._recipes)
 
-    def advancement_count(self) -> int:
-        """Get the total number of advancements in the bucket."""
-
-        return len(self._advancements)
-
     def register_all(self, ctx: TSContext) -> None:
         """Register all items and recipes with the given context.
 
@@ -343,10 +289,6 @@ class Bucket:
         # Then register all recipes
         for recipe in self._recipes:
             recipe.register(ctx)
-
-        # Then register all advancements
-        for advancement in self._advancements:
-            advancement.register(ctx)
 
         # Finally generate give commands for all items
         self._generate_give_commands(ctx)
@@ -448,11 +390,6 @@ class Bucket:
         """
         return [r.recipe_id for r in self._recipes]
 
-    def export_advancement_ids(self) -> List[str]:
-        """Export all advancement IDs as a list."""
-
-        return [a.advancement_id for a in self._advancements]
-
     def export_by_base_item(self) -> Dict[str, List[str]]:
         """Export items grouped by their base item.
 
@@ -476,7 +413,6 @@ class Bucket:
         return {
             "total_items": self.item_count(),
             "total_recipes": self.recipe_count(),
-            "total_advancements": self.advancement_count(),
             "item_categories": {
                 category: len(items)
                 for category, items in self._item_categories.items()
@@ -485,10 +421,6 @@ class Bucket:
                 category: len(recipes)
                 for category, recipes in self._recipe_categories.items()
             },
-            "advancement_categories": {
-                category: len(advancements)
-                for category, advancements in self._advancement_categories.items()
-            },
             "items_by_category": {
                 category: items[:] for category, items in self._item_categories.items()
             },
@@ -496,28 +428,20 @@ class Bucket:
                 category: recipes[:]
                 for category, recipes in self._recipe_categories.items()
             },
-            "advancements_by_category": {
-                category: advancements[:]
-                for category, advancements in self._advancement_categories.items()
-            },
         }
 
     def clear(self) -> None:
         """Clear all items and recipes from the bucket."""
         self._items.clear()
         self._recipes.clear()
-        self._advancements.clear()
         self._item_categories.clear()
         self._recipe_categories.clear()
-        self._advancement_categories.clear()
         log.debug("Bucket cleared.")
 
     def __repr__(self) -> str:
         """String representation of the Bucket."""
         return (
             f"Bucket(items={self.item_count()}, recipes={self.recipe_count()}, "
-            f"advancements={self.advancement_count()}, "
             f"item_categories={len(self._item_categories)}, "
             f"recipe_categories={len(self._recipe_categories)}, "
-            f"advancement_categories={len(self._advancement_categories)})"
         )
