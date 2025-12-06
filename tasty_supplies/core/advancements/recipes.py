@@ -4,12 +4,13 @@ This module provides utilities to extract recipe ids from advancement criteria
 and to build simple rewards payloads. It intentionally keeps logic minimal and
 lets callers resolve recipe existence using the Bucket where appropriate.
 """
+
 from __future__ import annotations
 
 from typing import Dict, List, Any
 
 from ..utils import ensure_namespace
-from ..constants import TASTY_SUPPLIES_NAMESPACE, MINECRAFT_NAMESPACE
+from ..constants import TASTY_SUPPLIES_NAMESPACE
 
 
 def extract_recipe_ids_from_criteria(criteria: Dict[str, Any]) -> List[str]:
@@ -22,9 +23,7 @@ def extract_recipe_ids_from_criteria(criteria: Dict[str, Any]) -> List[str]:
     ids: List[str] = []
 
     for name, entry in criteria.items():
-        # entry may be an AdvancementCriteria object serialized as dict or a raw dict
         if not isinstance(entry, dict):
-            # Can't inspect non-dict entries here; skip
             continue
 
         trigger = entry.get("trigger")
@@ -36,8 +35,9 @@ def extract_recipe_ids_from_criteria(criteria: Dict[str, Any]) -> List[str]:
         if not recipe_id:
             continue
 
-        # Normalize recipe id (allow already namespaced values)
-        normalized = ensure_namespace(str(recipe_id), TASTY_SUPPLIES_NAMESPACE, allow_tags=False)
+        normalized = ensure_namespace(
+            str(recipe_id), TASTY_SUPPLIES_NAMESPACE, allow_tags=False
+        )
         ids.append(normalized)
 
     return ids

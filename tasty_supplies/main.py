@@ -8,7 +8,7 @@ import json
 from typing import Dict, Any
 from beet import PngFile, Context, Model, ItemModel
 
-from core import log, TSContext
+from core import TSContext
 from generator import generate
 
 

@@ -30,24 +30,18 @@ from .models.recipe import (
 from .aliases import *
 
 __all__ = [
-    # Logger
     "get_logger",
     "log",
-    # Utils
     "to_absolute_path",
-    # Bucket
     "Bucket",
-    # Constants
     "MINECRAFT_NAMESPACE",
     "TASTY_SUPPLIES_NAMESPACE",
     "DEFAULT_MAX_STACK_SIZE",
     "DEFAULT_BASE_ITEM",
-    # Models
     "TSContext",
     "Item",
     "BlockItem",
     "Category",
-    # Recipes
     "Recipe",
     "ShapelessRecipe",
     "ShapedRecipe",

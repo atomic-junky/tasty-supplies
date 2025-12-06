@@ -1,7 +1,6 @@
-import json
 from typing import Any, Dict, Optional
 
-from beet import Model, ItemModel, ResourcePackNamespace
+from beet import Model, ItemModel
 
 from ..constants import MINECRAFT_NAMESPACE
 from .context import TSContext
@@ -58,9 +57,6 @@ class Item:
         self.components: Dict[str, Any] = {}
         self.components = self.components | components
 
-        # If item defines food properties but no consumable component,
-        # ensure a default empty consumable component is present so
-        # the item is correctly marked as eatable by the datapack.
         from ..constants import COMPONENT_FOOD, COMPONENT_CONSUMABLE
 
         if (
@@ -70,6 +66,12 @@ class Item:
             self.components[COMPONENT_CONSUMABLE] = {}
 
         self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
+
+        if (
+            "banner_pattern" in self.base_item
+            and not "provides_banner_patterns" in self.components
+        ):
+            self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
         # Convert snake_case to Title Case
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
@@ -88,7 +90,13 @@ class Item:
         Args:
             ctx: The Tasty Supplies context
         """
-        # Only generate model if it doesn't already exist in src/
+
+        if not self.components.get("custom_data"):
+            self.components["custom_data"] = {}
+
+        self.components["custom_data"]["ts_version"] = ctx.project_version
+        self.components["custom_data"]["ts_name"] = self.name
+
         if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
             ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
 
@@ -138,7 +146,7 @@ class Item:
         Raises:
             ValueError: If base item model not found in vanilla assets
         """
-        from ..constants import MINECRAFT_NAMESPACE
+        from core.constants import MINECRAFT_NAMESPACE
 
         base_item_model = ctx.vanilla.assets.item_models.get(
             to_absolute_path(self.base_item)
@@ -192,7 +200,7 @@ class Item:
         Returns:
             dict: The ingredient data for use in recipes
         """
-        from ..constants import MINECRAFT_NAMESPACE
+        from core.constants import MINECRAFT_NAMESPACE
 
         return {
             "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
@@ -328,7 +336,7 @@ class BlockItem(Item):
             base_item: The vanilla Minecraft item to use as a base (default: "armor_stand")
             **components: Item components including custom_data, entity_data, etc.
         """
-        from ..constants import MODEL_TYPE_BLOCK
+        from core.constants import MODEL_TYPE_BLOCK
 
         super().__init__(
             item_name=item_name,

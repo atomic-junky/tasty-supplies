@@ -1,9 +1,9 @@
 import json
 import re
 
-from core.models.context import TSContext
-from core.bucket import Bucket
-from core.logger import log
+from .models.context import TSContext
+from .bucket import Bucket
+from .logger import log
 
 
 class Token:
