@@ -70,6 +70,7 @@ bucket.register_all(ctx)
 ```
 
 **Features:**
+
 - Automatic recipe ID generation
 - Category organization
 - Generates `/give` commands for all items
@@ -112,6 +113,7 @@ cooked_rice = AutoCookingRecipe(
 ```
 
 **Available recipe types:**
+
 - `ShapelessRecipe` - Any arrangement in crafting grid
 - `ShapedRecipe` - Specific pattern required
 - `SmeltingRecipe` - Furnace/blast furnace/smoker/campfire
@@ -135,6 +137,7 @@ graph LR
 ```
 
 The generator follows these steps:
+
 1. **Define categories** (ingredients, meals, sweets, etc.)
 2. **Register items and recipes** to the bucket with categories
 3. **Export everything** with `bucket.register_all(ctx)`

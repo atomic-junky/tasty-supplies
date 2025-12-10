@@ -81,6 +81,5 @@
       "netherite_knife"
     ]
   ],
-  "sends_telemetry_event": true,
   "parent": "tasty_supplies:sharper_than_sharp"
 }

@@ -4,7 +4,7 @@ from beet import Model, ItemModel
 
 from ..constants import MINECRAFT_NAMESPACE
 from .context import TSContext
-from ..utils import to_absolute_path
+from ..utils import ensure_namespace, to_absolute_path
 from ..logger import log
 from ..constants import (
     DEFAULT_MAX_STACK_SIZE,
@@ -231,16 +231,24 @@ class Item:
         return result
 
     @property
+    def nbt(self) -> dict:
+        return {
+            "id": self.base_item,
+            "count": 1,
+            "components": self.custom_model_data | self.components,
+        }
+
+    @property
     def custom_model_data(self) -> dict:
         return {
-            f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
+            f"{COMPONENT_CUSTOM_MODEL_DATA}": {
                 "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
             }
         }
 
     @property
     def icon(self) -> dict:
-        return {"id": self.base_item, "count": 1, "components": self.custom_model_data}
+        return self.nbt
 
     @property
     def predicate(self) -> dict:

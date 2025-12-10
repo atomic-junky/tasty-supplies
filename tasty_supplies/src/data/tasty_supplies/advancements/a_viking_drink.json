@@ -59,6 +59,5 @@
       "melon_juice_horn"
     ]
   ],
-  "sends_telemetry_event": true,
   "parent": "tasty_supplies:barman"
 }

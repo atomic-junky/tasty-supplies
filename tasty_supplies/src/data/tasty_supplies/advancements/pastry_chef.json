@@ -38,6 +38,5 @@
       "sweets"
     ]
   ],
-  "sends_telemetry_event": true,
   "parent": "tasty_supplies:root"
 }

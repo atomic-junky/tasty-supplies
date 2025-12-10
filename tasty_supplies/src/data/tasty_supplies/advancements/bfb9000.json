@@ -26,6 +26,5 @@
       "netherite_cleaver"
     ]
   ],
-  "sends_telemetry_event": true,
   "parent": "tasty_supplies:a_bigger_blade"
 }

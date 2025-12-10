@@ -92,6 +92,5 @@
       "netherite_cleaver"
     ]
   ],
-  "sends_telemetry_event": true,
   "parent": "tasty_supplies:small_but_handy"
 }
