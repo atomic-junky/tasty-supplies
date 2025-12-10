@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.14.0] - 2025-12-10
+### :bug: Bug Fixes
+- [`6d3d0f9`](https://github.com/atomic-junky/tasty-supplies/commit/6d3d0f96c2a67457bd19ec3a8e513ddc08d8934d) - Cutting board was broken *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.13.0] - 2025-10-08
 ### :bug: Bug Fixes
 - [`9759543`](https://github.com/atomic-junky/tasty-supplies/commit/9759543d82cdbfd7524404c26de0805a242647db) - Food gives no effect when eaten (fix [#8](https://github.com/atomic-junky/tasty-supplies/pull/8)) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -58,3 +63,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.11.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.0...v0.11.1
 [v0.11.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.1...v0.11.2
 [v0.13.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.12.0...v0.13.0
+[v0.14.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.13.0...v0.14.0
