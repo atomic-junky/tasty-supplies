@@ -12,6 +12,7 @@ Note: Pottery sherds can be more easily used in recipes with the crafting table,
 # Food items
 BARNACLE_THONG: str = "guster_banner_pattern"
 BUTTER: str = "poisonous_potato"
+CHEESE_SLICE: str = "piglin_banner_pattern"
 COOKED_BACON: str = "skull_banner_pattern"
 COOKED_BARNACLE_THONG: str = "creeper_banner_pattern"
 COOKED_RICE: str = "field_masoned_banner_pattern"
