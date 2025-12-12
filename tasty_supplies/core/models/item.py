@@ -1,4 +1,5 @@
 from typing import Any, Dict, Optional
+from enum import Enum
 
 from beet import Model, ItemModel
 
@@ -11,15 +12,19 @@ from ..constants import (
     DEFAULT_BASE_ITEM,
     TASTY_SUPPLIES_NAMESPACE,
     COMPONENT_MAX_STACK_SIZE,
-    COMPONENT_CUSTOM_NAME,
     COMPONENT_CUSTOM_MODEL_DATA,
-    TEXT_COLOR_WHITE,
-    TEXT_ITALIC_FALSE,
     MODEL_TYPE_ITEM,
     MODEL_TYPE_SELECT,
     MODEL_TYPE_MODEL,
     MODEL_TYPE_GENERATED,
 )
+
+
+class Rarity(Enum):
+    COMMON = "common"
+    UNCOMMON = "uncommon"
+    RARE = "rare"
+    EPIC = "epic"
 
 
 class Item:
@@ -36,6 +41,7 @@ class Item:
         texture_path: Optional[str] = None,
         model_type: str = MODEL_TYPE_ITEM,
         max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
+        rarity: Rarity = Rarity.COMMON,
         **components: Any,
     ):
         """Initialize a custom item.
@@ -73,13 +79,9 @@ class Item:
         ):
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
-        # Convert snake_case to Title Case
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
-        self.components[COMPONENT_CUSTOM_NAME] = {
-            "text": display_name,
-            "italic": TEXT_ITALIC_FALSE,
-            "color": TEXT_COLOR_WHITE,
-        }
+        self.components["item_name"] = display_name
+        self.components["rarity"] = rarity.value
 
     def register(self, ctx: TSContext):
         """Register this item with the Beet context.

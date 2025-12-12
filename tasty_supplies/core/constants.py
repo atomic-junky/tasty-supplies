@@ -52,14 +52,9 @@ RECIPE_CATEGORY_EQUIPMENT = "equipment"
 
 # Component keys (without namespace)
 COMPONENT_CUSTOM_MODEL_DATA = "custom_model_data"
-COMPONENT_CUSTOM_NAME = "custom_name"
 COMPONENT_MAX_STACK_SIZE = "max_stack_size"
 COMPONENT_FOOD = "food"
 COMPONENT_CONSUMABLE = "consumable"
 
 # Default category name
 DEFAULT_CATEGORY = "uncategorized"
-
-# Text formatting
-TEXT_COLOR_WHITE = "white"
-TEXT_ITALIC_FALSE = False
