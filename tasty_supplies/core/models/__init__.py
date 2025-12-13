@@ -9,4 +9,4 @@ from .recipe import (
     SmithingTransformRecipe,
     CuttingBoardRecipe,
 )
-from .item import Item, BlockItem
+from .item import Item, BlockItem, Rarity
