@@ -1,1 +1,2 @@
 function tasty_supplies:cutting_board/tick
+function tasty_supplies:updater/tick

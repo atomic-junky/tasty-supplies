@@ -1,0 +1,3 @@
+advancement revoke @s only tasty_supplies:technical/_on_any_block_use
+
+function tasty_supplies:updater/on_any_block_use

@@ -1,10 +1,12 @@
+import hashlib
+import json
 from typing import Any, Dict, Optional
 
-from beet import Model, ItemModel
+from beet import Function, Model, ItemModel
 
 from ..constants import MINECRAFT_NAMESPACE
 from .context import TSContext
-from ..utils import ensure_namespace, to_absolute_path
+from ..utils import to_absolute_path, to_item_repr
 from ..logger import log
 from ..constants import (
     DEFAULT_MAX_STACK_SIZE,
@@ -67,6 +69,11 @@ class Item:
 
         self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
 
+        if not self.components.get("custom_data"):
+            self.components["custom_data"] = {}
+
+        self.components["custom_data"]["ts_name"] = self.name
+
         if (
             "banner_pattern" in self.base_item
             and not "provides_banner_patterns" in self.components
@@ -90,13 +97,6 @@ class Item:
         Args:
             ctx: The Tasty Supplies context
         """
-
-        if not self.components.get("custom_data"):
-            self.components["custom_data"] = {}
-
-        self.components["custom_data"]["ts_version"] = ctx.project_version
-        self.components["custom_data"]["ts_name"] = self.name
-
         if not ctx.assets["tasty_supplies"].models.get(f"item/{self.name}"):
             ctx.assets["tasty_supplies"].models[f"item/{self.name}"] = self._get_model()
 
@@ -104,6 +104,8 @@ class Item:
         self._register_model_case(ctx)
         if not self._texture_path_exist(ctx):
             log.warning(f"Non-existent texture for item '{self.name}.'")
+
+        self._setup_sha1_updater(ctx)
 
     def _texture_path_exist(self, ctx: TSContext) -> bool:
         return not ctx.assets.textures.get(self.texture_path) is None
@@ -194,6 +196,34 @@ class Item:
             }
         )
 
+    def _setup_sha1_updater(self, ctx: TSContext) -> None:
+        """Setup SHA1 updater functions.
+
+        Args:
+            ctx: The Tasty Supplies context
+        """
+        sha1_check_func = ctx.data["tasty_supplies"].functions.get("updater/check_sha1")
+        sha1_check_func.append(
+            Function(
+                'execute if data storage tasty_supplies:updater {hash: "'
+                + self._to_sha1()
+                + '"} run return 1'
+            )
+        )
+
+        item_replace_func = ctx.data["tasty_supplies"].functions.get(
+            "updater/replace_item"
+        )
+        item_replace_func.append(
+            Function(
+                '$execute if storage tasty_supplies:updater {item_name: "'
+                + self.name
+                + '"} run item replace $(target) $(path) with '
+                + to_item_repr(self)
+                + " $(count) run return 1"
+            )
+        )
+
     def to_ingredient(self) -> Dict[str, Any]:
         """Convert this item to a recipe ingredient format.
 
@@ -212,31 +242,24 @@ class Item:
         }
 
     def to_result(self, count: int = 1) -> Dict[str, Any]:
-        """Convert this item to a recipe result format.
+        result = self.nbt
+        result["count"] = count
+        return result
 
-        Uses the item's stored components to ensure consistency across all uses.
-
-        Args:
-            count: Number of items to produce (default: 1)
-
-        Returns:
-            dict: The result data for use in recipes and commands
-        """
-
-        result = {
+    def _raw_nbt(self, count: int = 1) -> dict:
+        nbt = {
             "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
             "count": count,
             "components": self.custom_model_data | self.components,
         }
-        return result
+        nbt = json.loads(json.dumps(nbt, sort_keys=True))
+        return nbt
 
     @property
     def nbt(self) -> dict:
-        return {
-            "id": self.base_item,
-            "count": 1,
-            "components": self.custom_model_data | self.components,
-        }
+        nbt = self._raw_nbt()
+        nbt["components"]["custom_data"] = {"ts_hash": self._to_sha1()}
+        return nbt
 
     @property
     def custom_model_data(self) -> dict:
@@ -321,6 +344,11 @@ class Item:
             )
 
         return entry
+
+    def _to_sha1(self):
+        sha1_hash = hashlib.sha1()
+        sha1_hash.update(str(self._raw_nbt()).encode("utf-8"))
+        return sha1_hash.hexdigest()
 
 
 class BlockItem(Item):

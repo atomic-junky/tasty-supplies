@@ -1,0 +1,1 @@
+function tasty_supplies:updater/on_load
