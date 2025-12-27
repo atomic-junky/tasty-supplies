@@ -1,0 +1,1 @@
+execute as @e if data entity @s Item run function tasty_supplies:updater/check/item {data_path:"Item", item_path:"contents", target:"entity @s"}
