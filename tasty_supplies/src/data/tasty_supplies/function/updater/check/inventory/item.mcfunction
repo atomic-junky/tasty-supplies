@@ -1,0 +1,1 @@
+$execute as @s run function tasty_supplies:updater/check/item {data_path:"Inventory[$(SlotsLoopIndex)]", item_path:"$(SlotsName).$(SlotsContainerIndex)", target:"entity @s"}

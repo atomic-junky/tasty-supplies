@@ -8,9 +8,12 @@ the generation pipeline.
 
 from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
 
+from beet import Function
+
 from .models.item import Item
 from .models.context import TSContext
 from .logger import log
+from .utils import remove_minecraft_namespace, to_item_repr, to_snbt
 
 
 @runtime_checkable
@@ -302,72 +305,11 @@ class Bucket:
         Args:
             ctx: The Tasty Supplies context
         """
-        from beet import Function
-
-        def remove_minecraft_namespace(data: Any) -> Any:
-            """Remove 'minecraft:' prefix from component keys.
-
-            Args:
-                data: The data structure to process (dict, list, or primitive)
-
-            Returns:
-                Data with minecraft namespace removed from keys
-            """
-            if isinstance(data, dict):
-                return {
-                    key.replace("minecraft:", ""): remove_minecraft_namespace(value)
-                    for key, value in data.items()
-                }
-            elif isinstance(data, list):
-                return [remove_minecraft_namespace(item) for item in data]
-            else:
-                return data
-
-        def to_snbt(data: Any) -> str:
-            """Convert Python data to SNBT (Stringified NBT) format for Minecraft commands.
-
-            Args:
-                data: The data to convert (dict, list, string, bool, number)
-
-            Returns:
-                SNBT formatted string
-            """
-            if isinstance(data, dict):
-                items: List[str] = [
-                    f"{key}:{to_snbt(value)}" for key, value in data.items()
-                ]
-                return "{" + ",".join(items) + "}"
-            elif isinstance(data, list):
-                items: List[str] = [to_snbt(item) for item in data]
-                return "[" + ",".join(items) + "]"
-            elif isinstance(data, str):
-                # Escape quotes in strings
-                return '"' + data.replace('"', '\\"') + '"'
-            elif isinstance(data, bool):
-                return "true" if data else "false"
-            elif isinstance(data, (int, float)):
-                return str(data)
-            else:
-                return str(data)
-
         for item_name, item in self._items.items():
-            item_data: Dict[str, Any] = item.to_result()
-            base_item: str = item_data["id"]
-            count: int = item_data.get("count", 1)
-            components: Dict[str, Any] = item_data.get("components", {})
-            components = remove_minecraft_namespace(components)
+            item_repr = to_item_repr(item)
+            count = item.to_result().get("count", 1)
 
-            # Generate SNBT for components
-            snbt_components: str
-            if components:
-                component_items: List[str] = [
-                    f"{key}={to_snbt(value)}" for key, value in components.items()
-                ]
-                snbt_components = ",".join(component_items)
-            else:
-                snbt_components = ""
-
-            give_command: str = f"give @s {base_item}[{snbt_components}] {count}"
+            give_command: str = f"give @s {item_repr} {count}"
 
             ctx.data["tasty_supplies"].functions[f"give/{item_name}"] = Function(
                 [give_command]

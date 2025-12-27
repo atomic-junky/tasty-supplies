@@ -1,0 +1,3 @@
+function tasty_supplies:updater/on_inventory_changed
+
+advancement revoke @s only tasty_supplies:technical/_on_inventory_changed
