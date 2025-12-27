@@ -12,5 +12,4 @@ $data modify storage tasty_supplies:updater temp.item_name set from $(target) $(
 $data modify storage tasty_supplies:updater temp.target set value "$(target)"
 $data modify storage tasty_supplies:updater temp.path set value "$(item_path)"
 $data modify storage tasty_supplies:updater temp.count set from $(target) $(data_path).count
-function tasty_supplies:debug_say with storage tasty_supplies:updater temp
 function tasty_supplies:updater/replace_item with storage tasty_supplies:updater temp

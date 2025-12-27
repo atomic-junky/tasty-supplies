@@ -2,7 +2,7 @@ execute if data entity @s equipment.body \
  run function tasty_supplies:updater/check/item {data_path:"equipment.body", item_path:"armor.body", target:"entity @s"}
 
 execute if data entity @s equipment.chest \ 
- run function tasty_supplies:updater/check/item {path:"equipment.chest", item_path:"armor.chest", target:"entity @s"}
+ run function tasty_supplies:updater/check/item {data_path:"equipment.chest", item_path:"armor.chest", target:"entity @s"}
 
 execute if data entity @s equipment.feet \
  run function tasty_supplies:updater/check/item {data_path:"equipment.feet", item_path:"armor.feet", target:"entity @s"}
