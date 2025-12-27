@@ -3,9 +3,9 @@ $execute unless data $(target) $(data_path).components."minecraft:custom_data".t
 data remove storage tasty_supplies:updater temp
 
 $execute unless data $(target) $(data_path).components."minecraft:custom_data".ts_hash run \
- data modify storage tasty_supplies:updater temp.hash set value "-1"
+data modify storage tasty_supplies:updater temp.hash set value "-1"
 $execute if data $(target) $(data_path).components."minecraft:custom_data".ts_hash run \
- data modify storage tasty_supplies:updater temp.hash set from $(target) $(data_path).components."minecraft:custom_data".ts_hash
+data modify storage tasty_supplies:updater temp.hash set from $(target) $(data_path).components."minecraft:custom_data".ts_hash
 execute if function tasty_supplies:updater/check_sha1 run return fail
 
 $data modify storage tasty_supplies:updater temp.item_name set from $(target) $(data_path).components."minecraft:custom_data".ts_name
