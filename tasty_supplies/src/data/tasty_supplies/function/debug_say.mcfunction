@@ -1,1 +1,0 @@
-$say $(ts_name)

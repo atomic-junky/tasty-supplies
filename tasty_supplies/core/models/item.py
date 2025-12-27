@@ -205,7 +205,7 @@ class Item:
         sha1_check_func = ctx.data["tasty_supplies"].functions.get("updater/check_sha1")
         sha1_check_func.append(
             Function(
-                'execute if data storage tasty_supplies:updater {hash: "'
+                'execute if data storage tasty_supplies:updater temp{hash: "'
                 + self._to_sha1()
                 + '"} run return 1'
             )
@@ -216,12 +216,19 @@ class Item:
         )
         item_replace_func.append(
             Function(
-                '$execute if storage tasty_supplies:updater {item_name: "'
-                + self.name
-                + '"} run item replace $(target) $(path) with '
-                + to_item_repr(self)
-                + " $(count) run return 1"
-            )
+                (
+                    '$execute if data storage tasty_supplies:updater temp{item_name: "'
+                    + self.name
+                    + '"} run item replace $(target) $(path) with '
+                    + to_item_repr(self)
+                    + " $(count)"
+                ),
+                (
+                    '$execute if data storage tasty_supplies:updater temp{item_name: "'
+                    + self.name
+                    + '"} run return 0'
+                ),
+            ),
         )
 
     def to_ingredient(self) -> Dict[str, Any]:
@@ -258,7 +265,7 @@ class Item:
     @property
     def nbt(self) -> dict:
         nbt = self._raw_nbt()
-        nbt["components"]["custom_data"] = {"ts_hash": self._to_sha1()}
+        nbt["components"]["custom_data"]["ts_hash"] = self._to_sha1()
         return nbt
 
     @property
