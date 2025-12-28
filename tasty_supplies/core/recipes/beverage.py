@@ -29,7 +29,7 @@ class Beverage(Category):
             Item(
                 "apple_cider",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -46,7 +46,7 @@ class Beverage(Category):
             Item(
                 "apple_cider_horn",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -64,7 +64,7 @@ class Beverage(Category):
             Item(
                 "glow_berry_custard",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -81,7 +81,7 @@ class Beverage(Category):
             Item(
                 "glow_berry_custard_horn",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -99,7 +99,7 @@ class Beverage(Category):
             Item(
                 "hot_cocoa",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -116,7 +116,7 @@ class Beverage(Category):
             Item(
                 "hot_cocoa_horn",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {
@@ -134,7 +134,7 @@ class Beverage(Category):
             Item(
                 "melon_juice",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {"id": "minecraft:instant_health", "amplifier": 0}
@@ -147,7 +147,7 @@ class Beverage(Category):
             Item(
                 "melon_juice_horn",
                 base_item="potion",
-                max_stack_size=1,
+                max_stack_size=16,
                 potion_contents={
                     "custom_effects": [
                         {"id": "minecraft:instant_health", "amplifier": 0}
