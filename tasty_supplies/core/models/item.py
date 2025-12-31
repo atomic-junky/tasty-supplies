@@ -80,7 +80,6 @@ class Item:
         ):
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
-        # Convert snake_case to Title Case
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
         self.components[COMPONENT_CUSTOM_NAME] = {
             "text": display_name,
@@ -265,7 +264,7 @@ class Item:
     @property
     def nbt(self) -> dict:
         nbt = self._raw_nbt()
-        nbt["components"]["custom_data"]["ts_hash"] = self._to_sha1()
+        nbt["components"].setdefault("custom_data", {})["ts_hash"] = self._to_sha1()
         return nbt
 
     @property
@@ -352,9 +351,15 @@ class Item:
 
         return entry
 
-    def _to_sha1(self):
+    def _to_sha1(self) -> str:
+        raw_nbt = self._raw_nbt()
+        canonical = json.dumps(
+            raw_nbt,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
         sha1_hash = hashlib.sha1()
-        sha1_hash.update(str(self._raw_nbt()).encode("utf-8"))
+        sha1_hash.update(canonical)
         return sha1_hash.hexdigest()
 
 
