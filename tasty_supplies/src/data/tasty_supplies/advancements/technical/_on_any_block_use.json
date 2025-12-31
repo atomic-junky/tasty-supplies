@@ -1,0 +1,10 @@
+{
+    "criteria": {
+        "any_block_use": {
+            "trigger": "minecraft:any_block_use"
+        }
+    },
+    "rewards": {
+        "function": "tasty_supplies:events/any_block_use"
+    }
+}

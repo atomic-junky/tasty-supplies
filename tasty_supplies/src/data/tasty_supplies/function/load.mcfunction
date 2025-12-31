@@ -1,0 +1,4 @@
+function tasty_supplies:events/on_load
+function tasty_supplies:updater/on_load
+
+function tasty_supplies:tick_20
