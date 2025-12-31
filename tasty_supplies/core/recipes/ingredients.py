@@ -10,6 +10,7 @@ from .. import (
     AutoCookingRecipe,
     CuttingBoardRecipe,
     ShapedRecipe,
+    ShapelessRecipe,
     Category,
     aliases,
 )
@@ -144,25 +145,18 @@ class Ingredients(Category):
         )
         self.add_item(
             Item(
-                "glare_eye",
-                base_item=aliases.GLARE_EYE,
-                food={"nutrition": 1, "saturation": 0.6},
-                consumable={
-                    "on_consume_effects": [
-                        {
-                            "type": "apply_effects",
-                            "effects": [
-                                {
-                                    "id": "minecraft:night_vision",
-                                    "duration": 100,
-                                }
-                            ],
-                        }
-                    ]
-                },
-            )
+                "raw_pasta",
+                base_item=aliases.RAW_PASTA,
+                food={"nutrition": 2, "saturation": 1.4},
+            ),
         )
-        self.add_item(Item("great_hunger_teeth", base_item=aliases.GREAT_HUNGER_TEETH))
+        self.add_item(
+            Item(
+                "wheat_dough",
+                base_item=aliases.WHEAT_DOUGH,
+                food={"nutrition": 2, "saturation": 1.4},
+            ),
+        )
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""
@@ -241,5 +235,24 @@ class Ingredients(Category):
                 result=self.bucket.get("cooked_barnacle_thong"),
                 base_cooking_time=200,
                 experience=0.2,
+            )
+        )
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "egg"],
+                result=self.bucket.get("wheat_dough"),
+            ),
+        )
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "water_bucket"],
+                result=self.bucket.get("wheat_dough"),
+            ),
+        )
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("wheat_dough"),
+                result=self.bucket.get("raw_pasta"),
+                result_count=2,
             )
         )

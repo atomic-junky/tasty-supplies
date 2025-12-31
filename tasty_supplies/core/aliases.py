@@ -6,7 +6,7 @@ Aliases often use uncommon items so that custom items can be used in recipes wit
 That's why pottery sherds, banner patterns, and armor trims are often used as aliases.
 Grouping all aliases here makes it easier to see which items are already used as aliases and avoid errors.
 
-Note: Pottery sherds can be more easily used in recipes with the crafting table, which is why it is preferable to use them for ingredients that are not used in the crafting table.
+Note: Pottery sherds can be more easily used in recipes with the crafting table and can be found more easily in the world, which is why it is preferable to use them for ingredients that are not used in the crafting table and pretty hard to get.
 """
 
 # Food items
@@ -18,15 +18,15 @@ COOKED_BARNACLE_THONG: str = "creeper_banner_pattern"
 COOKED_RICE: str = "field_masoned_banner_pattern"
 COOKED_TENTACLE: str = "mojang_banner_pattern"
 FRIED_EGG: str = "piglin_banner_pattern"
-GLARE_EYE: str = "sentry_armor_trim_smithing_template"
-GREAT_HUNGER_TEETH: str = "vex_armor_trim_smithing_template"
 GUARDIAN_TAIL: str = "flow_banner_pattern"
 PIE_CRUST: str = "angler_pottery_sherd"
 RAW_BACON: str = "archer_pottery_sherd"
 RAW_COD_SLICE: str = "flower_banner_pattern"
+RAW_PASTA: str = "skull_pottery_sherd"
 RAW_SALMON_SLICE: str = "bordure_indented_banner_pattern"
 RICE: str = "arms_up_pottery_sherd"
 TENTACLE: str = "blade_pottery_sherd"
+WHEAT_DOUGH: str = "snort_pottery_sherd"
 
 # Tool items
 DIAMOND_KNIFE: str = "disc_fragment_5"

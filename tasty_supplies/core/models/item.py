@@ -80,6 +80,15 @@ class Item:
         ):
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
+        self.components.setdefault(
+            "tooltip_display",
+            {
+                "hidden_components": [
+                    "minecraft:provides_banner_patterns",
+                ]
+            },
+        )
+
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
         self.components[COMPONENT_CUSTOM_NAME] = {
             "text": display_name,
