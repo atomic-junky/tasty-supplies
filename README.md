@@ -9,7 +9,7 @@ You'll be able to prepare a wide variety of delicious dishes from cookies to sal
 
 ## Features
 
-For now, Tasty Supplies add **+80 recipes**, **2 sets of tools** and **1 workstation**.<br>
+For now, Tasty Supplies add **+100 recipes**, **2 sets of tools**, **2 equipements** and **1 workstation**.<br>
 To know more about it, we invite you to read the [documentation](https://atomic-junky.github.io/tasty-supplies/#/).
 
 <p align="center">
