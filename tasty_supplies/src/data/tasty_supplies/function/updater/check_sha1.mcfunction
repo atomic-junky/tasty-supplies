@@ -1,0 +1,1 @@
+execute if data storage tasty_supplies:updater temp{hash: "-1"} run return fail

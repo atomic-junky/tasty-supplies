@@ -82,6 +82,7 @@ class Meals(Category):
             Item(
                 "cheese_slice",
                 food={"nutrition": 2, "saturation": 1.4},
+                base_item=aliases.CHEESE_SLICE,
             )
         )
 

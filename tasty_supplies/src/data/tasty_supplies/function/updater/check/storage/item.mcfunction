@@ -1,0 +1,1 @@
+$execute positioned ~ ~ ~ run function tasty_supplies:updater/check/item {data_path:"Items[$(SlotsLoopIndex)]", item_path:"container.$(SlotsCurrentIndex)", target:"block ~ ~ ~"}

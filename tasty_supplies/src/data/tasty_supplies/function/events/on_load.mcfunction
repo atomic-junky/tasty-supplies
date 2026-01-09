@@ -1,0 +1,1 @@
+scoreboard objectives add ts_join minecraft.custom:minecraft.leave_game

@@ -1,25 +1,28 @@
-import json
 from logging import log
-from typing import Any
-
 from beet import ItemModel
 
 from core import (
     TSContext,
-    TASTY_SUPPLIES_NAMESPACE,
     Item,
     ShapedRecipe,
     Category,
     Bucket,
 )
-from core.constants import MODEL_TYPE_ITEM, MODEL_TYPE_MODEL
 
 
 class EquipementItem(Item):
     def __init__(
-        self, item_name: str, slot: str, equipement_id: str, **components: Any
+        self,
+        item_name: str,
+        slot: str,
+        equipement_id: str,
+        *component: dict,
+        **components: dict,
     ):
         self.slot = slot
+        for data in component:
+            for key, value in data.items():
+                components[key] = value
 
         super().__init__(
             item_name=item_name,
@@ -34,11 +37,11 @@ class EquipementItem(Item):
         match self.slot:
             case "head":
                 return "leather_helmet"
-            case "chest":
+            case "chest":  # Useless
                 return "leather_chestplate"
-            case "legs":
+            case "legs":  # Useless
                 return "leather_leggings"
-            case "feet":
+            case "feet":  # Useless
                 return "leather_boots"
 
     def _register_model_case(self, ctx: TSContext) -> ItemModel:
@@ -57,7 +60,7 @@ class EquipementItem(Item):
         if item_model["model"].get("cases") is None:
             raise ValueError(f"Item model cases not found for {self.base_item}.")
 
-        model_path = f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}"
+        model_path = f"tasty_supplies:item/{self.name}"
         for candidate in item_model["model"]["cases"]:
             if (
                 "model" in candidate["model"]
@@ -71,7 +74,7 @@ class EquipementItem(Item):
 
         item_model["model"]["cases"].append(
             {
-                "when": f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}",
+                "when": f"tasty_supplies/{self.name}",
                 "model": {
                     "type": "minecraft:select",
                     "property": "minecraft:display_context",
@@ -79,14 +82,14 @@ class EquipementItem(Item):
                         {
                             "when": self.slot,
                             "model": {
-                                "type": MODEL_TYPE_MODEL,
-                                "model": f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/equipement/{self.name}",
+                                "type": "minecraft:model",
+                                "model": f"tasty_supplies:item/equipement/{self.name}",
                             },
                         }
                     ],
                     "fallback": {
-                        "type": MODEL_TYPE_MODEL,
-                        "model": f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}",
+                        "type": "minecraft:model",
+                        "model": f"tasty_supplies:item/{self.name}",
                     },
                 },
             }
@@ -113,14 +116,24 @@ class Equipements(Category):
         #     EquipementItem("fisherman_apron", slot="chest", equipement_id="fisherman")
         # )
 
-        self.add_item(EquipementItem("farmer_hat", slot="head", equipement_id="farmer"))
+        self.add_item(
+            EquipementItem(
+                "farmer_hat",
+                "head",
+                "farmer",
+            )
+        )
 
         # self.add_item(
         #     EquipementItem("butcher_apron", slot="chest", equipement_id="butcher")
         # )
 
         self.add_item(
-            EquipementItem("fisherman_hat", slot="head", equipement_id="fisherman")
+            EquipementItem(
+                "fisherman_hat",
+                "head",
+                "fisherman",
+            )
         )
 
     def create_recipes(self):

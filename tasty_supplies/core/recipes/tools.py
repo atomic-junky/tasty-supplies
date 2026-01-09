@@ -24,7 +24,13 @@ class Tools(Category):
         Args:
             bucket: The Bucket instance to store items and recipes
         """
-        super().__init__("Knife", bucket)
+        super().__init__("Tools", bucket)
+
+    def add_item(self, item, tool_type: str):
+        if not item.components.get("custom_data"):
+            item.components["custom_data"] = {}
+        item.components["custom_data"]["ts_cutting_tool"] = tool_type
+        return super().add_item(item)
 
     def create_items(self):
         """Create all tool items and add them to the bucket."""
@@ -92,7 +98,8 @@ class Tools(Category):
                 max_damage=2032,
                 weapon={},
                 attribute_modifiers=tool_attr(4.5, 2.3, "netherite_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -103,7 +110,8 @@ class Tools(Category):
                 max_damage=1561,
                 weapon={},
                 attribute_modifiers=tool_attr(4, 2.3, "diamond_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -114,7 +122,8 @@ class Tools(Category):
                 max_damage=32,
                 weapon={},
                 attribute_modifiers=tool_attr(2, 2.3, "golden_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -125,7 +134,8 @@ class Tools(Category):
                 max_damage=250,
                 weapon={},
                 attribute_modifiers=tool_attr(3.5, 2.3, "iron_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -136,7 +146,8 @@ class Tools(Category):
                 max_damage=190,
                 weapon={},
                 attribute_modifiers=tool_attr(3, 2.3, "copper_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -147,7 +158,8 @@ class Tools(Category):
                 max_damage=131,
                 weapon={},
                 attribute_modifiers=tool_attr(3, 2.3, "flint_knife"),
-            )
+            ),
+            "knife",
         )
 
         self.add_item(
@@ -158,7 +170,8 @@ class Tools(Category):
                 max_damage=3046,
                 weapon={},
                 attribute_modifiers=tool_attr(9, 1.2, "netherite_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -169,7 +182,8 @@ class Tools(Category):
                 max_damage=2341,
                 weapon={},
                 attribute_modifiers=tool_attr(8, 1.2, "diamond_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -180,7 +194,8 @@ class Tools(Category):
                 max_damage=48,
                 weapon={},
                 attribute_modifiers=tool_attr(6, 1.2, "golden_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -191,7 +206,8 @@ class Tools(Category):
                 max_damage=375,
                 weapon={},
                 attribute_modifiers=tool_attr(8, 1.1, "iron_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -202,7 +218,8 @@ class Tools(Category):
                 max_damage=285,
                 weapon={},
                 attribute_modifiers=tool_attr(8, 1.0, "copper_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -213,7 +230,8 @@ class Tools(Category):
                 max_damage=196,
                 weapon={},
                 attribute_modifiers=tool_attr(8, 1.0, "stone_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
         self.add_item(
@@ -224,7 +242,8 @@ class Tools(Category):
                 max_damage=88,
                 weapon={},
                 attribute_modifiers=tool_attr(6, 1.0, "wooden_cleaver"),
-            )
+            ),
+            "cleaver",
         )
 
     def create_recipes(self):

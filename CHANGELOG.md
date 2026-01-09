@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.14.1] - 2025-12-31
+### :bug: Bug Fixes
+- [`4658e82`](https://github.com/atomic-junky/tasty-supplies/commit/4658e82461115c776ee4b9aaf5334dc628bb445e) - 20 cheese slice can be replaced by bread *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+- [`450293a`](https://github.com/atomic-junky/tasty-supplies/commit/450293affc4158ddc752c6ef82acaa14614e9791) - Diamond knife and cleaver can't cut items [#26](https://github.com/atomic-junky/tasty-supplies/pull/26) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+### :wrench: Chores
+- [`965e023`](https://github.com/atomic-junky/tasty-supplies/commit/965e0239a0c63699fd41b62bad755acdb2f6e057) - Beverages can now be stacked up to 16 [#19](https://github.com/atomic-junky/tasty-supplies/pull/19) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.14.0] - 2025-12-10
 ### :bug: Bug Fixes
 - [`6d3d0f9`](https://github.com/atomic-junky/tasty-supplies/commit/6d3d0f96c2a67457bd19ec3a8e513ddc08d8934d) - Cutting board was broken *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -64,3 +73,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.11.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.11.1...v0.11.2
 [v0.13.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.12.0...v0.13.0
 [v0.14.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.13.0...v0.14.0
+[v0.14.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.14.0...v0.14.1
