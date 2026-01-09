@@ -10,7 +10,6 @@ from __future__ import annotations
 from typing import Dict, List, Any
 
 from ..utils import ensure_namespace
-from ..constants import TASTY_SUPPLIES_NAMESPACE
 
 
 def extract_recipe_ids_from_criteria(criteria: Dict[str, Any]) -> List[str]:
@@ -36,7 +35,7 @@ def extract_recipe_ids_from_criteria(criteria: Dict[str, Any]) -> List[str]:
             continue
 
         normalized = ensure_namespace(
-            str(recipe_id), TASTY_SUPPLIES_NAMESPACE, allow_tags=False
+            str(recipe_id), "tasty_supplies", allow_tags=False
         )
         ids.append(normalized)
 

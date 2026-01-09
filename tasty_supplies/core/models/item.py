@@ -4,23 +4,12 @@ from typing import Any, Dict, Optional
 
 from beet import Function, Model, ItemModel
 
-from ..constants import MINECRAFT_NAMESPACE
 from .context import TSContext
 from ..utils import to_absolute_path, to_item_repr
 from ..logger import log
 from ..constants import (
     DEFAULT_MAX_STACK_SIZE,
     DEFAULT_BASE_ITEM,
-    TASTY_SUPPLIES_NAMESPACE,
-    COMPONENT_MAX_STACK_SIZE,
-    COMPONENT_CUSTOM_NAME,
-    COMPONENT_CUSTOM_MODEL_DATA,
-    TEXT_COLOR_WHITE,
-    TEXT_ITALIC_FALSE,
-    MODEL_TYPE_ITEM,
-    MODEL_TYPE_SELECT,
-    MODEL_TYPE_MODEL,
-    MODEL_TYPE_GENERATED,
 )
 
 
@@ -36,7 +25,7 @@ class Item:
         item_name: str,
         base_item: str = DEFAULT_BASE_ITEM,
         texture_path: Optional[str] = None,
-        model_type: str = MODEL_TYPE_ITEM,
+        model_type: str = "item",
         max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
         **components: Any,
     ):
@@ -51,41 +40,32 @@ class Item:
         """
         self.name = item_name
         self.base_item = base_item
-        self.texture_path = (
-            texture_path or f"{TASTY_SUPPLIES_NAMESPACE}:{model_type}/{item_name}"
-        )
+        self.texture_path = texture_path or f"tasty_supplies:{model_type}/{item_name}"
         self.model_type = model_type
 
         self.components: Dict[str, Any] = {}
         self.components = self.components | components
 
-        from ..constants import COMPONENT_FOOD, COMPONENT_CONSUMABLE
+        if "food" in self.components:
+            self.components.setdefault("consumable", {})
+        self.components["max_stack_size"] = max_stack_size
 
-        if (
-            COMPONENT_FOOD in self.components
-            and COMPONENT_CONSUMABLE not in self.components
-        ):
-            self.components[COMPONENT_CONSUMABLE] = {}
-
-        self.components[COMPONENT_MAX_STACK_SIZE] = max_stack_size
-
-        if not self.components.get("custom_data"):
-            self.components["custom_data"] = {}
-
+        self.components.setdefault("custom_data", {})
         self.components["custom_data"]["ts_name"] = self.name
 
-        if (
-            "banner_pattern" in self.base_item
-            and not "provides_banner_patterns" in self.components
-        ):
+        if "banner_pattern" in self.base_item:
+            self.components.setdefault("provides_banner_patterns", {})
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
-        self.components[COMPONENT_CUSTOM_NAME] = {
-            "text": display_name,
-            "italic": TEXT_ITALIC_FALSE,
-            "color": TEXT_COLOR_WHITE,
-        }
+        self.components.setdefault(
+            "custom_name",
+            {
+                "text": display_name,
+                "italic": False,
+                "color": "white",
+            },
+        )
 
     def register(self, ctx: TSContext):
         """Register this item with the Beet context.
@@ -119,7 +99,7 @@ class Item:
         if item_model["model"].get("cases") is None:
             raise ValueError(f"Item model cases not found for {self.base_item}.")
 
-        model_path = f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}"
+        model_path = f"tasty_supplies:item/{self.name}"
         for candidate in item_model["model"]["cases"]:
             if candidate["model"]["model"] == model_path:
                 log.warning(
@@ -130,9 +110,9 @@ class Item:
 
         item_model["model"]["cases"].append(
             {
-                "when": f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}",
+                "when": f"tasty_supplies/{self.name}",
                 "model": {
-                    "type": MODEL_TYPE_MODEL,
+                    "type": "minecraft:model",
                     "model": model_path,
                 },
             }
@@ -147,8 +127,6 @@ class Item:
         Raises:
             ValueError: If base item model not found in vanilla assets
         """
-        from core.constants import MINECRAFT_NAMESPACE
-
         base_item_model = ctx.vanilla.assets.item_models.get(
             to_absolute_path(self.base_item)
         )
@@ -157,11 +135,11 @@ class Item:
                 f"Base item model for {self.base_item} not found in vanilla assets."
             )
 
-        ctx.assets[MINECRAFT_NAMESPACE].item_models[self.base_item] = ItemModel(
+        ctx.assets["minecraft"].item_models[self.base_item] = ItemModel(
             {
                 "model": {
-                    "type": MODEL_TYPE_SELECT,
-                    "property": f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}",
+                    "type": "minecraft:select",
+                    "property": f"minecraft:custom_model_data",
                     "cases": [],
                     "fallback": base_item_model.data["model"],
                 },
@@ -175,7 +153,7 @@ class Item:
             Model: The Beet Model object for this item
         """
         json_model = {
-            "parent": MODEL_TYPE_GENERATED,
+            "parent": "minecraft:item/generated",
             "textures": {"layer0": self.texture_path},
         }
         return Model(json_model, f"{self.name}.json")
@@ -189,8 +167,8 @@ class Item:
         return ItemModel(
             {
                 "model": {
-                    "type": MODEL_TYPE_MODEL,
-                    "model": f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_ITEM}/{self.name}",
+                    "type": "minecraft:model",
+                    "model": f"tasty_supplies:item/{self.name}",
                 }
             }
         )
@@ -206,7 +184,7 @@ class Item:
             Function(
                 'execute if data storage tasty_supplies:updater temp{hash: "'
                 + self._to_sha1()
-                + '"} run return 1'
+                + " run return 1"
             )
         )
 
@@ -218,14 +196,14 @@ class Item:
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + '"} run item replace $(target) $(path) with '
+                    + " run item replace $(target) $(path) with "
                     + to_item_repr(self)
                     + " $(count)"
                 ),
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + '"} run return 0'
+                    + " run return 0"
                 ),
             ),
         )
@@ -236,13 +214,11 @@ class Item:
         Returns:
             dict: The ingredient data for use in recipes
         """
-        from core.constants import MINECRAFT_NAMESPACE
-
         return {
-            "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "id": f"minecraft:{self.base_item}",
             "components": {
-                f"{MINECRAFT_NAMESPACE}:{COMPONENT_CUSTOM_MODEL_DATA}": {
-                    "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
+                f"minecraft:custom_model_data": {
+                    "strings": [f"tasty_supplies/{self.name}"]
                 }
             },
         }
@@ -254,7 +230,7 @@ class Item:
 
     def _raw_nbt(self, count: int = 1) -> dict:
         nbt = {
-            "id": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "id": f"minecraft:{self.base_item}",
             "count": count,
             "components": self.custom_model_data | self.components,
         }
@@ -269,11 +245,7 @@ class Item:
 
     @property
     def custom_model_data(self) -> dict:
-        return {
-            f"{COMPONENT_CUSTOM_MODEL_DATA}": {
-                "strings": [f"{TASTY_SUPPLIES_NAMESPACE}/{self.name}"]
-            }
-        }
+        return {f"custom_model_data": {"strings": [f"tasty_supplies/{self.name}"]}}
 
     @property
     def icon(self) -> dict:
@@ -297,7 +269,7 @@ class Item:
     ) -> dict:
         entry = {
             "type": "minecraft:item",
-            "name": f"{MINECRAFT_NAMESPACE}:{self.base_item}",
+            "name": f"minecraft:{self.base_item}",
             "functions": [
                 {
                     "function": "minecraft:set_components",
@@ -384,12 +356,11 @@ class BlockItem(Item):
             base_item: The vanilla Minecraft item to use as a base (default: "armor_stand")
             **components: Item components including custom_data, entity_data, etc.
         """
-        from core.constants import MODEL_TYPE_BLOCK
 
         super().__init__(
             item_name=item_name,
             base_item=base_item,
-            texture_path=f"{TASTY_SUPPLIES_NAMESPACE}:{MODEL_TYPE_BLOCK}/{item_name}",
-            model_type=MODEL_TYPE_BLOCK,
+            texture_path=f"tasty_supplies:block/{item_name}",
+            model_type="block",
             **components,
         )
