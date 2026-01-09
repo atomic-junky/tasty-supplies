@@ -7,6 +7,7 @@ All items and recipes are managed through the Bucket system.
 from .. import (
     Bucket,
     Item,
+    Rarity,
     AutoCookingRecipe,
     CuttingBoardRecipe,
     ShapedRecipe,
@@ -113,6 +114,7 @@ class Ingredients(Category):
                         }
                     ]
                 },
+                rarity=Rarity.RARE,
             )
         )
         self.add_item(
@@ -133,6 +135,7 @@ class Ingredients(Category):
                         }
                     ]
                 },
+                rarity=Rarity.UNCOMMON,
             )
         )
         self.add_item(
@@ -140,6 +143,7 @@ class Ingredients(Category):
                 "cooked_barnacle_thong",
                 base_item=aliases.COOKED_BARNACLE_THONG,
                 food={"nutrition": 2, "saturation": 2.6},
+                rarity=Rarity.UNCOMMON,
             )
         )
         self.add_item(
@@ -162,7 +166,13 @@ class Ingredients(Category):
                 },
             )
         )
-        self.add_item(Item("great_hunger_teeth", base_item=aliases.GREAT_HUNGER_TEETH))
+        self.add_item(
+            Item(
+                "great_hunger_teeth",
+                base_item=aliases.GREAT_HUNGER_TEETH,
+                rarity=Rarity.UNCOMMON,
+            )
+        )
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""

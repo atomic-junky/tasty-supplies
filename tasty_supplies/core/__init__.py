@@ -13,7 +13,7 @@ from .constants import (
 )
 
 from .models.context import TSContext
-from .models.item import Item, BlockItem
+from .models.item import Item, BlockItem, Rarity
 from .models.category import Category
 from .models.recipe import (
     Recipe,
@@ -35,6 +35,7 @@ __all__ = [
     "DEFAULT_MAX_STACK_SIZE",
     "DEFAULT_BASE_ITEM",
     "TSContext",
+    "Rarity",
     "Item",
     "BlockItem",
     "Category",

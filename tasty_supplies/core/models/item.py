@@ -1,6 +1,7 @@
 import hashlib
 import json
 from typing import Any, Dict, Optional
+from enum import Enum
 
 from beet import Function, Model, ItemModel
 
@@ -11,6 +12,13 @@ from ..constants import (
     DEFAULT_MAX_STACK_SIZE,
     DEFAULT_BASE_ITEM,
 )
+
+
+class Rarity(Enum):
+    COMMON = "common"
+    UNCOMMON = "uncommon"
+    RARE = "rare"
+    EPIC = "epic"
 
 
 class Item:
@@ -27,6 +35,7 @@ class Item:
         texture_path: Optional[str] = None,
         model_type: str = "item",
         max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
+        rarity: Rarity = Rarity.COMMON,
         **components: Any,
     ):
         """Initialize a custom item.
@@ -58,14 +67,8 @@ class Item:
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
-        self.components.setdefault(
-            "custom_name",
-            {
-                "text": display_name,
-                "italic": False,
-                "color": "white",
-            },
-        )
+        self.components.setdefault("item_name", display_name)
+        self.components.setdefault("rarity", rarity.value)
 
     def register(self, ctx: TSContext):
         """Register this item with the Beet context.
