@@ -19,6 +19,9 @@ class Meals(Category):
         """
         super().__init__("Meals", bucket)
 
+    def add_item(self, item):
+        return super().add_item(item)
+
     def create_items(self):
         """Create all meal items and add them to the bucket."""
 

@@ -54,8 +54,12 @@ class Ingredients(Category):
                 consumable={"on_consume_effects": [{"type": "clear_all_effects"}]},
             )
         )
-        self.add_item(Item("pie_crust", base_item=aliases.PIE_CRUST))
-        self.add_item(Item("rice", base_item=aliases.RICE))
+        self.add_item(
+            Item("pie_crust", base_item=aliases.PIE_CRUST),
+        )
+        self.add_item(
+            Item("rice", base_item=aliases.RICE),
+        )
         self.add_item(
             Item(
                 "cooked_rice",
@@ -161,7 +165,6 @@ class Ingredients(Category):
                 food={"nutrition": 2, "saturation": 1.4},
             ),
         )
-
 
     def create_recipes(self):
         """Create all ingredient recipes and add them to the bucket."""

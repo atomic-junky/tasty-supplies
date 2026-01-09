@@ -24,15 +24,15 @@ class Category:
         self.category_name = category_name
         self.bucket: Optional["Bucket"] = bucket
 
-    def add_item(self, item: "Item") -> None:
-        """Add an item with automatic category tagging.
+    def add_item(self, item: "Item", category: str = "misc") -> None:
+        """Add an item to the bucket.
 
         Args:
             item: The Item instance to add
         """
         if self.bucket is None:
             raise ValueError("Bucket is not initialized for this category")
-        self.bucket.add_item(item, category=self.category_name.lower())
+        self.bucket.add_item(item, category)
 
     def add_recipe(self, recipe) -> None:
         """Add a recipe with automatic category tagging.
