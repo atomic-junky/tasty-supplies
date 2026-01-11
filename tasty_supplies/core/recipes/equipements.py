@@ -37,11 +37,11 @@ class EquipementItem(Item):
         match self.slot:
             case "head":
                 return "leather_helmet"
-            case "chest":  # Useless
+            case "chest":  # Unused
                 return "leather_chestplate"
-            case "legs":  # Useless
+            case "legs":  # Unused
                 return "leather_leggings"
-            case "feet":  # Useless
+            case "feet":  # Unused
                 return "leather_boots"
 
     def _register_model_case(self, ctx: TSContext) -> ItemModel:
@@ -110,11 +110,29 @@ class Equipements(Category):
     def create_items(self):
         """Create all equipement items and add them to the bucket."""
 
-        ## Equipment other than helmets cannot be added without mods due to technical limitations.
+        self.add_item(
+            EquipementItem(
+                "armorer_hat",
+                "head",
+                "armorer",
+            )
+        )
 
-        # self.add_item(
-        #     EquipementItem("fisherman_apron", slot="chest", equipement_id="fisherman")
-        # )
+        self.add_item(
+            EquipementItem(
+                "butcher_hat",
+                "head",
+                "butcher",
+            )
+        )
+
+        self.add_item(
+            EquipementItem(
+                "cartographer_monocle",
+                "head",
+                "cartographer",
+            )
+        )
 
         self.add_item(
             EquipementItem(
@@ -124,15 +142,43 @@ class Equipements(Category):
             )
         )
 
-        # self.add_item(
-        #     EquipementItem("butcher_apron", slot="chest", equipement_id="butcher")
-        # )
-
         self.add_item(
             EquipementItem(
                 "fisherman_hat",
                 "head",
                 "fisherman",
+            )
+        )
+
+        self.add_item(
+            EquipementItem(
+                "fletcher_hat",
+                "head",
+                "fletcher",
+            )
+        )
+
+        self.add_item(
+            EquipementItem(
+                "librarian_hat",
+                "head",
+                "librarian",
+            )
+        )
+
+        self.add_item(
+            EquipementItem(
+                "shepherd_hat",
+                "head",
+                "shepherd",
+            )
+        )
+
+        self.add_item(
+            EquipementItem(
+                "weaponsmith_eye_patch",
+                "head",
+                "weaponsmith",
             )
         )
 

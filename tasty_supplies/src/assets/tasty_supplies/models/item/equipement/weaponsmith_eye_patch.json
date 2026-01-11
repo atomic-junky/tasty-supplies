@@ -1,0 +1,30 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"parent": "villagerhats:item/hat",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "tasty_supplies:item/weaponsmith"
+	},
+	"elements": [
+		{
+			"from": [4, -5, 4],
+			"to": [12, 0, 12],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, -3, 0]},
+			"faces": {
+				"north": {"uv": [2, 2.75, 4, 4], "texture": "#0"},
+				"east": {"uv": [0, 2.75, 2, 4], "texture": "#0"},
+				"south": {"uv": [6, 2.75, 8, 4], "texture": "#0"},
+				"west": {"uv": [4, 2.75, 6, 4], "texture": "#0"},
+				"up": {"uv": [0, 0, 0, 2], "texture": "#0"},
+				"down": {"uv": [0, 0, 0, 2], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 16.25, 0],
+			"scale": [1.81, 1.81, 1.81]
+		}
+	}
+}
