@@ -155,6 +155,13 @@ class Ingredients(Category):
             Item(
                 "raw_pasta",
                 base_item=aliases.RAW_PASTA,
+                food={"nutrition": 1, "saturation": 0.4},
+            ),
+        )
+        self.add_item(
+            Item(
+                "pasta",
+                base_item=aliases.PASTA,
                 food={"nutrition": 2, "saturation": 1.4},
             ),
         )
@@ -162,7 +169,7 @@ class Ingredients(Category):
             Item(
                 "wheat_dough",
                 base_item=aliases.WHEAT_DOUGH,
-                food={"nutrition": 2, "saturation": 1.4},
+                food={"nutrition": 2, "saturation": 0.8},
             ),
         )
 
@@ -248,19 +255,28 @@ class Ingredients(Category):
         self.add_recipe(
             ShapelessRecipe(
                 ingredients=["wheat", "wheat", "wheat", "egg"],
-                result=self.bucket.get("wheat_dough"),
+                result=self.bucket.get_ingredient("wheat_dough"),
             ),
         )
         self.add_recipe(
             ShapelessRecipe(
                 ingredients=["wheat", "wheat", "wheat", "water_bucket"],
-                result=self.bucket.get("wheat_dough"),
+                result=self.bucket.get_ingredient("wheat_dough"),
             ),
         )
         self.add_recipe(
             CuttingBoardRecipe(
-                ingredient=self.bucket.get("wheat_dough"),
+                ingredient=self.bucket.get_ingredient("wheat_dough"),
                 result=self.bucket.get("raw_pasta"),
                 result_count=2,
+            )
+        )
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("raw_pasta"),
+                result=self.bucket.get("pasta"),
+                result_count=1,
+                base_cooking_time=100,
+                experience=0.1,
             )
         )

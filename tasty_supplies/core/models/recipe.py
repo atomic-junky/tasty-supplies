@@ -273,8 +273,8 @@ class AutoCookingRecipe:
             SmeltingRecipe(
                 ingredient,
                 result,
-                f"{base_recipe_id}_blasting" if base_recipe_id else "",
-                "blasting",
+                f"{base_recipe_id}_smelting" if base_recipe_id else "",
+                "smelting",
                 experience,
                 int(base_cooking_time * 0.5),
                 category,

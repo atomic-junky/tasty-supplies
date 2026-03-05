@@ -196,7 +196,7 @@ class Item:
             Function(
                 'execute if data storage tasty_supplies:updater temp{hash: "'
                 + self._to_sha1()
-                + " run return 1"
+                + '"} run return 1'
             )
         )
 
