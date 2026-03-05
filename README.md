@@ -123,4 +123,4 @@ cooked_rice = AutoCookingRecipe(
 
 ## Credits
 
-Certain items texture/models come from or are base on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) and [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge).
+Certain item textures/models come from or are based on [Farmer's Delight](https://github.com/vectorwing/FarmersDelight) and [Nether's Delight](https://github.com/Chefs-Delight/NethersDelight_Forge).

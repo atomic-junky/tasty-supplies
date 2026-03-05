@@ -698,19 +698,6 @@ class Meals(Category):
                 ingredients=[
                     "bowl",
                     self.bucket.get_ingredient("pasta"),
-                    self.bucket.get_ingredient("raw_cod_slice"),
-                    "dried_kelp",
-                    "seagrass",
-                ],
-                result=self.bucket.get("seafood_pasta"),
-            )
-        )
-
-        self.add_recipe(
-            ShapelessRecipe(
-                ingredients=[
-                    "bowl",
-                    self.bucket.get_ingredient("pasta"),
                     self.bucket.get_ingredient("raw_salmon_slice"),
                     "dried_kelp",
                     "seagrass",
