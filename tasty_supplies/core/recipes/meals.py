@@ -19,6 +19,9 @@ class Meals(Category):
         """
         super().__init__("Meals", bucket)
 
+    def add_item(self, item):
+        return super().add_item(item)
+
     def create_items(self):
         """Create all meal items and add them to the bucket."""
 
@@ -316,6 +319,46 @@ class Meals(Category):
                         }
                     ]
                 },
+            )
+        )
+
+        self.add_item(
+            Item(
+                "seafood_pasta",
+                food={"nutrition": 10, "saturation": 14.2},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "ink_pasta",
+                food={"nutrition": 8, "saturation": 9.4},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "beetroot_pasta",
+                food={"nutrition": 10, "saturation": 10.6},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "vegetable_noodles",
+                food={"nutrition": 12, "saturation": 12.6},
+                use_remainder={"id": "minecraft:bowl"},
+            )
+        )
+
+        self.add_item(
+            Item(
+                "noodle_soup",
+                food={"nutrition": 12, "saturation": 16.2},
+                use_remainder={"id": "minecraft:bowl"},
             )
         )
 
@@ -647,5 +690,136 @@ class Meals(Category):
                     "baked_potato",
                 ],
                 result=self.bucket.get("stuffed_nautilus_shell"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    self.bucket.get_ingredient("raw_salmon_slice"),
+                    "dried_kelp",
+                    "seagrass",
+                ],
+                result=self.bucket.get("seafood_pasta"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    self.bucket.get_ingredient("raw_cod_slice"),
+                    "ink_sac",
+                    "beetroot",
+                ],
+                result=self.bucket.get("ink_pasta"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    self.bucket.get_ingredient("raw_salmon_slice"),
+                    "ink_sac",
+                    "beetroot",
+                ],
+                result=self.bucket.get("ink_pasta"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "beetroot",
+                    "beetroot",
+                ],
+                result=self.bucket.get("beetroot_pasta"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "beetroot",
+                    "beetroot",
+                ],
+                result=self.bucket.get("beetroot_pasta"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "carrot",
+                    "brown_mushroom",
+                    "kelp",
+                    "potato",
+                ],
+                result=self.bucket.get("vegetable_noodles"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "carrot",
+                    "brown_mushroom",
+                    "kelp",
+                    "carrot",
+                ],
+                result=self.bucket.get("vegetable_noodles"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "carrot",
+                    "brown_mushroom",
+                    "kelp",
+                    "beetroot",
+                ],
+                result=self.bucket.get("vegetable_noodles"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    self.bucket.get_ingredient("cooked_bacon"),
+                    "egg",
+                    "dried_kelp",
+                ],
+                result=self.bucket.get("noodle_soup"),
+            )
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "bowl",
+                    self.bucket.get_ingredient("pasta"),
+                    "cooked_porkchop",
+                    "egg",
+                    "dried_kelp",
+                ],
+                result=self.bucket.get("noodle_soup"),
             )
         )

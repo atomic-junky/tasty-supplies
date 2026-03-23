@@ -66,6 +66,15 @@ class Item:
             self.components.setdefault("provides_banner_patterns", {})
             self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
+        self.components.setdefault(
+            "tooltip_display",
+            {
+                "hidden_components": [
+                    "minecraft:provides_banner_patterns",
+                ]
+            },
+        )
+
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
         self.components.setdefault("item_name", display_name)
         self.components.setdefault("rarity", rarity.value)
@@ -187,7 +196,7 @@ class Item:
             Function(
                 'execute if data storage tasty_supplies:updater temp{hash: "'
                 + self._to_sha1()
-                + " run return 1"
+                + '"} run return 1'
             )
         )
 

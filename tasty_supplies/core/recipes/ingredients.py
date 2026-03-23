@@ -11,6 +11,7 @@ from .. import (
     AutoCookingRecipe,
     CuttingBoardRecipe,
     ShapedRecipe,
+    ShapelessRecipe,
     Category,
     aliases,
 )
@@ -53,8 +54,12 @@ class Ingredients(Category):
                 consumable={"on_consume_effects": [{"type": "clear_all_effects"}]},
             )
         )
-        self.add_item(Item("pie_crust", base_item=aliases.PIE_CRUST))
-        self.add_item(Item("rice", base_item=aliases.RICE))
+        self.add_item(
+            Item("pie_crust", base_item=aliases.PIE_CRUST),
+        )
+        self.add_item(
+            Item("rice", base_item=aliases.RICE),
+        )
         self.add_item(
             Item(
                 "cooked_rice",
@@ -148,30 +153,24 @@ class Ingredients(Category):
         )
         self.add_item(
             Item(
-                "glare_eye",
-                base_item=aliases.GLARE_EYE,
-                food={"nutrition": 1, "saturation": 0.6},
-                consumable={
-                    "on_consume_effects": [
-                        {
-                            "type": "apply_effects",
-                            "effects": [
-                                {
-                                    "id": "minecraft:night_vision",
-                                    "duration": 100,
-                                }
-                            ],
-                        }
-                    ]
-                },
-            )
+                "raw_pasta",
+                base_item=aliases.RAW_PASTA,
+                food={"nutrition": 1, "saturation": 0.4},
+            ),
         )
         self.add_item(
             Item(
-                "great_hunger_teeth",
-                base_item=aliases.GREAT_HUNGER_TEETH,
-                rarity=Rarity.UNCOMMON,
-            )
+                "pasta",
+                base_item=aliases.PASTA,
+                food={"nutrition": 2, "saturation": 1.4},
+            ),
+        )
+        self.add_item(
+            Item(
+                "wheat_dough",
+                base_item=aliases.WHEAT_DOUGH,
+                food={"nutrition": 2, "saturation": 0.8},
+            ),
         )
 
     def create_recipes(self):
@@ -251,5 +250,33 @@ class Ingredients(Category):
                 result=self.bucket.get("cooked_barnacle_thong"),
                 base_cooking_time=200,
                 experience=0.2,
+            )
+        )
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "egg"],
+                result=self.bucket.get_ingredient("wheat_dough"),
+            ),
+        )
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "water_bucket"],
+                result=self.bucket.get_ingredient("wheat_dough"),
+            ),
+        )
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get_ingredient("wheat_dough"),
+                result=self.bucket.get("raw_pasta"),
+                result_count=2,
+            )
+        )
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("raw_pasta"),
+                result=self.bucket.get("pasta"),
+                result_count=1,
+                base_cooking_time=100,
+                experience=0.1,
             )
         )

@@ -18,6 +18,9 @@ class Worksation(Category):
         """
         super().__init__("Workstation", bucket)
 
+    def add_item(self, item):
+        super().add_item(item, category="blocks")
+
     def create_items(self):
         """Create all workstation items and add them to the bucket."""
         self.add_item(
