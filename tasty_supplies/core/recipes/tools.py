@@ -27,6 +27,7 @@ class Tools(Category):
         super().__init__("Tools", bucket)
 
     def add_item(self, item, tool_type: str):
+        item.parent_model = "minecraft:item/handheld"
         if not item.components.get("custom_data"):
             item.components["custom_data"] = {}
         item.components["custom_data"]["ts_cutting_tool"] = tool_type

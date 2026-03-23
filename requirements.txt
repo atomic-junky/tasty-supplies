@@ -1,2 +1,1 @@
-# beet[image] >= 0.111.0
-beet[image] @ git+https://github.com/edayot/beet@update_1_21_9
+beet[image] >= 0.114.1

@@ -29,7 +29,6 @@ class EquipementItem(Item):
             base_item=self._get_base_item(),
             max_stack_size=1,
             equippable={"slot": slot, "dispensable": True, "swappable": True},
-            # item_model=f"equipement/{item_name}",
             **components,
         )
 

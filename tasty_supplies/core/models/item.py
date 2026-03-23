@@ -34,6 +34,7 @@ class Item:
         base_item: str = DEFAULT_BASE_ITEM,
         texture_path: Optional[str] = None,
         model_type: str = "item",
+        parent_model: str = "minecraft:item/generated",
         max_stack_size: int = DEFAULT_MAX_STACK_SIZE,
         rarity: Rarity = Rarity.COMMON,
         **components: Any,
@@ -51,6 +52,7 @@ class Item:
         self.base_item = base_item
         self.texture_path = texture_path or f"tasty_supplies:{model_type}/{item_name}"
         self.model_type = model_type
+        self.parent_model = parent_model
 
         self.components: Dict[str, Any] = {}
         self.components = self.components | components
@@ -165,7 +167,7 @@ class Item:
             Model: The Beet Model object for this item
         """
         json_model = {
-            "parent": "minecraft:item/generated",
+            "parent": self.parent_model,
             "textures": {"layer0": self.texture_path},
         }
         return Model(json_model, f"{self.name}.json")
