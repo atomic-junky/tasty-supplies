@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.14.2] - 2026-03-25
+### :bug: Bug Fixes
+- [`f30d906`](https://github.com/atomic-junky/tasty-supplies/commit/f30d9064815d185c13e804bf0ba745a514de5e1b) - wrong tools model [#30](https://github.com/atomic-junky/tasty-supplies/pull/30) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+### :wrench: Chores
+- [`f3163db`](https://github.com/atomic-junky/tasty-supplies/commit/f3163dbd03cf0a6b2db27f94f646ce01d1f0e548) - Item updater system *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.14.1] - 2025-12-31
 ### :bug: Bug Fixes
 - [`4658e82`](https://github.com/atomic-junky/tasty-supplies/commit/4658e82461115c776ee4b9aaf5334dc628bb445e) - 20 cheese slice can be replaced by bread *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -74,3 +82,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.13.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.12.0...v0.13.0
 [v0.14.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.13.0...v0.14.0
 [v0.14.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.14.0...v0.14.1
+[v0.14.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.14.1...v0.14.2
