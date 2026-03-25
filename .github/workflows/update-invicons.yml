@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install ImageMagick
         run: sudo apt-get update && sudo apt-get install -y imagemagick
@@ -56,19 +56,19 @@ jobs:
           done
 
       - name: Upload icons32 artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: icons32
           path: docs/icons32
 
       - name: Upload icons64 artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: icons64
           path: docs/icons64
           
       - name: Upload icons512 artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: icons512
           path: docs/icons512

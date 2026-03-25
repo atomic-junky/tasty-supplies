@@ -44,21 +44,9 @@ jobs:
             zip -r "../$dir.zip" ./*
             cd ..
           done
-      
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
         with:
-          make_latest: true
-          name: ${{ github.ref_name }}
-          tag_name: ${{ github.ref_name }}
-          body: ${{ steps.changelog.outputs.changes }}
-          files: ./tasty_supplies/build/*.zip
-          fail_on_unmatched_files: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-  
-      - name: Commit CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v7
-        with:
-          branch: main
-          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
-          file_pattern: CHANGELOG.md
+          name: builds
+          path: ./tasty_supplies/build/*.zip
