@@ -255,13 +255,13 @@ class Ingredients(Category):
         self.add_recipe(
             ShapelessRecipe(
                 ingredients=["wheat", "wheat", "wheat", "egg"],
-                result=self.bucket.get_ingredient("wheat_dough"),
+                result=self.bucket.get("wheat_dough"),
             ),
         )
         self.add_recipe(
             ShapelessRecipe(
                 ingredients=["wheat", "wheat", "wheat", "water_bucket"],
-                result=self.bucket.get_ingredient("wheat_dough"),
+                result=self.bucket.get("wheat_dough"),
             ),
         )
         self.add_recipe(

@@ -4,7 +4,9 @@ This module orchestrates the generation of all items, recipes, and
 related datapack resources.
 """
 
-from core import TSContext, Bucket, log
+from beet import Function
+
+from core import TSContext, Bucket, log, recipe_book
 from core.recipes import *
 from core.convert import convert_data
 
@@ -33,14 +35,14 @@ def generate(ctx: TSContext) -> None:
     for category in categories:
         category.create_recipes()
 
+    recipe_book.generate(ctx, bucket)
+
     bucket.register_all(ctx)
     convert_data(ctx, bucket)
 
-    # Generate cutting board drop function
+    # TODO: Why is this here?
     cutting_board = bucket.get("cutting_board")
     if cutting_board:
-        from beet import Function
-
         ctx.data["tasty_supplies:cutting_board/drop"] = Function(
             [f"summon minecraft:item ~ ~.5 ~ {{Item:{cutting_board.to_result()}}}"]
         )

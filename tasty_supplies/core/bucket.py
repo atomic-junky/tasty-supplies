@@ -10,10 +10,9 @@ from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
 
 from beet import Function
 
-from .models.item import Item
-from .models.context import TSContext
+from .models import Item, TSContext, Recipe
 from .logger import log
-from .utils import remove_minecraft_namespace, to_item_repr, to_snbt
+from .utils import to_item_repr
 
 
 @runtime_checkable
@@ -208,6 +207,14 @@ class Bucket:
             Dict[str, Item]: Dictionary of all items mapped by name.
         """
         return self._items.copy()
+
+    def get_all_recipes(self) -> List[Recipe]:
+        """Get all recipes in the bucket.
+
+        Returns:
+            List[Recipe]: List of all recipes
+        """
+        return self._recipes
 
     def get_items_by_category(self, category: str) -> List[str]:
         """Get all item names in a specific category.
