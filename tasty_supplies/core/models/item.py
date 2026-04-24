@@ -1,6 +1,6 @@
 import hashlib
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from enum import Enum
 
 from beet import Function, Model, ItemModel
@@ -55,6 +55,10 @@ class Item:
         self.parent_model = parent_model
 
         self.components: Dict[str, Any] = {}
+        self.disabled_components: List[str] = [
+            "provides_banner_patterns",
+            "provides_trim_material",
+        ]
         self.components = self.components | components
 
         if "food" in self.components:
@@ -63,10 +67,6 @@ class Item:
 
         self.components.setdefault("custom_data", {})
         self.components["custom_data"]["ts_name"] = self.name
-
-        if "banner_pattern" in self.base_item:
-            self.components.setdefault("provides_banner_patterns", {})
-            self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
 
         self.components.setdefault(
             "tooltip_display",
@@ -248,6 +248,7 @@ class Item:
             "count": count,
             "components": self.custom_model_data | self.components,
         }
+
         nbt = json.loads(json.dumps(nbt, sort_keys=True))
         return nbt
 

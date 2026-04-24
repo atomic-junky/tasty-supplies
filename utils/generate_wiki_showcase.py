@@ -15,13 +15,35 @@ EXCLUDED_TEXTURES = ["Fisherman", "Farmer", "Butcher"]
 UNUSED_TEXTURES = ["Ham"]
 
 FAMILIES = {
-    "Sweets": ["Pie", "Pie Slice", "Cookie", "Cake", "Croissant", "Honey", "Ice Cream", "Popsicle"],
+    "Sweets": [
+        "Pie",
+        "Pie Slice",
+        "Cookie",
+        "Cake",
+        "Croissant",
+        "Honey",
+        "Ice Cream",
+        "Popsicle",
+    ],
     "Drinks": ["Cider", "Juice", "Custard", "Cocoa", "Horn", "Gelatin"],
-    "Meals": ["Sandwich", "Burger", "Wrap", "Stew", "Skewer", "Salad", "Potato", "Roll", "Rice", "Cheese", "Mutton"],
+    "Meals": [
+        "Sandwich",
+        "Burger",
+        "Wrap",
+        "Stew",
+        "Skewer",
+        "Salad",
+        "Potato",
+        "Roll",
+        "Rice",
+        "Cheese",
+        "Mutton",
+    ],
     "Misc": ["Ice Cream Cone", "Pie Crust"],  # fallback
     "Tools": ["Cleaver", "Knife"],
-    "Equipements": ["Hat"]
+    "Equipements": ["Hat"],
 }
+
 
 def detect_family(name: str):
     """Returns the family corresponding to an item."""
@@ -32,6 +54,7 @@ def detect_family(name: str):
                 return family
     return "Misc"
 
+
 def sort_within_family(items, model):
     """Sorts items in a family by semantic similarity."""
     if len(items) <= 1:
@@ -41,12 +64,17 @@ def sort_within_family(items, model):
     order = np.argsort(-np.mean(sims, axis=1))
     return [items[i] for i in order]
 
+
 def main():
     path = abspath(ITEM_TEXTURES_LOCATION)
     all_files = [f for f in listdir(path) if isfile(join(path, f))]
-    all_names = [f.removesuffix('.png').replace("_", " ").title() for f in all_files]
-    
-    all_names = [name for name in all_names if name not in EXCLUDED_TEXTURES and name not in UNUSED_TEXTURES]
+    all_names = [f.removesuffix(".png").replace("_", " ").title() for f in all_files]
+
+    all_names = [
+        name
+        for name in all_names
+        if name not in EXCLUDED_TEXTURES and name not in UNUSED_TEXTURES
+    ]
 
     print(f"Found {len(all_names)} items. Generating showcase...")
 
@@ -63,8 +91,9 @@ def main():
             continue
         sorted_items = sort_within_family(family_groups[fam], model)
         showcase_template += BASE_TEMPLATE.format(";".join(sorted_items))
-        
+
     print(showcase_template)
+
 
 if __name__ == "__main__":
     main()

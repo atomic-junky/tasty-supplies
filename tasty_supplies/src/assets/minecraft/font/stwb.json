@@ -1,0 +1,9 @@
+{
+    "providers": [
+        {
+            "type": "ttf",
+            "file": "minecraft:stwb.ttf",
+            "size": 9
+        }
+    ]
+}

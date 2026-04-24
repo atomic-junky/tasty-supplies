@@ -181,24 +181,22 @@ class Bucket:
         """
         return self._items.get(item_name)
 
-    def get_ingredient(self, item_name: str) -> Optional[str]:
-        """Retrieve the base_item (Minecraft item ID) of an item by name.
+    def get_ingredient(self, item_name: str) -> Optional["Item"]:
+        """Retrieve the Item object by name.
 
-        This is useful for recipes that need the base Minecraft item
-        rather than the full Item object. Returns the base_item which can
+        This returns the full Item object which can
         be used directly in recipe ingredients.
 
         Args:
             item_name (str): The name of the item to retrieve.
 
         Returns:
-            str or None: The base_item ID if found, None otherwise.
+            Item or None: The Item if found, None otherwise.
 
         Example:
-            >>> bucket.get_ingredient("butter")  # Returns "poisonous_potato"
+            >>> bucket.get_ingredient("butter")
         """
-        item = self._items.get(item_name)
-        return item.base_item if item else None
+        return self.get(item_name)
 
     def get_all(self) -> Dict[str, Item]:
         """Get all items in the bucket.
