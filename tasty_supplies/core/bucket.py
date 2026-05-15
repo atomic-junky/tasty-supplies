@@ -10,10 +10,9 @@ from typing import Any, Dict, List, Optional, Protocol, Union, runtime_checkable
 
 from beet import Function
 
-from .models.item import Item
-from .models.context import TSContext
+from .models import Item, TSContext, Recipe
 from .logger import log
-from .utils import remove_minecraft_namespace, to_item_repr, to_snbt
+from .utils import to_item_repr
 
 
 @runtime_checkable
@@ -119,15 +118,16 @@ class Bucket:
             self._recipe_id_counter[base_name] += 1
             return f"{base_name}_{self._recipe_id_counter[base_name]}"
 
-    def add_recipe(self, recipe: RecipeType, category: Optional[str] = None) -> None:
+    def add_recipe(self, recipe: RecipeType, category: str = None) -> None:
         """Add a recipe to the bucket.
 
         Automatically generates a recipe_id if the recipe doesn't have one or if it's empty.
 
         Args:
             recipe: The recipe object to add (can be a single recipe or AutoCookingRecipe).
-            category: Category name to organize recipes (optional).
+            category: Category name to organize recipes.
         """
+
         # Handle AutoCookingRecipe which contains multiple recipes
         if hasattr(recipe, "recipes") and isinstance(recipe.recipes, list):
             # This is an AutoCookingRecipe
@@ -143,6 +143,7 @@ class Bucket:
             # Now assign IDs to each sub-recipe with appropriate suffixes
             suffixes: List[str] = ["blasting", "smoking", "campfire"]
             for i, sub_recipe in enumerate(recipe.recipes):
+                sub_recipe.ts_category = category
                 # Generate recipe_id if needed
                 if not hasattr(sub_recipe, "recipe_id") or not sub_recipe.recipe_id:
                     sub_recipe.recipe_id = f"{base_id}_{suffixes[i]}"
@@ -151,6 +152,8 @@ class Bucket:
                 if category:
                     if category not in self._recipe_categories:
                         self._recipe_categories[category] = []
+
+                    sub_recipe.ts_category = category
                     self._recipe_categories[category].append(sub_recipe.recipe_id)
                 log.debug(
                     f"Added recipe '{sub_recipe.recipe_id}' to bucket (from AutoCookingRecipe)."
@@ -167,6 +170,8 @@ class Bucket:
             if category:
                 if category not in self._recipe_categories:
                     self._recipe_categories[category] = []
+
+                recipe.ts_category = category
                 self._recipe_categories[category].append(recipe.recipe_id)
 
             log.debug(f"Added recipe '{recipe.recipe_id}' to bucket.")
@@ -182,24 +187,22 @@ class Bucket:
         """
         return self._items.get(item_name)
 
-    def get_ingredient(self, item_name: str) -> Optional[str]:
-        """Retrieve the base_item (Minecraft item ID) of an item by name.
+    def get_ingredient(self, item_name: str) -> Optional["Item"]:
+        """Retrieve the Item object by name.
 
-        This is useful for recipes that need the base Minecraft item
-        rather than the full Item object. Returns the base_item which can
+        This returns the full Item object which can
         be used directly in recipe ingredients.
 
         Args:
             item_name (str): The name of the item to retrieve.
 
         Returns:
-            str or None: The base_item ID if found, None otherwise.
+            Item or None: The Item if found, None otherwise.
 
         Example:
-            >>> bucket.get_ingredient("butter")  # Returns "poisonous_potato"
+            >>> bucket.get_ingredient("butter")
         """
-        item = self._items.get(item_name)
-        return item.base_item if item else None
+        return self.get(item_name)
 
     def get_all(self) -> Dict[str, Item]:
         """Get all items in the bucket.
@@ -208,6 +211,14 @@ class Bucket:
             Dict[str, Item]: Dictionary of all items mapped by name.
         """
         return self._items.copy()
+
+    def get_all_recipes(self) -> List[Recipe]:
+        """Get all recipes in the bucket.
+
+        Returns:
+            List[Recipe]: List of all recipes
+        """
+        return self._recipes
 
     def get_items_by_category(self, category: str) -> List[str]:
         """Get all item names in a specific category.

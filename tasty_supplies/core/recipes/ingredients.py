@@ -177,6 +177,62 @@ class Ingredients(Category):
         """Create all ingredient recipes and add them to the bucket."""
 
         self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["milk_bucket"],
+                result=self.bucket.get("butter"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
+                pattern=["WBW", " W "],
+                key={"W": "wheat", "B": self.bucket.get_ingredient("butter")},
+                result=self.bucket.get("pie_crust"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
+                key={"W": "wheat"},
+                pattern=["W", "W", "W"],
+                result=self.bucket.get("ice_cream_cone"),
+                result_count=3,
+            ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "egg"],
+                result=self.bucket.get("wheat_dough"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["wheat", "wheat", "wheat", "water_bucket"],
+                result=self.bucket.get("wheat_dough"),
+            ),
+        )
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get_ingredient("wheat_dough"),
+                result=self.bucket.get("raw_pasta"),
+                result_count=2,
+            )
+        )
+
+        self.add_recipe(
+            AutoCookingRecipe(
+                ingredient=self.bucket.get_ingredient("raw_pasta"),
+                result=self.bucket.get("pasta"),
+                result_count=1,
+                base_cooking_time=100,
+                experience=0.1,
+            )
+        )
+
+        self.add_recipe(
             CuttingBoardRecipe(
                 ingredient="porkchop",
                 result=self.bucket.get("raw_bacon"),
@@ -191,6 +247,22 @@ class Ingredients(Category):
                 base_cooking_time=150,
                 experience=0.2,
             )
+        )
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient="cod",
+                result=self.bucket.get("raw_cod_slice"),
+                result_count=2,
+            ),
+        )
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient="salmon",
+                result=self.bucket.get("raw_salmon_slice"),
+                result_count=2,
+            ),
         )
 
         self.add_recipe(
@@ -211,31 +283,6 @@ class Ingredients(Category):
         )
 
         self.add_recipe(
-            CuttingBoardRecipe(
-                ingredient="cod",
-                result=self.bucket.get("raw_cod_slice"),
-                result_count=2,
-            ),
-        )
-
-        self.add_recipe(
-            CuttingBoardRecipe(
-                ingredient="salmon",
-                result=self.bucket.get("raw_salmon_slice"),
-                result_count=2,
-            ),
-        )
-
-        self.add_recipe(
-            ShapedRecipe(
-                key={"W": "wheat"},
-                pattern=["W", "W", "W"],
-                result=self.bucket.get("ice_cream_cone"),
-                result_count=3,
-            ),
-        )
-
-        self.add_recipe(
             AutoCookingRecipe(
                 ingredient=self.bucket.get_ingredient("tentacle"),
                 result=self.bucket.get("cooked_tentacle"),
@@ -250,33 +297,5 @@ class Ingredients(Category):
                 result=self.bucket.get("cooked_barnacle_thong"),
                 base_cooking_time=200,
                 experience=0.2,
-            )
-        )
-        self.add_recipe(
-            ShapelessRecipe(
-                ingredients=["wheat", "wheat", "wheat", "egg"],
-                result=self.bucket.get_ingredient("wheat_dough"),
-            ),
-        )
-        self.add_recipe(
-            ShapelessRecipe(
-                ingredients=["wheat", "wheat", "wheat", "water_bucket"],
-                result=self.bucket.get_ingredient("wheat_dough"),
-            ),
-        )
-        self.add_recipe(
-            CuttingBoardRecipe(
-                ingredient=self.bucket.get_ingredient("wheat_dough"),
-                result=self.bucket.get("raw_pasta"),
-                result_count=2,
-            )
-        )
-        self.add_recipe(
-            AutoCookingRecipe(
-                ingredient=self.bucket.get_ingredient("raw_pasta"),
-                result=self.bucket.get("pasta"),
-                result_count=1,
-                base_cooking_time=100,
-                experience=0.1,
             )
         )

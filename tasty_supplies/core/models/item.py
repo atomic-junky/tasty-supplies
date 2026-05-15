@@ -1,6 +1,6 @@
 import hashlib
 import json
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from enum import Enum
 
 from beet import Function, Model, ItemModel
@@ -55,6 +55,10 @@ class Item:
         self.parent_model = parent_model
 
         self.components: Dict[str, Any] = {}
+        self.disabled_components: List[str] = [
+            "provides_banner_patterns",
+            "provides_trim_material",
+        ]
         self.components = self.components | components
 
         if "food" in self.components:
@@ -63,19 +67,6 @@ class Item:
 
         self.components.setdefault("custom_data", {})
         self.components["custom_data"]["ts_name"] = self.name
-
-        if "banner_pattern" in self.base_item:
-            self.components.setdefault("provides_banner_patterns", {})
-            self.components["provides_banner_patterns"] = "#minecraft:pattern_item/none"
-
-        self.components.setdefault(
-            "tooltip_display",
-            {
-                "hidden_components": [
-                    "minecraft:provides_banner_patterns",
-                ]
-            },
-        )
 
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
         self.components.setdefault("item_name", display_name)
@@ -210,32 +201,17 @@ class Item:
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + " run item replace $(target) $(path) with "
+                    + '"} run item replace $(target) $(path) with '
                     + to_item_repr(self)
                     + " $(count)"
                 ),
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + " run return 0"
+                    + '"} run return 0'
                 ),
             ),
         )
-
-    def to_ingredient(self) -> Dict[str, Any]:
-        """Convert this item to a recipe ingredient format.
-
-        Returns:
-            dict: The ingredient data for use in recipes
-        """
-        return {
-            "id": f"minecraft:{self.base_item}",
-            "components": {
-                f"minecraft:custom_model_data": {
-                    "strings": [f"tasty_supplies/{self.name}"]
-                }
-            },
-        }
 
     def to_result(self, count: int = 1) -> Dict[str, Any]:
         result = self.nbt
@@ -248,6 +224,7 @@ class Item:
             "count": count,
             "components": self.custom_model_data | self.components,
         }
+
         nbt = json.loads(json.dumps(nbt, sort_keys=True))
         return nbt
 

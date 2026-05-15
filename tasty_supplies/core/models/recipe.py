@@ -28,11 +28,12 @@ def _process_ingredient(ingredient: IngredientType) -> Union[str, Dict[str, Any]
         String path or dict ingredient data
     """
     if isinstance(ingredient, Item):
-        return ingredient.to_ingredient()
-    elif isinstance(ingredient, dict):
-        return ingredient
-    else:
+        return to_absolute_path(ingredient.base_item)
+
+    if isinstance(ingredient, str):
         return to_absolute_path(str(ingredient))
+
+    return ingredient
 
 
 def _process_result(result: ResultType, count: int = 1) -> Dict[str, Any]:
@@ -79,6 +80,7 @@ class Recipe:
         self.recipe_id: str = recipe_id
         self.result: ResultType = result
         self.category: str = category
+        self.ts_category: str
         self.result_count: int = result_count
 
     def register(self, ctx: TSContext) -> None:
@@ -352,7 +354,7 @@ class SmithingTransformRecipe(Recipe):
         }
 
 
-class CuttingBoardRecipe:
+class CuttingBoardRecipe(Recipe):
     """A custom cutting board recipe for the mod.
 
     This creates function files rather than standard recipe JSON files.
@@ -373,10 +375,8 @@ class CuttingBoardRecipe:
             recipe_id: Unique identifier for this recipe (auto-generated if empty)
             result_count: Number of items to produce
         """
-        self.recipe_id: str = recipe_id
+        super().__init__(recipe_id, result, "", result_count)
         self.ingredient: IngredientType = ingredient
-        self.result: ResultType = result
-        self.result_count: int = result_count
 
     def register(self, ctx: TSContext) -> None:
         """Register this cutting board recipe.
