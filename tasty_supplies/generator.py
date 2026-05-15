@@ -4,10 +4,13 @@ This module orchestrates the generation of all items, recipes, and
 related datapack resources.
 """
 
+from typing import List
+
 from beet import Function
 
 from core import TSContext, Bucket, log, recipe_book
 from core.recipes import *
+from core.models import Category
 from core.convert import convert_data
 
 
@@ -19,13 +22,13 @@ def generate(ctx: TSContext) -> None:
     """
     bucket = Bucket()
 
-    categories = [
-        Beverage(bucket),
-        Equipements(bucket),
-        Ingredients(bucket),
-        Meals(bucket),
+    categories: List[Category] = [
         Sweets(bucket),
+        Beverage(bucket),
+        Meals(bucket),
+        Ingredients(bucket),
         Tools(bucket),
+        Equipements(bucket),
         Worksation(bucket),
     ]
 

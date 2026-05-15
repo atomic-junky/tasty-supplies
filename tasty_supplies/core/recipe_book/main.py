@@ -2,7 +2,7 @@ import os
 from typing import List
 from beet import Font, Texture
 
-from ..models import TSContext, Item, Recipe, ShapelessRecipe
+from ..models import TSContext, Item, Recipe, ShapelessRecipe, Rarity
 from ..bucket import Bucket
 from .font import get_providers, item_references
 from .pages import generate_pages
@@ -24,19 +24,21 @@ def generate(ctx: TSContext, bucket: Bucket) -> None:
     font_data = get_providers(ctx, recipe_references)
     ctx.assets["tasty_supplies"].fonts["recipe_book"] = Font(font_data)
 
-    pages = generate_pages(recipe_references, item_references)
+    pages = generate_pages(bucket, recipe_references, item_references)
 
     book_item = Item(
-        "tasty_cookbook",
+        "cookbook",
         base_item="written_book",
         max_stack_size=1,
         written_book_content={
-            "title": "Tasty Cookbook",
+            "title": "Tasty Supplies Cookbook",
             "author": "A Forgotten Chef",
             "resolved": False,
             "generation": 3,
             "pages": pages,
         },
+        rarity=Rarity.EPIC,
+        enchantment_glint_override=False,
     )
 
     bucket.add_item(book_item)
@@ -46,6 +48,6 @@ def generate(ctx: TSContext, bucket: Bucket) -> None:
                 "minecraft:book",
                 "minecraft:wheat",
             ],
-            result=bucket.get("tasty_cookbook"),
+            result=bucket.get("cookbook"),
         )
     )

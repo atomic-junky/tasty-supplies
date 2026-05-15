@@ -118,15 +118,16 @@ class Bucket:
             self._recipe_id_counter[base_name] += 1
             return f"{base_name}_{self._recipe_id_counter[base_name]}"
 
-    def add_recipe(self, recipe: RecipeType, category: Optional[str] = None) -> None:
+    def add_recipe(self, recipe: RecipeType, category: str = None) -> None:
         """Add a recipe to the bucket.
 
         Automatically generates a recipe_id if the recipe doesn't have one or if it's empty.
 
         Args:
             recipe: The recipe object to add (can be a single recipe or AutoCookingRecipe).
-            category: Category name to organize recipes (optional).
+            category: Category name to organize recipes.
         """
+
         # Handle AutoCookingRecipe which contains multiple recipes
         if hasattr(recipe, "recipes") and isinstance(recipe.recipes, list):
             # This is an AutoCookingRecipe
@@ -142,6 +143,7 @@ class Bucket:
             # Now assign IDs to each sub-recipe with appropriate suffixes
             suffixes: List[str] = ["blasting", "smoking", "campfire"]
             for i, sub_recipe in enumerate(recipe.recipes):
+                sub_recipe.ts_category = category
                 # Generate recipe_id if needed
                 if not hasattr(sub_recipe, "recipe_id") or not sub_recipe.recipe_id:
                     sub_recipe.recipe_id = f"{base_id}_{suffixes[i]}"
@@ -150,6 +152,8 @@ class Bucket:
                 if category:
                     if category not in self._recipe_categories:
                         self._recipe_categories[category] = []
+
+                    sub_recipe.ts_category = category
                     self._recipe_categories[category].append(sub_recipe.recipe_id)
                 log.debug(
                     f"Added recipe '{sub_recipe.recipe_id}' to bucket (from AutoCookingRecipe)."
@@ -166,6 +170,8 @@ class Bucket:
             if category:
                 if category not in self._recipe_categories:
                     self._recipe_categories[category] = []
+
+                recipe.ts_category = category
                 self._recipe_categories[category].append(recipe.recipe_id)
 
             log.debug(f"Added recipe '{recipe.recipe_id}' to bucket.")

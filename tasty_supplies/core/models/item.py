@@ -68,15 +68,6 @@ class Item:
         self.components.setdefault("custom_data", {})
         self.components["custom_data"]["ts_name"] = self.name
 
-        self.components.setdefault(
-            "tooltip_display",
-            {
-                "hidden_components": [
-                    "minecraft:provides_banner_patterns",
-                ]
-            },
-        )
-
         display_name = " ".join(word.capitalize() for word in item_name.split("_"))
         self.components.setdefault("item_name", display_name)
         self.components.setdefault("rarity", rarity.value)
@@ -210,32 +201,17 @@ class Item:
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + " run item replace $(target) $(path) with "
+                    + '"} run item replace $(target) $(path) with '
                     + to_item_repr(self)
                     + " $(count)"
                 ),
                 (
                     '$execute if data storage tasty_supplies:updater temp{item_name: "'
                     + self.name
-                    + " run return 0"
+                    + '"} run return 0'
                 ),
             ),
         )
-
-    def to_ingredient(self) -> Dict[str, Any]:
-        """Convert this item to a recipe ingredient format.
-
-        Returns:
-            dict: The ingredient data for use in recipes
-        """
-        return {
-            "id": f"minecraft:{self.base_item}",
-            "components": {
-                f"minecraft:custom_model_data": {
-                    "strings": [f"tasty_supplies/{self.name}"]
-                }
-            },
-        }
 
     def to_result(self, count: int = 1) -> Dict[str, Any]:
         result = self.nbt

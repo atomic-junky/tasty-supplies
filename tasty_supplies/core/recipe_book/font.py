@@ -94,6 +94,8 @@ def get_providers(
                 ing_items.extend(recipe.ingredients)
             elif isinstance(recipe.ingredients, dict):
                 ing_items.extend(recipe.ingredients.values())
+        if hasattr(recipe, "key") and recipe.key:
+            ing_items.extend(recipe.key.values())
 
         for ing in ing_items:
             # ing can be a string (vanilla), an Item (custom) or a dict.

@@ -278,21 +278,6 @@ class Sweets(Category):
         """Create all sweet recipes and add them to the bucket."""
 
         self.add_recipe(
-            ShapelessRecipe(
-                ingredients=["milk_bucket"],
-                result=self.bucket.get("butter"),
-            ),
-        )
-
-        self.add_recipe(
-            ShapedRecipe(
-                pattern=["WBW", " W "],
-                key={"W": "wheat", "B": self.bucket.get_ingredient("butter")},
-                result=self.bucket.get("pie_crust"),
-            ),
-        )
-
-        self.add_recipe(
             ShapedRecipe(
                 pattern=["WWW", "AAA", "SBS"],
                 key={
@@ -309,27 +294,6 @@ class Sweets(Category):
             CuttingBoardRecipe(
                 ingredient=self.bucket.get("apple_pie"),
                 result=self.bucket.get("apple_pie_slice"),
-                result_count=4,
-            ),
-        )
-
-        self.add_recipe(
-            ShapedRecipe(
-                pattern=["CCC", "MMM", "HBH"],
-                key={
-                    "C": "cherry_leaves",
-                    "M": "milk_bucket",
-                    "H": "honeycomb",
-                    "B": self.bucket.get_ingredient("pie_crust"),
-                },
-                result=self.bucket.get("cherry_blossom_pie"),
-            ),
-        )
-
-        self.add_recipe(
-            CuttingBoardRecipe(
-                ingredient=self.bucket.get("cherry_blossom_pie"),
-                result=self.bucket.get("cherry_blossom_pie_slice"),
                 result_count=4,
             ),
         )
@@ -357,6 +321,27 @@ class Sweets(Category):
 
         self.add_recipe(
             ShapedRecipe(
+                pattern=["CCC", "MMM", "HBH"],
+                key={
+                    "C": "cherry_leaves",
+                    "M": "milk_bucket",
+                    "H": "honeycomb",
+                    "B": self.bucket.get_ingredient("pie_crust"),
+                },
+                result=self.bucket.get("cherry_blossom_pie"),
+            ),
+        )
+
+        self.add_recipe(
+            CuttingBoardRecipe(
+                ingredient=self.bucket.get("cherry_blossom_pie"),
+                result=self.bucket.get("cherry_blossom_pie_slice"),
+                result_count=4,
+            ),
+        )
+
+        self.add_recipe(
+            ShapedRecipe(
                 pattern=["CCC", "SSS", "MPM"],
                 key={
                     "C": "chorus_fruit",
@@ -373,32 +358,6 @@ class Sweets(Category):
                 ingredient=self.bucket.get("chorus_pie"),
                 result=self.bucket.get("chorus_pie_slice"),
                 result_count=4,
-            ),
-        )
-
-        self.add_recipe(
-            ShapelessRecipe(
-                ingredients=[
-                    "snowball",
-                    "sugar",
-                    self.bucket.get_ingredient("ice_cream_cone"),
-                ],
-                result=self.bucket.get("ice_cream"),
-            ),
-        )
-
-        self.add_recipe(
-            ShapelessRecipe(
-                ingredients=[
-                    "melon_slice",
-                    "melon_slice",
-                    "melon_slice",
-                    "melon_slice",
-                    "ice",
-                    "ice",
-                    "stick",
-                ],
-                result=self.bucket.get("melon_popsicle"),
             ),
         )
 
@@ -444,6 +403,13 @@ class Sweets(Category):
         )
 
         self.add_recipe(
+            ShapelessRecipe(
+                ingredients=["apple", "honey_bottle"],
+                result=self.bucket.get("honeyed_apple"),
+            ),
+        )
+
+        self.add_recipe(
             ShapedRecipe(
                 pattern=["whw"],
                 key={"h": "honey_bottle", "w": "wheat"},
@@ -473,13 +439,6 @@ class Sweets(Category):
 
         self.add_recipe(
             ShapelessRecipe(
-                ingredients=["apple", "honey_bottle"],
-                result=self.bucket.get("honeyed_apple"),
-            ),
-        )
-
-        self.add_recipe(
-            ShapelessRecipe(
                 ingredients=[
                     "wheat",
                     "sugar",
@@ -487,5 +446,31 @@ class Sweets(Category):
                     self.bucket.get_ingredient("butter"),
                 ],
                 result=self.bucket.get("sweet_roll"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "snowball",
+                    "sugar",
+                    self.bucket.get_ingredient("ice_cream_cone"),
+                ],
+                result=self.bucket.get("ice_cream"),
+            ),
+        )
+
+        self.add_recipe(
+            ShapelessRecipe(
+                ingredients=[
+                    "melon_slice",
+                    "melon_slice",
+                    "melon_slice",
+                    "melon_slice",
+                    "ice",
+                    "ice",
+                    "stick",
+                ],
+                result=self.bucket.get("melon_popsicle"),
             ),
         )

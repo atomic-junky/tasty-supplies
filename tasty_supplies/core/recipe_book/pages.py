@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass
-from typing import Union
+from typing import Dict, List, Union
 
 from ..models import (
     Item,
@@ -8,6 +8,7 @@ from ..models import (
     ShapelessRecipe,
     CuttingBoardRecipe,
 )
+from ..bucket import Bucket
 from PIL import ImageFont
 
 PAGE_WIDTH = 114
@@ -21,6 +22,9 @@ FONT_REGULAR = ImageFont.truetype(
     os.path.join(os.path.dirname(__file__), "../../src/assets/minecraft/font/stwb.ttf"),
     size=9,
 )
+
+SUM_ITEMS_PER_LINE = 7
+SUM_MAX_ITEM_PER_PAGES = 35
 
 
 @dataclass(frozen=True)
@@ -336,19 +340,159 @@ def _generate_page(
     return {"raw": {"text": "", "extra": text_components}}
 
 
+def _get_recipe_signature(recipe: object) -> str:
+    if hasattr(recipe, "ingredients") and recipe.ingredients:
+        return str([getattr(i, "name", str(i)) for i in recipe.ingredients])
+    if hasattr(recipe, "pattern") and hasattr(recipe, "key"):
+        return str(recipe.pattern) + str(
+            {k: getattr(v, "name", str(v)) for k, v in recipe.key.items()}
+        )
+    if hasattr(recipe, "ingredient"):
+        return str(getattr(recipe.ingredient, "name", str(recipe.ingredient)))
+    return str(recipe)
+
+
+def _deduplicate_recipes(recipes: list) -> list:
+    seen = set()
+    unique = []
+    for r in recipes:
+        sig = _get_recipe_signature(r)
+        if sig not in seen:
+            seen.add(sig)
+            unique.append(r)
+    return unique
+
+
+def _get_unique_recipes_by_category(bucket: Bucket) -> Dict[str, List[str]]:
+    categories: Dict[str, List[str]] = {}
+    for recipe in bucket.get_all_recipes():
+        category: str = recipe.ts_category
+        if category not in categories:
+            categories[category] = []
+
+        result: str = recipe.result.name
+        if result not in categories[category]:
+            categories[category].append(result)
+    return categories
+
+
+def _generate_cover_page() -> dict:
+    extra = []
+    extra.append(
+        {
+            "text": "[WIP]\\n",
+            "italic": True,
+            "bold": True,
+            "font": "minecraft:stwr",
+            "color": "red",
+        }
+    )
+    for line in wrap_and_center("Tasty Supplies Cookbook", FONT_BOLD):
+        extra.append({"text": line + "\\n", "font": "minecraft:stwb", "color": "gold"})
+    extra.append({"text": "\\n\\n\\n"})  # Margin
+    for line in wrap_and_center("Recipes & Guides"):
+        extra.append(
+            {"text": line + "\\n", "font": "minecraft:stwr", "color": "dark_gray"}
+        )
+    return {"raw": {"text": "", "extra": extra}}
+
+
+def _generate_sum_pages(
+    bucket: Bucket,
+    items: list[Item],
+    item_references: dict[str, str],
+    item_page_map: dict[str, int],
+) -> list[dict]:
+    pages = []
+    categories: list[str] = []
+    categories_item_count: list[int] = []
+
+    for category, recipes in _get_unique_recipes_by_category(bucket).items():
+        for i in range((len(recipes) - 1) // SUM_MAX_ITEM_PER_PAGES + 1):
+            categories.append(category)
+            categories_item_count.append(
+                min(SUM_MAX_ITEM_PER_PAGES, len(recipes) - i * SUM_MAX_ITEM_PER_PAGES)
+            )
+
+    global_item_index = 0
+    for i in range(len(categories)):
+        category: str = categories[i]
+        page_items = items[
+            global_item_index : global_item_index + categories_item_count[i]
+        ]
+        extra = []
+
+        for line in wrap_and_center(category.title(), FONT_BOLD):
+            extra.append({"text": line, "font": "minecraft:stwb"})
+        extra.append({"text": "\\n\\n\\n\\n"})  # Margin
+
+        y = 0
+        for item in page_items:
+            y += 1
+            target_page = item_page_map.get(item.name, 1)
+            icon_char = item_references.get(item.name, "")
+
+            click_ev = {"action": "change_page", "page": target_page}
+            hover_ev = {
+                "action": "show_text",
+                "value": f"Go to page {target_page}",
+            }
+
+            extra.append(
+                {
+                    "text": icon_char,
+                    "font": "tasty_supplies:recipe_book",
+                    "color": "white",
+                    "click_event": click_ev,
+                    "hover_event": hover_ev,
+                }
+            )
+
+            if y % SUM_ITEMS_PER_LINE == 0:
+                extra.append({"text": "\\n\\n"})
+
+        pages.append({"raw": {"text": "", "extra": extra}})
+        global_item_index += categories_item_count[i]
+
+    return pages
+
+
 def generate_pages(
+    bucket: Bucket,
     recipe_references: dict[Item, list],
     item_references: dict[str, str],
 ) -> list[dict]:
+    filtered_refs = {
+        item: _deduplicate_recipes(recipes)
+        for item, recipes in recipe_references.items()
+        if recipes
+    }
+
+    items_list = list(filtered_refs.keys())
+    sum_page_count = 0
+    for _, recipes in _get_unique_recipes_by_category(bucket).items():
+        for i in range((len(recipes) - 1) // SUM_MAX_ITEM_PER_PAGES + 1):
+            sum_page_count += 1
+
+    current_page = 1 + sum_page_count + 1
+
     item_page_map: dict[str, int] = {}
-    current_page = 1
-    for recipes in recipe_references.values():
-        if recipes and recipes[0].result and hasattr(recipes[0].result, "name"):
-            item_page_map[recipes[0].result.name] = current_page
+    for item, recipes in filtered_refs.items():
+        item_page_map[item.name] = current_page
         current_page += len(recipes)
 
-    return [
-        _generate_page(recipe, item_references, i + 1, len(recipes), item_page_map)
-        for recipes in recipe_references.values()
-        for i, recipe in enumerate(recipes)
-    ]
+    pages = []
+    pages.append(_generate_cover_page())
+    pages.extend(
+        _generate_sum_pages(bucket, items_list, item_references, item_page_map)
+    )
+
+    for item, recipes in filtered_refs.items():
+        for i, recipe in enumerate(recipes):
+            pages.append(
+                _generate_page(
+                    recipe, item_references, i + 1, len(recipes), item_page_map
+                )
+            )
+
+    return pages
