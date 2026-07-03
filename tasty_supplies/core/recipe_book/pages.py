@@ -310,9 +310,9 @@ def _generate_page(
 
     title_lines = wrap_and_center(display_title, FONT_BOLD)
     for line in title_lines:
-        text_components.append({"text": line + "\\n", "font": "minecraft:stwb"})
+        text_components.append({"text": line + "\n", "font": "minecraft:stwb"})
     for _ in range(TITLE_MAX_LINES - len(title_lines)):
-        text_components.append({"text": "\\n"})
+        text_components.append({"text": "\n"})
 
     grid, config = _build_grid_matrix(recipe)
     grid_char = item_references.get(config.grid_key, "")
@@ -321,7 +321,7 @@ def _generate_page(
     text_components.append(
         {"text": grid_char, "font": "tasty_supplies:recipe_book", "color": "white"}
     )
-    text_components.append({"text": "\\n\\n\\n"})  # Margin top
+    text_components.append({"text": "\n\n\n"})  # Margin top
 
     for r in range(config.num_rows):
         row_comps = _build_grid_row(
@@ -335,7 +335,7 @@ def _generate_page(
             grid_char,
         )
         text_components.extend(row_comps)
-        text_components.append({"text": "\\n\\n"})
+        text_components.append({"text": "\n\n"})
 
     return {"raw": {"text": "", "extra": text_components}}
 
@@ -380,7 +380,7 @@ def _generate_cover_page() -> dict:
     extra = []
     extra.append(
         {
-            "text": "[WIP]\\n",
+            "text": "[WIP]\n",
             "italic": True,
             "bold": True,
             "font": "minecraft:stwr",
@@ -388,11 +388,11 @@ def _generate_cover_page() -> dict:
         }
     )
     for line in wrap_and_center("Tasty Supplies Cookbook", FONT_BOLD):
-        extra.append({"text": line + "\\n", "font": "minecraft:stwb", "color": "gold"})
-    extra.append({"text": "\\n\\n\\n"})  # Margin
+        extra.append({"text": line + "\n", "font": "minecraft:stwb", "color": "gold"})
+    extra.append({"text": "\n\n\n"})  # Margin
     for line in wrap_and_center("Recipes & Guides"):
         extra.append(
-            {"text": line + "\\n", "font": "minecraft:stwr", "color": "dark_gray"}
+            {"text": line + "\n", "font": "minecraft:stwr", "color": "dark_gray"}
         )
     return {"raw": {"text": "", "extra": extra}}
 
@@ -424,7 +424,7 @@ def _generate_sum_pages(
 
         for line in wrap_and_center(category.title(), FONT_BOLD):
             extra.append({"text": line, "font": "minecraft:stwb"})
-        extra.append({"text": "\\n\\n\\n\\n"})  # Margin
+        extra.append({"text": "\n\n\n\n"})  # Margin
 
         y = 0
         for item in page_items:
@@ -449,7 +449,7 @@ def _generate_sum_pages(
             )
 
             if y % SUM_ITEMS_PER_LINE == 0:
-                extra.append({"text": "\\n\\n"})
+                extra.append({"text": "\n\n"})
 
         pages.append({"raw": {"text": "", "extra": extra}})
         global_item_index += categories_item_count[i]
