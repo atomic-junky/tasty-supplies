@@ -1,21 +1,21 @@
-version: 0.14.2
+version: 0.15.0-beta3
 author: OneShrimpADay
 
 data_pack:
   name: "Tasty Supplies - Data Pack"
   description: "Data pack that adds over 100 new recipes to Minecraft!"
-  pack_format: 101
+  pack_format: 107
   min_format: 80
-  max_format: 101
-  supported_formats: [ 80, 101 ]
+  max_format: 107
+  supported_formats: [ 80, 107 ]
   load: "src"
 resource_pack:
   name: "Tasty Supplies - Resource Pack"
   description: "The offcial Resource pack for the Tasty Supplies Data pack!"
-  pack_format: 84
+  pack_format: 88
   min_format: 63
-  max_format: 84
-  supported_formats: [ 63, 84 ]
+  max_format: 88
+  supported_formats: [ 63, 88 ]
   load: "src"
 
 pipeline:
