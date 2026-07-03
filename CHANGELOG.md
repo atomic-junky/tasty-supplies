@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [v0.15.0-beta2] - 2026-07-03
+### :bug: Bug Fixes
+- [`8a6270f`](https://github.com/atomic-junky/tasty-supplies/commit/8a6270f5d9f3fef06b39f07cb946222a7da7dc3a) - Cookbook pages formatting is broken [#34](https://github.com/atomic-junky/tasty-supplies/pull/34) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
+
+
 ## [v0.14.2] - 2026-03-25
 ### :bug: Bug Fixes
 - [`f30d906`](https://github.com/atomic-junky/tasty-supplies/commit/f30d9064815d185c13e804bf0ba745a514de5e1b) - wrong tools model [#30](https://github.com/atomic-junky/tasty-supplies/pull/30) *(commit by [@atomic-junky](https://github.com/atomic-junky))*
@@ -83,3 +88,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [v0.14.0]: https://github.com/atomic-junky/tasty-supplies/compare/v0.13.0...v0.14.0
 [v0.14.1]: https://github.com/atomic-junky/tasty-supplies/compare/v0.14.0...v0.14.1
 [v0.14.2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.14.1...v0.14.2
+[v0.15.0-beta2]: https://github.com/atomic-junky/tasty-supplies/compare/v0.15.0-beta1...v0.15.0-beta2
