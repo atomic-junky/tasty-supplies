@@ -1,3 +1,4 @@
+import re
 from typing import Any, Dict, List
 
 
@@ -97,6 +98,15 @@ def to_item_repr(item) -> str:
     else:
         snbt_components = ""
 
-    result: str = f"{base_item}[{snbt_components}]"
+    escaped = snbt_components.translate(
+        str.maketrans(
+            {
+                "\n": r"\n",
+                "\r": r"\r",
+            }
+        )
+    )
+
+    result: str = f"{base_item}[{escaped}]"
 
     return result
