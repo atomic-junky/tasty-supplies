@@ -10,7 +10,7 @@ env:
   PYTHON_VERSION: "3.14.3"
 
 jobs:
-  build:
+  test-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

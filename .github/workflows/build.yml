@@ -1,10 +1,6 @@
 name: Build
 
-on:
-  push:
-    tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
-  workflow_dispatch:
+on: [push, pull_request]
 
 env:
   PYTHON_VERSION: "3.14.3"
@@ -79,23 +75,12 @@ jobs:
             1.21.11
           environment: client_and_server
           primary-file: TastySupplies_-_DataPack.zip
-          files: ./tasty_supplies/build/*.zip
+          files: -|
+            ./tasty_supplies/build/TastySupplies_-_DataPack.zip
+            ./tasty_supplies/build/TastySupplies_-_ResourcePack.zip
           file-types: TastySupplies_-_ResourcePack.zip=required-resource-pack
           channel: beta
           name: v${{ github.ref_name }}
-
-      - name: Curseforge Upload (Data Pack)
-        uses: itsmeow/curseforge-upload@v3
-        with:
-          file_path: ./tasty_supplies/build/TastySupplies_-_DataPack.zip
-          game_endpoint: "minecraft"
-          relations: "fabric-api:requiredDependency"
-          game_versions: "Minecraft 1.21.11:26.2"
-          project_id: 1362637
-          token: "${{ secrets.CF_API_TOKEN }}"
-          display_name: "[v${{ github.ref_name }}] Tasty Supplies - Data Pack"
-          changelog: ${{ steps.changelog.outputs.changes }}
-          changelog_type: "markdown"
 
       - name: Curseforge Upload (Resource Pack)
         uses: itsmeow/curseforge-upload@v3
@@ -109,3 +94,18 @@ jobs:
           display_name: "[v${{ github.ref_name }}] Tasty Supplies - Resource Pack"
           changelog: ${{ steps.changelog.outputs.changes }}
           changelog_type: "markdown"
+          release_type: "release"
+
+      - name: Curseforge Upload (Data Pack)
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          file_path: ./tasty_supplies/build/TastySupplies_-_DataPack.zip
+          game_endpoint: "minecraft"
+          relations: "fabric-api:requiredDependency"
+          game_versions: "Minecraft 1.21.11:26.2"
+          project_id: 1362637
+          token: "${{ secrets.CF_API_TOKEN }}"
+          display_name: "[v${{ github.ref_name }}] Tasty Supplies - Data Pack"
+          changelog: ${{ steps.changelog.outputs.changes }}
+          changelog_type: "markdown"
+          release_type: "release"
