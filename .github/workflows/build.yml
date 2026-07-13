@@ -62,3 +62,50 @@ jobs:
           branch: main
           commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
           file_pattern: CHANGELOG.md
+      
+      - name: Modrinth Upload
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: SLkQznH5
+          version: ${{ github.ref_name }}
+          changelog: ${{ steps.changelog.outputs.changes }}
+          loaders: |-
+            datapack
+            minecraft
+          game-versions: |-
+            26.2
+            26.1.x
+            1.21.11
+          environment: client_and_server
+          primary-file: TastySupplies_-_DataPack.zip
+          files: ./tasty_supplies/build/*.zip
+          file-types: TastySupplies_-_ResourcePack.zip=required-resource-pack
+          channel: beta
+          name: v${{ github.ref_name }}
+
+      - name: Curseforge Upload (Data Pack)
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          file_path: ./tasty_supplies/build/TastySupplies_-_DataPack.zip
+          game_endpoint: "minecraft"
+          relations: "fabric-api:requiredDependency"
+          game_versions: "Minecraft 1.21.11:26.2"
+          project_id: 1362637
+          token: "${{ secrets.CF_API_TOKEN }}"
+          display_name: "[v${{ github.ref_name }}] Tasty Supplies - Data Pack"
+          changelog: ${{ steps.changelog.outputs.changes }}
+          changelog_type: "markdown"
+
+      - name: Curseforge Upload (Resource Pack)
+        uses: itsmeow/curseforge-upload@v3
+        with:
+          file_path: ./tasty_supplies/build/TastySupplies_-_ResourcePack.zip
+          game_endpoint: "minecraft"
+          relations: "fabric-api:requiredDependency"
+          game_versions: "Minecraft 1.21.11:26.2"
+          project_id: 1362637
+          token: "${{ secrets.CF_API_TOKEN }}"
+          display_name: "[v${{ github.ref_name }}] Tasty Supplies - Resource Pack"
+          changelog: ${{ steps.changelog.outputs.changes }}
+          changelog_type: "markdown"
