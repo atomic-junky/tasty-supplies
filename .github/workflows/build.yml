@@ -89,7 +89,6 @@ jobs:
         with:
           file_path: ./tasty_supplies/build/TastySupplies_-_ResourcePack.zip
           game_endpoint: "minecraft"
-          relations: "fabric-api:requiredDependency"
           game_versions: "1.21.11,26.1,26.1.1,26.1.2,26.2"
           project_id: 1362637
           token: "${{ secrets.CF_API_TOKEN }}"
@@ -103,7 +102,6 @@ jobs:
         with:
           file_path: ./tasty_supplies/build/TastySupplies_-_DataPack.zip
           game_endpoint: "minecraft"
-          relations: "fabric-api:requiredDependency"
           game_versions: "1.21.11,26.1,26.1.1,26.1.2,26.2"
           project_id: 1362637
           token: "${{ secrets.CF_API_TOKEN }}"
