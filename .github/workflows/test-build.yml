@@ -39,3 +39,6 @@ jobs:
         with:
           name: builds
           path: ./tasty_supplies/build/*.zip
+        
+      - name: List build artifacts
+        run: ls -la ./tasty_supplies/build/ && pwd

@@ -79,7 +79,9 @@ jobs:
             1.21.11
           environment: client_and_server
           primary-file: TastySupplies_-_DataPack.zip
-          files: '["tasty_supplies/build/TastySupplies_-_DataPack.zip", "tasty_supplies/build/TastySupplies_-_ResourcePack.zip"]'
+          files: |-
+            tasty_supplies/build/TastySupplies_-_DataPack.zip
+            tasty_supplies/build/TastySupplies_-_ResourcePack.zip
           file-types: TastySupplies_-_ResourcePack.zip=required-resource-pack
           channel: beta
           name: v${{ github.ref_name }}
