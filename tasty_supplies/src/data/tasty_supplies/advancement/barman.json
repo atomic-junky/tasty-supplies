@@ -1,0 +1,63 @@
+{
+  "display": {
+    "title": {
+      "text": "Barman"
+    },
+    "description": {
+      "text": "Craft every signature drink on the menu."
+    },
+    "icon": {{ items.apple_cider.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "apple_cider": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.apple_cider.predicate|tojson }}
+        ]
+      }
+    },
+    "glow_berry_custard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.glow_berry_custard.predicate|tojson }}
+        ]
+      }
+    },
+    "hot_cocoa": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.hot_cocoa.predicate|tojson }}
+        ]
+      }
+    },
+    "melon_juice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.melon_juice.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "apple_cider"
+    ],
+    [
+      "glow_berry_custard"
+    ],
+    [
+      "hot_cocoa"
+    ],
+    [
+      "melon_juice"
+    ]
+  ],
+  "parent": "tasty_supplies:root"
+}

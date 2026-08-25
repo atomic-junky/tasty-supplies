@@ -1,0 +1,25 @@
+{
+  "display": {
+    "title": {
+      "text": "Between tradition and modernity"
+    },
+    "description": {
+      "text": "Balance classic and modern techniques."
+    },
+    "icon": {{ items.salmon_roll.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "parent": "tasty_supplies:cut_the_wheat"
+}

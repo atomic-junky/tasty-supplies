@@ -1,0 +1,42 @@
+{
+  "display": {
+    "title": {
+      "text": "Pastry Chef"
+    },
+    "description": {
+      "text": "Let's open a bakery!"
+    },
+    "icon": {{ items.croissant.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "sweets": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.apple_pie.predicate|tojson }},
+          {{ items.chocolate_pie.predicate|tojson }},
+          {{ items.croissant.predicate|tojson }},
+          {{ items.cherry_blossom_pie.predicate|tojson }},
+          {{ items.glow_berry_pie.predicate|tojson }},
+          {{ items.chorus_pie.predicate|tojson }},
+          {{ items.sweet_berry_cheesecake.predicate|tojson }},
+          {{ items.sweet_berry_cookie.predicate|tojson }},
+          {{ items.sweet_roll.predicate|tojson }},
+          {{ items.ice_cream.predicate|tojson }},
+          {{ items.ice_cream_cone.predicate|tojson }},
+          {{ items.melon_popsicle.predicate|tojson }},
+          {{ items.honey_cookie.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sweets"
+    ]
+  ],
+  "parent": "tasty_supplies:root"
+}

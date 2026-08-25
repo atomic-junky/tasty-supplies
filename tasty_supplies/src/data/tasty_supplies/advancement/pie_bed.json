@@ -1,0 +1,30 @@
+{
+  "display": {
+    "title": {
+      "text": "Pie Bed"
+    },
+    "description": {
+      "text": "Prepare your pie station."
+    },
+    "icon": {{ items.pie_crust.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "pie_crust": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.pie_crust.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "pie_crust"
+    ]
+  ],
+  "parent": "tasty_supplies:pastry_chef"
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "title": {
+      "text": "BFB9000"
+    },
+    "description": {
+      "text": "Craft a netherite cleaver."
+    },
+    "icon": {{ items.netherite_cleaver.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "netherite_cleaver": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.netherite_cleaver.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_cleaver"
+    ]
+  ],
+  "parent": "tasty_supplies:a_bigger_blade"
+}

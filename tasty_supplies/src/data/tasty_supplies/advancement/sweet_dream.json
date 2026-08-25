@@ -1,0 +1,36 @@
+{
+  "display": {
+    "title": {
+      "text": "Sweet dream!"
+    },
+    "description": {
+      "text": "Indulge in a sweet treat."
+    },
+    "icon": {{ items.sweet_roll.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "sugary": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.sweet_berry_cheesecake.predicate|tojson }},
+          {{ items.sweet_berry_cookie.predicate|tojson }},
+          {{ items.sweet_roll.predicate|tojson }},
+          {{ items.croissant.predicate|tojson }},
+          {{ items.ice_cream.predicate|tojson }},
+          {{ items.ice_cream_cone.predicate|tojson }},
+          {{ items.melon_popsicle.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "sugary"
+    ]
+  ],
+  "parent": "tasty_supplies:pastry_chef"
+}

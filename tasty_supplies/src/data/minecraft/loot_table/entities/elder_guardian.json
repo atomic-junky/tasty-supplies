@@ -1,11 +1,9 @@
-{
-    "$merge.pools": [
-        {
-            "rolls": 1.0,
-            "bonus_rolls": 0.0,
-            "entries": [
-                "$item.guardian_tail.entry()"
-            ]
-        }
+{{ extend_loot_table("minecraft:entities/elder_guardian", pools=[
+  {
+    "rolls": 1.0,
+    "bonus_rolls": 0.0,
+    "entries": [
+      items.guardian_tail.entry()
     ]
-}
+  }
+]) }}

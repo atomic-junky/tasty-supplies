@@ -1,0 +1,52 @@
+{
+  "display": {
+    "title": {
+      "text": "Slightly Sliced"
+    },
+    "description": {
+      "text": "Serve a tasteful slice."
+    },
+    "icon": {{ items.sweet_berry_cheesecake_slice.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "apple_slice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.apple_pie_slice.predicate|tojson }}
+        ]
+      }
+    },
+    "cherry_slice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.cherry_blossom_pie_slice.predicate|tojson }}
+        ]
+      }
+    },
+    "glow_slice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.glow_berry_pie_slice.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "apple_slice"
+    ],
+    [
+      "cherry_slice"
+    ],
+    [
+      "glow_slice"
+    ]
+  ],
+  "parent": "tasty_supplies:pie"
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+    "title": {
+      "text": "Sharper than sharp"
+    },
+    "description": {
+      "text": "Refine your edge."
+    },
+    "icon": {{ items.netherite_knife.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "netherite_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.netherite_knife.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "netherite_knife"
+    ]
+  ],
+  "parent": "tasty_supplies:a_bigger_blade"
+}

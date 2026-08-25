@@ -1,0 +1,43 @@
+{
+  "display": {
+    "title": {
+      "text": "Oh Honey!"
+    },
+    "description": {
+      "text": "Discover honeyed flavors."
+    },
+    "icon": {
+      "id": "minecraft:honeycomb"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "honey_cookie": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.honey_cookie.predicate|tojson }}
+        ]
+      }
+    },
+    "honeyed_apple": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.honeyed_apple.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "honey_cookie"
+    ],
+    [
+      "honeyed_apple"
+    ]
+  ],
+  "parent": "tasty_supplies:pastry_chef"
+}
