@@ -11,7 +11,16 @@ from typing import Any, Dict, List, Union
 from PIL import ImageFont
 
 from ..item import Item
-from ..recipe import Cut, RecipeSpec, Ref, Shaped, Shapeless, Smithing, ref_key, ref_title
+from ..recipe import (
+    Cut,
+    RecipeSpec,
+    Ref,
+    Shaped,
+    Shapeless,
+    Smithing,
+    ref_key,
+    ref_title,
+)
 from ..registry import Registry
 from .font import Glyphs
 
