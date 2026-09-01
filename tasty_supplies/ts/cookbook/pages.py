@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Union
 from PIL import ImageFont
 
 from ..item import Item
-from ..recipe import Cut, RecipeSpec, Ref, Shaped, Shapeless, ref_key, ref_title
+from ..recipe import Cut, RecipeSpec, Ref, Shaped, Shapeless, Smithing, ref_key, ref_title
 from ..registry import Registry
 from .font import Glyphs
 
@@ -26,6 +26,14 @@ FONT_BOLD = ImageFont.truetype(os.path.join(FONT_DIR, "stwb.ttf"), size=9)
 FONT_REGULAR = ImageFont.truetype(os.path.join(FONT_DIR, "stwb.ttf"), size=9)
 
 BOOK_FONT = "tasty_supplies:recipe_book"
+
+TOOLTIP_COMPONENTS = (
+    "item_name",
+    "rarity",
+    "attribute_modifiers",
+    "potion_contents",
+    "max_damage",
+)
 
 
 @dataclass(frozen=True)
@@ -45,6 +53,9 @@ GRID_COOKING = GridConfig(
 )
 GRID_CUTTING = GridConfig(
     cols=[32], result_x=66, result_row=1, num_rows=2, grid_key="grid_cutting"
+)
+GRID_SMITHING = GridConfig(
+    cols=[14, 32, 50], result_x=84, result_row=1, num_rows=2, grid_key="grid_smithing"
 )
 
 _SLOT_POS: Dict[str, tuple] = {
@@ -147,7 +158,13 @@ def _build_grid(recipe: RecipeSpec) -> tuple:
     if isinstance(recipe, Shapeless):
         return _slots_to_grid(_arrange_shapeless(recipe.items)), GRID_CRAFTING
 
-    # TODO: support Smithing, which has more than one ingredient.
+    if isinstance(recipe, Smithing):
+        grid: List[list] = [[None] * 3 for _ in range(3)]
+        grid[1][0] = recipe.template
+        grid[1][1] = recipe.base
+        grid[1][2] = recipe.addition
+        return grid, GRID_SMITHING
+
     grid = [[None] * 3 for _ in range(3)]
     ingredient = getattr(recipe, "ingredient", None)
     if ingredient:
@@ -161,8 +178,6 @@ def _drawable(ingredient: Ref, glyphs: Glyphs) -> tuple:
 
     if not ingredient or isinstance(ingredient, dict):
         return "", ""
-    if isinstance(ingredient, str) and ingredient.startswith("#"):
-        return "", ""
     return glyphs.char(ref_key(ingredient)), ingredient
 
 
@@ -171,11 +186,8 @@ def _item_component(
 ) -> dict:
     """A glyph the reader can hover for a tooltip and click to jump to a page."""
 
-    component: Dict[str, Any] = {
-        "text": text,
-        "font": BOOK_FONT,
-        "color": "white",
-    }
+    # A glyph is tinted by the text colour, and a book writes in dark ink.
+    component: Dict[str, Any] = {"text": text, "color": "white"}
 
     if isinstance(ingredient, Item):
         component["hover_event"] = {
@@ -183,8 +195,19 @@ def _item_component(
             "id": f"minecraft:{ingredient.support.id}",
             "count": 1,
         }
-        if ingredient.components:
-            component["hover_event"]["components"] = ingredient.components
+        shown = {
+            key: value
+            for key, value in ingredient.components.items()
+            if key in TOOLTIP_COMPONENTS
+        }
+        if shown:
+            component["hover_event"]["components"] = shown
+    elif ingredient.startswith("#"):
+        # A tag is drawn with one of its members, so say it takes any of them.
+        component["hover_event"] = {
+            "action": "show_text",
+            "value": f"Any {ref_title(ingredient)}",
+        }
     else:
         component["hover_event"] = {
             "action": "show_item",
@@ -216,14 +239,12 @@ def _grid_row(
         if not char:
             continue
 
-        components.append({"text": _spaces(target_x - cursor_x), "font": BOOK_FONT})
+        components.append({"text": _spaces(target_x - cursor_x)})
         components.append(_item_component(char, ingredient, item_page_map))
         cursor_x = target_x + glyphs.advance(ref_key(ingredient))
 
     if row == config.result_row:
-        components.append(
-            {"text": _spaces(config.result_x - cursor_x), "font": BOOK_FONT}
-        )
+        components.append({"text": _spaces(config.result_x - cursor_x)})
         components.append(_item_component(result_char, result, item_page_map))
 
     return components
@@ -244,14 +265,12 @@ def _recipe_page(
 
     lines = wrap_and_center(title, FONT_BOLD)
     for line in lines:
-        extra.append({"text": line + "\n", "font": "minecraft:stwb"})
+        extra.append({"text": line + "\n", "font": "minecraft:stwb", "color": "black"})
     for _ in range(TITLE_MAX_LINES - len(lines)):
         extra.append({"text": "\n"})
 
     grid, config = _build_grid(recipe)
-    extra.append(
-        {"text": glyphs.char(config.grid_key), "font": BOOK_FONT, "color": "white"}
-    )
+    extra.append({"text": glyphs.char(config.grid_key), "color": "white"})
     extra.append({"text": "\n\n\n"})  # Top margin.
 
     result_char = glyphs.chars.get(ref_key(recipe.result), "<?>")
@@ -261,19 +280,11 @@ def _recipe_page(
         )
         extra.append({"text": "\n\n"})
 
-    return {"raw": {"text": "", "extra": extra}}
+    return _page(extra)
 
 
 def _cover_page() -> dict:
-    extra: List[dict] = [
-        {
-            "text": "[WIP]\n",
-            "italic": True,
-            "bold": True,
-            "font": "minecraft:stwr",
-            "color": "red",
-        }
-    ]
+    extra: List[dict] = []
     for line in wrap_and_center("Tasty Supplies Cookbook", FONT_BOLD):
         extra.append({"text": line + "\n", "font": "minecraft:stwb", "color": "gold"})
     extra.append({"text": "\n\n\n"})  # Margin.
@@ -281,7 +292,7 @@ def _cover_page() -> dict:
         extra.append(
             {"text": line + "\n", "font": "minecraft:stwr", "color": "dark_gray"}
         )
-    return {"raw": {"text": "", "extra": extra}}
+    return _page(extra)
 
 
 def _results_by_category(registry: Registry) -> Dict[str, List[str]]:
@@ -323,7 +334,6 @@ def _summary_pages(
                 extra.append(
                     {
                         "text": glyphs.char(result),
-                        "font": BOOK_FONT,
                         "color": "white",
                         "click_event": {"action": "change_page", "page": target},
                         "hover_event": {
@@ -335,7 +345,7 @@ def _summary_pages(
                 if position % SUM_ITEMS_PER_LINE == 0:
                     extra.append({"text": "\n\n"})
 
-            pages.append({"raw": {"text": "", "extra": extra}})
+            pages.append(_page(extra))
 
     return pages
 
@@ -367,3 +377,9 @@ def build(
             )
 
     return pages
+
+
+def _page(extra: List[dict]) -> dict:
+    """A page. Its parts inherit the font and the colour from it."""
+
+    return {"raw": {"text": "", "font": BOOK_FONT, "extra": extra}}

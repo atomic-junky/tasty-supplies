@@ -43,24 +43,17 @@ def ref_key(ref: Ref) -> str:
     if isinstance(ref, Item):
         return ref.id
     if isinstance(ref, str):
-        return ref.removeprefix("minecraft:")
+        identifier = to_absolute_path(ref)
+        if identifier.startswith("#"):
+            return identifier
+        return identifier.removeprefix("minecraft:")
     return repr(ref)
 
 
-def ref_texture(ref: Ref) -> Optional[str]:
-    """Texture of an ingredient or a result, for the cookbook glyphs."""
-
-    if isinstance(ref, Item):
-        return f"{ref.texture_path}.png"
-    if isinstance(ref, str) and not ref.startswith("#"):
-        return f"minecraft:item/{ref.removeprefix('minecraft:')}.png"
-    return None
-
-
 def ref_title(ref: Ref) -> str:
-    """Name shown at the top of a cookbook page."""
+    """Name shown at the top of a cookbook page, or on a tag tooltip."""
 
-    return ref_key(ref).replace("_", " ").title()
+    return ref_key(ref).split(":")[-1].replace("_", " ").title()
 
 
 @dataclass

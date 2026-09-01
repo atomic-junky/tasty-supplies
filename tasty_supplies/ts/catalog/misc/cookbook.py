@@ -1,4 +1,4 @@
-from ts import Item, bases, component, rarity, shapeless, stack
+from ts import Item, bases, component, rarity, shaped, stack
 
 
 @stack(1)
@@ -7,14 +7,13 @@ from ts import Item, bases, component, rarity, shapeless, stack
 @component(
     written_book_content={
         "title": "Tasty Supplies Cookbook",
-        "author": "A Forgotten Chef",
+        "author": "Mithaecus",
         "resolved": False,
         "generation": 3,
         "pages": [],
     }
 )
-@shapeless("book", "wheat")
+@shaped(["WWW", "WBW", "WWW"], {"W": "minecraft:wheat", "B": "minecraft:book"})
 class Cookbook(Item):
     base = bases.WRITTEN_BOOK
-    # Pages are laid out by the cookbook plugin, and the book skips its own.
     book = False

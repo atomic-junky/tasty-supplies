@@ -38,6 +38,10 @@ C:\> beet watch
 
 Replace `beet` with `beet -p ./tasty_supplies/` if you want to stay in the root folder, else do `cd ./tasty_supplies/`.
 
+The build renders block models for the recipe book, which needs OpenGL. On
+Linux that means `freeglut3-dev libgl1 libglu1-mesa`, and a display: run the
+build under `xvfb-run -a` if you have none.
+
 Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 
 ## How it works

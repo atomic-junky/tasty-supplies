@@ -1,2 +1,3 @@
 beet[image] >= 0.114.1
 Pillow==12.2.0
+model-resolver >= 1.14

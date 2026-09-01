@@ -46,8 +46,6 @@ class Registry:
         prefix = f"{package}."
 
         def category_of(cls: type) -> str:
-            # Where the class lives, not when it was imported: a module may
-            # pull in items from another category.
             path = cls.__module__.removeprefix(prefix)
             return labels.get(path.split(".")[0], "misc")
 
