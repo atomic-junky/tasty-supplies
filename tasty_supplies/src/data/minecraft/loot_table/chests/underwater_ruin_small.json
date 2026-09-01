@@ -1,20 +1,18 @@
-{
-    "$merge.pools": [
+{{ extend_loot_table("minecraft:chests/underwater_ruin_small", pools=[
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      },
+      "bonus_rolls": 0.0,
+      "entries": [
+        items.tentacle.entry(min_count=1.0, max_count=2.0),
+        items.barnacle_thong.entry(),
         {
-            "rolls": {
-                "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-            },
-            "bonus_rolls": 0.0,
-            "entries": [
-                "$item.tentacle.entry(min_count=1.0, max_count=2.0)",
-                "$item.barnacle_thong.entry()",
-                {
-                    "type": "minecraft:empty",
-                    "weight": 2
-                }
-            ]
+          "type": "minecraft:empty",
+          "weight": 2
         }
-    ]
-}
+      ]
+    }
+  ]) }}

@@ -33,8 +33,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install OpenGL, used to render blocks for the recipe book
+        run: sudo apt-get update && sudo apt-get install -y xvfb freeglut3-dev libgl1 libglu1-mesa
+
       - name: Build project
-        run: beet -p ./tasty_supplies build
+        run: xvfb-run -a beet -p ./tasty_supplies build
       
       - name: Zip all builds
         run: |

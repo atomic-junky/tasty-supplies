@@ -1,6 +1,4 @@
-{
-    "$merge.pools.0.entries": [
-        "$item.tentacle.entry()",
-        "$item.guardian_tail.entry()"
-    ]
-}
+{{ extend_loot_table("minecraft:archaeology/ocean_ruin_warm", entries={0: [
+  items.tentacle.entry(),
+  items.guardian_tail.entry()
+]}) }}

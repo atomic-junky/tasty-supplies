@@ -1,0 +1,85 @@
+{
+  "display": {
+    "title": {
+      "text": "Cut them all"
+    },
+    "description": {
+      "text": "Master every blade type."
+    },
+    "icon": {{ items.netherite_knife.icon|tojson }},
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "copper_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.copper_knife.predicate|tojson }}
+        ]
+      }
+    },
+    "flint_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.flint_knife.predicate|tojson }}
+        ]
+      }
+    },
+    "iron_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.iron_knife.predicate|tojson }}
+        ]
+      }
+    },
+    "golden_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.golden_knife.predicate|tojson }}
+        ]
+      }
+    },
+    "diamond_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.diamond_knife.predicate|tojson }}
+        ]
+      }
+    },
+    "netherite_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {{ items.netherite_knife.predicate|tojson }}
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "copper_knife"
+    ],
+    [
+      "flint_knife"
+    ],
+    [
+      "iron_knife"
+    ],
+    [
+      "golden_knife"
+    ],
+    [
+      "diamond_knife"
+    ],
+    [
+      "netherite_knife"
+    ]
+  ],
+  "parent": "tasty_supplies:sharper_than_sharp"
+}

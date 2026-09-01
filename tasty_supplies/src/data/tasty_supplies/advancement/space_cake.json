@@ -1,0 +1,28 @@
+{
+  "display": {
+    "title": {
+      "text": "Space Cake"
+    },
+    "description": {
+      "text": "A mysterious confection."
+    },
+    "icon": {{ items.chorus_pie.icon|tojson }},
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "eat_chorus_pie": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {{ items.chorus_pie.predicate|tojson }}
+      }
+    }
+  },
+  "requirements": [
+    [
+      "eat_chorus_pie"
+    ]
+  ],
+  "parent": "tasty_supplies:pie"
+}

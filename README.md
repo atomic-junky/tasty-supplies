@@ -38,11 +38,86 @@ C:\> beet watch
 
 Replace `beet` with `beet -p ./tasty_supplies/` if you want to stay in the root folder, else do `cd ./tasty_supplies/`.
 
+The build renders block models for the recipe book, which needs OpenGL. On
+Linux that means `freeglut3-dev libgl1 libglu1-mesa`, and a display: run the
+build under `xvfb-run -a` if you have none.
+
 Like that if you make any changes for the data pack just type `/reload` in minecraft and if you make in any chnages for the resource pack, disable and re-enable the resource pack.
 
 ## How it works
 
-This project uses [beet](https://github.com/mcbeet/beet) to automatically generate Minecraft datapacks and resource packs. Instead of writing complex JSON files manually, you define items and recipes in Python.
+This project uses [beet](https://github.com/mcbeet/beet) to generate the data pack
+and the resource pack. Instead of writing JSON by hand, you declare items and
+recipes in Python: one class per item, in its own file.
+
+```python
+# tasty_supplies/ts/catalog/sweets/croissant.py
+from ts import Item, food, shaped
+
+from ..ingredients.butter import Butter
+
+
+@food(6, 3.4)
+@shaped(["WBS", "WBS"], W="wheat", B=Butter, S="sugar")
+class Croissant(Item):
+    pass
+```
+
+That is all it takes. The build derives the item id from the class name and
+generates the model, the item definition, the recipe, a `give` function, the
+page in the in-game cookbook, and the entry letting the pack update the item in
+existing worlds. The only thing left to do is to drop
+`src/assets/tasty_supplies/textures/item/croissant.png` next to it; the build
+warns when a texture is missing.
+
+### Layout
+
+| Path | What lives there |
+|---|---|
+| `tasty_supplies/ts/catalog/` | the content: one package per category, one module per item |
+| `tasty_supplies/ts/declare.py` | every decorator: `@food`, `@apply_effect`, `@shaped`, `@cut`... |
+| `tasty_supplies/ts/components.py` | how declarations turn into item components |
+| `tasty_supplies/ts/bases.py` | the vanilla items custom items are built on, and why |
+| `tasty_supplies/ts/plugins.py` | the steps of the build, listed in `beet.yml` |
+| `tasty_supplies/src/` | static data and assets: functions, tags, advancements, textures |
+
+### Conventions
+
+- **Decorators add, the class body configures.** Anything additive -- a
+  component, a recipe and its `count` -- is a decorator; the class body only
+  fills in the slots an abstract family declares.
+- **Families factor out repetition.** `Knife`, `Pie` or `Drink` carry what their
+  members share, so an item only states what makes it different.
+- **`@component` is the escape hatch.** It covers every vanilla component, and
+  every sugar decorator forwards extra keyword arguments to it, so being precise
+  never means giving up on the shorthand.
+- **A recipe without a new item** is a class of its own:
+
+  ```python
+  @shapeless(WheatDough, "wheat", count=2)
+  class DoughToBread(Recipe):
+      result = "bread"
+  ```
+
+- **JSON files in `src/` can read the catalog** through Jinja, which beet runs
+  over advancements and loot tables:
+
+  ```jsonc
+  "icon": {{ items.iron_cleaver.icon|tojson }}
+  ```
+
+  ```jinja
+  {{ extend_loot_table("minecraft:entities/squid", pools=[
+    {"rolls": 1.0, "bonus_rolls": 0.0, "entries": [items.tentacle.entry()]}
+  ]) }}
+  ```
+
+### Checks
+
+The build fails on the mistakes that used to slip through: an item whose
+support is shared with another one, or generic enough that a vanilla item would
+satisfy the recipe. `ts/registry.py` lists the ones that are known and still
+waiting to be fixed.
 
 ## Credits
 

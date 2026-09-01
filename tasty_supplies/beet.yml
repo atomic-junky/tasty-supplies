@@ -18,8 +18,32 @@ resource_pack:
   supported_formats: [ 63, 88 ]
   load: "src"
 
+require:
+- beet.contrib.log_level
+
+meta:
+  log_level:
+    level: INFO
+
+  # Vanilla assets the build reads from: item models to fall back on, and
+  # textures to measure for the recipe book. Pinned on purpose.
+  vanilla:
+    version: "1.21"
+
+  # Only these files go through Jinja; ts/templating.py says what they can call.
+  render:
+    data_pack:
+      advancement: "tasty_supplies:*"
+      loot_table: "minecraft:*"
+
 pipeline:
-- "main.build_pack"
+- "ts.plugins.content"
+- "ts.plugins.cookbook"
+- "ts.plugins.emit"
+- "ts.plugins.cutting_board"
+- "ts.plugins.updater"
+- "beet.contrib.render"
+- "beet.contrib.format_json"
 - "beet.contrib.minify_function"
 
 output: build
