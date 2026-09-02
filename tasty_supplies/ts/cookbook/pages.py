@@ -12,6 +12,7 @@ from PIL import ImageFont
 
 from ..item import Item
 from ..recipe import (
+    Brewing,
     Cut,
     RecipeSpec,
     Ref,
@@ -54,6 +55,9 @@ class GridConfig:
     grid_key: str
 
 
+GRID_BREWING = GridConfig(
+    cols=[50], result_x=84, result_row=2, num_rows=3, grid_key="grid_brewing"
+)
 GRID_CRAFTING = GridConfig(
     cols=[14, 32, 50], result_x=84, result_row=1, num_rows=3, grid_key="grid_crafting"
 )
@@ -173,6 +177,12 @@ def _build_grid(recipe: RecipeSpec) -> tuple:
         grid[1][1] = recipe.base
         grid[1][2] = recipe.addition
         return grid, GRID_SMITHING
+
+    if isinstance(recipe, Brewing):
+        grid: List[list] = [[None] * 3 for _ in range(3)]
+        grid[0][0] = recipe.reagent
+        grid[2][0] = recipe.input
+        return grid, GRID_BREWING
 
     grid = [[None] * 3 for _ in range(3)]
     ingredient = getattr(recipe, "ingredient", None)

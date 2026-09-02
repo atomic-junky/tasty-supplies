@@ -24,6 +24,7 @@ GRIDS = {
     "grid_crafting": chr(0xE902),
     "grid_cutting": chr(0xE903),
     "grid_smithing": chr(0xE904),
+    "grid_brewing": chr(0xE905),
 }
 
 

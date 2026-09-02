@@ -12,7 +12,7 @@ from typing import Any, Callable, Dict, List, Optional
 
 from . import declaration as kinds
 from .components import RARITIES
-from .recipe import Cooked, Cut, Ref, Shaped, Shapeless, Smithing
+from .recipe import Brewing, BrewingRef, Cooked, Cut, Ref, Shaped, Shapeless, Smithing
 from .utils import to_absolute_path
 
 Decorator = Callable[[type], type]
@@ -145,6 +145,18 @@ def shapeless(*items: Ref, count: int = 1, id: str = "") -> Decorator:
     """Crafting recipe with no layout."""
 
     return _contribute(kinds.RECIPE, Shapeless(id=id, count=count, items=list(items)))
+
+
+def brew(input: BrewingRef, reagent: BrewingRef, output: Ref) -> Decorator:
+    """Brewing stand recipe."""
+
+    input_potion: Optional[str] = input[1] if isinstance(input, tuple) else None
+    reagent_potion: Optional[str] = reagent[1] if isinstance(reagent, tuple) else None
+
+    return _contribute(
+        kinds.RECIPE,
+        Brewing(input=input, reagent=reagent, result=output, input_potion=input_potion, reagent_potion=reagent_potion)
+    )
 
 
 def cooked(

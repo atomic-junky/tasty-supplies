@@ -36,7 +36,6 @@ def remove_minecraft_namespace(data: Any) -> Any:
     return data
 
 
-#: Characters a compound key may use unquoted; a namespaced key needs quotes.
 _BARE_KEY = re.compile(r"[A-Za-z0-9_.+-]+")
 
 

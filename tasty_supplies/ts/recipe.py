@@ -5,14 +5,14 @@ A recipe is carried by the item it produces, or declared on its own through
 """
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from .declaration import Declarable
 from .item import Item
 from .utils import to_absolute_path
 
-#: An ingredient: item class, item, vanilla id, tag, or raw dict.
 Ref = Union[type, Item, str, dict]
+BrewingRef = Union[Ref, Tuple[Ref, Optional[str]]]
 
 
 def as_ingredient(ref: Ref) -> Union[str, dict]:
@@ -66,12 +66,7 @@ class RecipeSpec:
     category: str = "misc"
     ts_category: str = ""
     book: bool = True
-
-    #: Suffix added to the id, for the variants of a single cooking recipe.
     suffix: str = ""
-
-    #: False for our own mechanics, which read components instead of the
-    #: support item vanilla recipes are limited to.
     matches_support = True
 
     def resolve(self, resolver: Any) -> None:
@@ -151,6 +146,46 @@ class Shapeless(RecipeSpec):
             "ingredients": [as_ingredient(ref) for ref in self.items],
             "result": self.result_json,
         }
+
+
+@dataclass
+class Brewing(RecipeSpec):
+    """Brewing stand recipe."""
+
+    input: Optional[Ref] = None
+    reagent: Optional[Ref] = None
+    input_potion: Optional[str] = None
+    reagent_potion: Optional[str] = None
+
+    def resolve(self, resolver: Any) -> None:
+        super().resolve(resolver)
+        self.input_item = resolver(self.input_item)
+        self.reagent = resolver(self.reagent)
+    
+    def ingredients(self) -> List[Ref]:
+        return (self.input, self.reagent)
+
+    def to_json(self) -> Dict[str, Any]:
+        result: dict = {
+            "type": "minecraft:brewing",
+            "input": {
+                "item": as_ingredient(self.input),
+                "potion_content": {},
+            },
+            "reagent": {
+                "item": as_ingredient(self.reagent),
+                "potion_content": {},
+            },
+            "output": self.result_json
+        }
+
+        if self.input_potion is not None:
+            result["input"]["potion_content"]["id"] = to_absolute_path(self.input_potion)
+
+        if self.reagent_potion is not None:
+            result["reagent"]["potion_content"]["id"] = to_absolute_path(self.reagent_potion)
+
+        return result
 
 
 @dataclass
