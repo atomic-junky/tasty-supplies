@@ -159,13 +159,16 @@ class Brewing(RecipeSpec):
 
     def resolve(self, resolver: Any) -> None:
         super().resolve(resolver)
-        self.input_item = resolver(self.input_item)
+        self.input = resolver(self.input)
         self.reagent = resolver(self.reagent)
     
     def ingredients(self) -> List[Ref]:
         return (self.input, self.reagent)
 
     def to_json(self) -> Dict[str, Any]:
+        output: Dict[str, Any] = self.result_json
+        output.pop("count", None)
+
         result: dict = {
             "type": "minecraft:brewing",
             "input": {
@@ -176,7 +179,7 @@ class Brewing(RecipeSpec):
                 "item": as_ingredient(self.reagent),
                 "potion_content": {},
             },
-            "output": self.result_json
+            "output": output,
         }
 
         if self.input_potion is not None:

@@ -24,7 +24,6 @@ class Base:
         return value if isinstance(value, Base) else Base(value, dedicated=False)
 
 
-# Generic supports, shared by many items.
 BREAD = Base("bread", dedicated=False)
 POTION = Base("potion", dedicated=False)
 WOODEN_SWORD = Base("wooden_sword", dedicated=False)
@@ -33,7 +32,6 @@ WRITTEN_BOOK = Base("written_book", dedicated=False)
 RABBIT_STEW = Base("rabbit_stew", dedicated=False)
 ARMOR_STAND = Base("armor_stand", dedicated=False)
 
-# Dedicated supports: one custom item each.
 BARNACLE_THONG = Base("guster_banner_pattern")
 BUTTER = Base("poisonous_potato")
 CHEESE_SLICE = Base("piglin_banner_pattern")
@@ -55,3 +53,5 @@ WHEAT_DOUGH = Base("snort_pottery_sherd")
 
 DIAMOND_KNIFE = Base("disc_fragment_5")
 DIAMOND_CLEAVER = Base("echo_shard")
+
+TANKARD = Base("prismarine_crystals")

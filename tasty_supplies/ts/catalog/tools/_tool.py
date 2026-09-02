@@ -48,7 +48,6 @@ class Tool(Item, abstract=True):
 
     #: Read by the cutting board, which only accepts a knife or a cleaver.
     kind: str
-    #: None when the tool is forged rather than crafted.
     material: Any = None
     damage: float = 1.0
     speed: float = 4.0
