@@ -20,6 +20,7 @@ from .declare import (
 )
 from .item import Item
 from .recipe import Brewing, Cooked, Cooking, Cut, Recipe, Shaped, Shapeless, Smithing
+from .translatable import Translatable
 
 __all__ = [
     "Base",
@@ -49,4 +50,5 @@ __all__ = [
     "shapeless",
     "smithing",
     "stack",
+    "Translatable",
 ]

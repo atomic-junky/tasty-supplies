@@ -1,10 +1,10 @@
-from ts import Item, apply_effect, food, remainder, shapeless, stack
+from ts import Item, potion_effect, food, remainder, shapeless, stack
 
 
 @food(1, 6, can_always_eat=True)
 @stack(1)
-@apply_effect("nausea", 300)
-@apply_effect("fire_resistance", 6000)
+@potion_effect("nausea", 300)
+@potion_effect("fire_resistance", 6000)
 @remainder("bucket")
 @shapeless(
     "bucket",

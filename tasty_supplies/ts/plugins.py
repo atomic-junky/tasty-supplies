@@ -1,8 +1,9 @@
 """The steps of the build, in the order ``beet.yml`` lists them."""
 
 import logging
+from typing import List
 
-from beet import Context, Function, ItemModel, Model, PngFile
+from beet import Context, Function, ItemModel, Language, Model, PngFile
 from beet import Recipe as RecipeFile
 from beet.contrib.vanilla import Vanilla
 
@@ -11,6 +12,7 @@ from . import templating
 from .item import Item
 from .recipe import Cut, as_result
 from .registry import Registry
+from .translatable import _translatables, Translatable
 from .utils import to_snbt
 
 logger = logging.getLogger(__name__)
@@ -42,7 +44,6 @@ def emit(ctx: Context) -> None:
     functions = ctx.data[NAMESPACE].functions
 
     for item in registry.items.values():
-        # A model shipped in src/ wins over the generated one.
         if not assets.models.get(f"item/{item.id}"):
             assets.models[f"item/{item.id}"] = Model(item.model)
 
@@ -128,6 +129,17 @@ def cutting_board(ctx: Context) -> None:
     if board is not None:
         # Dropped when the block is broken, or when it cannot be placed.
         ctx.data[f"{NAMESPACE}:cutting_board/drop"] = Function([_summon(board.stack())])
+
+def locale(ctx: Context) -> None:
+    """Generate the locale file from all translatable strings."""
+
+    assets = ctx.assets[NAMESPACE]
+    locale: dict = {}
+    for translatable in _translatables:
+        locale[translatable.key] = translatable.default
+    locale = dict(sorted(locale.items(), key=lambda item: item[0]))
+
+    assets.languages["en_us"] = Language(locale)
 
 
 def _summon(stack: dict) -> str:

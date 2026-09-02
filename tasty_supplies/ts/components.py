@@ -1,48 +1,32 @@
-"""Building the components of an item, in four layers.
-
-1. core: ``custom_model_data`` and ``custom_data.ts_name``, always present;
-2. defaults: ``item_name``, ``rarity``, ``max_stack_size``, set when missing;
-3. traits: conditional, such as ``food`` implying ``consumable``;
-4. removals: ``DISABLED_COMPONENTS``, emitted as ``"!minecraft:x"``.
-
-Precedence: core > explicit declaration > trait > default.
-"""
-
 from typing import Any, Dict, Iterable
 
 from .declaration import Declaration
+from .translatable import Translatable
 from .utils import title_case
 
 DEFAULT_MAX_STACK_SIZE = 64
-
 RARITIES = ("common", "uncommon", "rare", "epic")
-
-#: Vanilla components dropped from every item, so that an item based on a
-#: banner pattern does not stay usable on a loom. Empty until the change lands
-#: with its own in-game test: it rewrites the hash of every item.
-#: Candidates: ``provides_banner_patterns``, ``provides_trim_material``.
 DISABLED_COMPONENTS = ()
 
 
-def build(item_id: str, declaration: Declaration) -> Dict[str, Any]:
+def build(item_id: str, item_type: str, declaration: Declaration) -> Dict[str, Any]:
     """The components of an item, without removals and without ``ts_hash``."""
+    
+    from . import Translatable
 
     components: Dict[str, Any] = dict(declaration.components)
 
-    _add_effects(components, declaration)
+    _add_effects(item_id, item_type, components, declaration)
 
-    # Traits.
     if "food" in components:
         components.setdefault("consumable", {})
     if "max_damage" in components or "equippable" in components:
         components.setdefault("max_stack_size", 1)
 
-    # Defaults.
     components.setdefault("max_stack_size", DEFAULT_MAX_STACK_SIZE)
-    components.setdefault("item_name", title_case(item_id))
+    components.setdefault("item_name", Translatable(f"ts.item.{item_id}.name", default=title_case(item_id)))
     components.setdefault("rarity", "common")
 
-    # Core.
     custom_data = dict(components.get("custom_data", {}))
     custom_data["ts_name"] = item_id
     components["custom_data"] = custom_data
@@ -51,11 +35,10 @@ def build(item_id: str, declaration: Declaration) -> Dict[str, Any]:
     return components
 
 
-def _add_effects(components: Dict[str, Any], declaration: Declaration) -> None:
+def _add_effects(item_id: str, item_type: str, components: Dict[str, Any], declaration: Declaration) -> None:
     entries = list(declaration.consume_effects)
 
     if declaration.apply_effects:
-        # Effects sharing a probability fit in a single entry.
         grouped: Dict[Any, list] = {}
         for probability, effect in declaration.apply_effects:
             grouped.setdefault(probability, []).append(effect)
@@ -79,6 +62,11 @@ def _add_effects(components: Dict[str, Any], declaration: Declaration) -> None:
             contents.get("custom_effects", []) + declaration.potion_effects
         )
         components["potion_contents"] = contents
+        components["potion_contents"]["potion"] = "water"
+        components["potion_contents"]["custom_color"] = 16777215
+        components["potion_contents"]["custom_name"] = item_id
+
+        Translatable(f"item.minecraft.{item_type}.effect.{item_id}", default=title_case(item_id))
 
 
 def with_removals(

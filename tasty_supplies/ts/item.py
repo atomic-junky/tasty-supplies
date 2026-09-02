@@ -27,7 +27,7 @@ class Item(Declarable, abstract=True):
     def __init__(self) -> None:
         self.declaration = type(self).declaration()
         self.components: Dict[str, Any] = components_module.build(
-            self.id, self.declaration
+            self.id, self.base.id, self.declaration
         )
 
     def __repr__(self) -> str:

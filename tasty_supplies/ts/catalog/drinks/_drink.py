@@ -6,7 +6,6 @@ from ts.recipe import Ref
 from ts.utils import title_case
 
 
-@disable("potion_contents")
 @stack(16)
 class Potion(Item, abstract=True):
     pass

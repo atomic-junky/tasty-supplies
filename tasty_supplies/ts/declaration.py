@@ -80,8 +80,6 @@ class Declarable:
                 elif kind not in ACCUMULATING:
                     raise ValueError(f"Unknown contribution: {kind!r}")
 
-            # Decorators apply bottom-up, but anything that piles up should
-            # follow the order it is written in.
             for kind, payload in reversed(own):
                 if kind == APPLY_EFFECT:
                     merged.apply_effects.append(payload)

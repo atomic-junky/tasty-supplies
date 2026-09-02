@@ -42,6 +42,7 @@ pipeline:
 - "ts.plugins.emit"
 - "ts.plugins.cutting_board"
 - "ts.plugins.updater"
+- "ts.plugins.locale"
 - "beet.contrib.render"
 - "beet.contrib.format_json"
 - "beet.contrib.minify_function"

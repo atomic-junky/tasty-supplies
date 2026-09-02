@@ -23,6 +23,7 @@ from ..recipe import (
     ref_title,
 )
 from ..registry import Registry
+from ..translatable import Translatable
 from .font import Glyphs
 
 PAGE_WIDTH = 114
@@ -283,14 +284,19 @@ def _recipe_page(
         title += f" ({index}/{total})"
 
     lines = wrap_and_center(title, FONT_BOLD)
+    i = 0
     for line in lines:
-        extra.append({"text": line + "\n", "font": "minecraft:stwb", "color": "black"})
+        extra.append(Translatable(f"ts.cookbook.recipe.{recipe.id}.title.line.{i}", line + "\n", font="minecraft:stwb", color="black"))
+        i+=1
+
+    i = len(lines)
     for _ in range(TITLE_MAX_LINES - len(lines)):
-        extra.append({"text": "\n"})
+        extra.append(Translatable(f"ts.cookbook.recipe.{recipe.id}.title.line.{i}", "\n", font="minecraft:stwb", color="black"))
+        i+=1
 
     grid, config = _build_grid(recipe)
     extra.append({"text": glyphs.char(config.grid_key), "color": "white"})
-    extra.append({"text": "\n\n\n"})  # Top margin.
+    extra.append({"text": "\n\n\n"})  # Top margin
 
     result_char = glyphs.chars.get(ref_key(recipe.result), "<?>")
     for row in range(config.num_rows):
@@ -304,13 +310,24 @@ def _recipe_page(
 
 def _cover_page() -> dict:
     extra: List[dict] = []
-    for line in wrap_and_center("Tasty Supplies Cookbook", FONT_BOLD):
-        extra.append({"text": line + "\n", "font": "minecraft:stwb", "color": "gold"})
-    extra.append({"text": "\n\n\n"})  # Margin.
-    for line in wrap_and_center("Recipes & Guides"):
+
+    title_lines = wrap_and_center("Tasty Supplies Cookbook", FONT_BOLD)
+    title_lines += ["", ""] # Margin
+    i = 0
+    for line in title_lines:
         extra.append(
-            {"text": line + "\n", "font": "minecraft:stwr", "color": "dark_gray"}
+            Translatable(f"ts.cookbook.title.line.{i}", line + "\n", font="minecraft:stwb", color="gold")
         )
+        i+=1
+
+    desc_lines = wrap_and_center("Recipes & Guides", FONT_REGULAR)
+    i = 0
+    for line in desc_lines:
+        extra.append(
+            Translatable(f"ts.cookbook.desc.line.{i}", line + "\n", font="minecraft:stwr", color="dark_gray")
+        )
+        i+=1
+    
     return _page(extra)
 
 
@@ -343,9 +360,13 @@ def _summary_pages(
     for category, results in _results_by_category(registry).items():
         for start in range(0, len(results), SUM_MAX_ITEM_PER_PAGES):
             extra: List[dict] = []
+            i = 0
             for line in wrap_and_center(category.title(), FONT_BOLD):
-                extra.append({"text": line, "font": "minecraft:stwb"})
-            extra.append({"text": "\n\n\n\n"})  # Margin.
+                category_id = category.lower().replace(" ", "_")
+                extra.append(Translatable(f"ts.cookbook.category.{category_id}.line.{i}", line + "\n", font="minecraft:stwb"))
+                i += 1
+            
+            extra.append({"text": "\n\n\n"})  # Margin
 
             shown = results[start : start + SUM_MAX_ITEM_PER_PAGES]
             for position, result in enumerate(shown, start=1):
@@ -357,7 +378,7 @@ def _summary_pages(
                         "click_event": {"action": "change_page", "page": target},
                         "hover_event": {
                             "action": "show_text",
-                            "value": f"Go to page {target}",
+                            "value": Translatable(f"ts.cookbook.action.change_page", "Go to page %s", with_args=[str(target)]),
                         },
                     }
                 )
@@ -379,7 +400,6 @@ def build(
         for results in _results_by_category(registry).values()
     )
 
-    # The cover, the summary, then the recipes.
     page = 1 + summary_page_count + 1
     item_page_map: Dict[str, int] = {}
     for key, recipes in groups.items():
@@ -392,7 +412,7 @@ def build(
     for recipes in groups.values():
         for index, recipe in enumerate(recipes, start=1):
             pages.append(
-                _recipe_page(recipe, glyphs, index, len(recipes), item_page_map)
+                _recipe_page(recipe, glyphs, index, total=len(recipes), item_page_map=item_page_map)
             )
 
     return pages
